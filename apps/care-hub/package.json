@@ -13,12 +13,7 @@
   "dependencies": {
     "next": "16.1.5",
     "react": "19.2.3",
-    "react-dom": "19.2.3",
-     "@infinity/contracts": "workspace:*",
-    "@infinity/event-bus": "workspace:*",
-    "@infinity/ui": "workspace:*",
-    "@infinity/tokens": "workspace:*",
-    "@infinity/analytics": "workspace:*"
+    "react-dom": "19.2.3"
 
   },
   "devDependencies": {
