@@ -1,0 +1,21 @@
+{
+  "name": "@infinity/command-worker",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Event-driven background jobs for command-center",
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "node --watch dist/index.js",
+    "build": "tsc",
+    "type-check": "tsc --noEmit",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@infinity/event-bus": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.3"
+  }
+}

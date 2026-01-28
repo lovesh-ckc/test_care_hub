@@ -1,0 +1,8 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+  - 'workers/*'
+  - 'tooling/*'
+
+shared-workspace-lockfile: true
+prefer-workspace-packages: true

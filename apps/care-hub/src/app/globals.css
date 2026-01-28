@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  --surface: #f4f2ee;
+  --surface-muted: #ffffff;
+  --ink: #1b1a17;
+  --muted-ink: #5e5a52;
+  --brand: #0d9488;
+  --brand-contrast: #f7fff9;
+  --radius: 16px;
+  --font-display: "Space Grotesk", system-ui;
+  --font-body: "Plus Jakarta Sans", system-ui;
+}
+
+.theme-default {
+  --surface: #f4f2ee;
+  --surface-muted: #ffffff;
+  --ink: #1b1a17;
+  --muted-ink: #5e5a52;
+  --brand: #0d9488;
+  --brand-contrast: #f7fff9;
+  --radius: 16px;
+  --font-display: "Space Grotesk", system-ui;
+  --font-body: "Plus Jakarta Sans", system-ui;
+  --font-greeting: "Sofia", system-ui;
+  --font-heading: "Space Grotesk", system-ui;
+}
+
+.theme-teal {
+  --surface: #ffffff;
+  --surface-muted: #ffffff;
+  --ink: #1c1c1c;
+  --muted-ink: #5e5a52;
+  --brand: #0f766e;
+  --brand-contrast: #f0fdfa;
+  --radius: 18px;
+  --font-display: "Space Grotesk", system-ui;
+  --font-body: "IBM Plex Sans", system-ui;
+  --font-greeting: "Sofia", system-ui;
+  --font-heading: "Space Grotesk", system-ui;
+}
+
+.theme-purple {
+  --surface: #f7f3ff;
+  --surface-muted: #ffffff;
+  --ink: #1f1231;
+  --muted-ink: #6b5b7f;
+  --brand: #a855f7;
+  --brand-contrast: #faf5ff;
+  --radius: 14px;
+  --font-display: "Space Grotesk", system-ui;
+  --font-body: "Plus Jakarta Sans", system-ui;
+  --font-greeting: "Sofia", system-ui;
+  --font-heading: "Space Grotesk", system-ui;
+}
+
+.theme-orange {
+  --surface: #fff4e8;
+  --surface-muted: #ffffff;
+  --ink: #2b1c12;
+  --muted-ink: #7a5a4d;
+  --brand: #f97316;
+  --brand-contrast: #fff7ed;
+  --radius: 22px;
+  --font-display: "Space Grotesk", system-ui;
+  --font-body: "Plus Jakarta Sans", system-ui;
+  --font-greeting: "Sofia", system-ui;
+  --font-heading: "Space Grotesk", system-ui;
+}
+
+@theme inline {
+  --font-sans: var(--font-body);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow: -moz-scrollbars-none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hide-scrollbar::-webkit-scrollbar-thumb {
+  background: transparent;
+}

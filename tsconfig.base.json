@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "jsx": "preserve",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@control-center/*": ["./apps/control-center/src/*"],
+      "@command-center/*": ["./apps/command-center/src/*"],
+      "@care-hub/*": ["./apps/care-hub/src/*"],
+      "@eumetise/theme-contracts": ["./packages/theme-contracts/src/index.ts"],
+      "@eumetise/theme-registry": ["./packages/theme-registry/src/index.ts"],
+      "@infinity/ui": ["./packages/ui/src/index.ts"],
+      "@infinity/tokens": ["./packages/tokens/src/index.ts"],
+      "@infinity/layout-engine": ["./packages/layout-engine/src/index.ts"],
+      "@infinity/typography-engine": ["./packages/typography-engine/src/index.ts"],
+      "@infinity/contracts": ["./packages/contracts/src/index.ts"],
+      "@infinity/event-bus": ["./packages/event-bus/src/index.ts"],
+      "@infinity/auth": ["./packages/auth/src/index.ts"],
+      "@infinity/analytics": ["./packages/analytics/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "dist", ".next", "build"]
+}

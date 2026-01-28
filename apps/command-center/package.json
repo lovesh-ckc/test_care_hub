@@ -1,0 +1,30 @@
+{
+  "name": "@command-center/app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Execution microfrontend - operational workflows",
+  "scripts": {
+    "dev": "next dev --port 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "16.1.5",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "@infinity/contracts": "workspace:*",
+    "@infinity/event-bus": "workspace:*",
+    "@infinity/ui": "workspace:*",
+    "@infinity/tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5.3.3",
+    "tailwindcss": "^4"
+  }
+}

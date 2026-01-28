@@ -1,0 +1,124 @@
+/**
+ * SEMANTIC CSS VARIABLES - SINGLE SOURCE OF TRUTH FOR ALL DESIGN VALUES
+ * Tailwind ONLY consumes these variables, never hardcoded design tokens
+ * All themes apply values via runtime CSS variable mutation
+ */
+
+@layer base {
+  :root {
+    /* ========== COLORS: SEMANTIC INTENT ========== */
+
+    /* Primary Intent - Brand/Action */
+    --color-primary: #0066cc;
+    --color-primary-hover: #0052a3;
+    --color-primary-active: #003d7a;
+    --color-primary-disabled: #99ccff;
+
+    /* Secondary Intent - Supporting */
+    --color-secondary: #667399;
+    --color-secondary-hover: #4d5a7a;
+    --color-secondary-active: #334466;
+
+    /* Status Colors */
+    --color-success: #00aa44;
+    --color-success-light: #ccf0dd;
+    --color-warning: #ffaa00;
+    --color-warning-light: #fff4e6;
+    --color-error: #dd0000;
+    --color-error-light: #ffcccc;
+    --color-info: #0099dd;
+    --color-info-light: #e6f2ff;
+
+    /* Neutral Scale - Structural */
+    --color-neutral-900: #0a0a0a;
+    --color-neutral-800: #1a1a1a;
+    --color-neutral-700: #333333;
+    --color-neutral-600: #4d4d4d;
+    --color-neutral-500: #666666;
+    --color-neutral-400: #999999;
+    --color-neutral-300: #cccccc;
+    --color-neutral-200: #e6e6e6;
+    --color-neutral-100: #f5f5f5;
+    --color-neutral-50: #fafafa;
+
+    /* Overlays */
+    --color-overlay: rgba(0, 0, 0, 0.5);
+    --color-overlay-hover: rgba(0, 0, 0, 0.7);
+
+    /* ========== TYPOGRAPHY ========== */
+
+    /* Font Families */
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      sans-serif;
+    --font-family-mono: "Fira Code", "Courier New", monospace;
+
+    /* Font Weights */
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Line Heights */
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+    --line-height-loose: 2;
+
+    /* Letter Spacing */
+    --letter-spacing-tight: -0.02em;
+    --letter-spacing-normal: 0em;
+    --letter-spacing-wide: 0.04em;
+
+    /* ========== SPACING ========== */
+
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    --spacing-3xl: 4rem;
+
+    /* ========== RADIUS ========== */
+
+    --radius-none: 0;
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 1rem;
+    --radius-full: 9999px;
+
+    /* ========== SHADOWS ========== */
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Ensure variables are available in all color schemes */
+  @supports (color: var(--color-primary)) {
+    body {
+      color: var(--color-neutral-900);
+      background-color: var(--color-neutral-50);
+      font-family: var(--font-family);
+      line-height: var(--line-height-normal);
+    }
+  }
+}
+
+/* Reset and base styles */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}

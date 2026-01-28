@@ -1,0 +1,21 @@
+{
+  "name": "@infinity/event-bus",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Type-safe cross-app event communication",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}

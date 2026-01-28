@@ -1,0 +1,28 @@
+{
+  "name": "infinity-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Enterprise-grade hybrid monorepo + microfrontend platform",
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
+    "test": "turbo run test",
+    "validate-contracts": "tsx scripts/validate-contracts.ts",
+    "validate-deps": "tsx scripts/validate-dependencies.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.55.0",
+    "tsx": "^4.7.0",
+    "turbo": "^1.11.0",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.17.0",
+    "pnpm": ">=8.0.0"
+  }
+}

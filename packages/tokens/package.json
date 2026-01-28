@@ -1,0 +1,24 @@
+{
+  "name": "@infinity/tokens",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Design tokens - spacing, colors, typography, motion",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./css": {
+      "default": "./dist/tokens.css"
+    }
+  },
+  "scripts": {
+    "build": "tsc && node scripts/build-css.js",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
