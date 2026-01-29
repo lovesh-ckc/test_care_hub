@@ -302,7 +302,7 @@ export function NotificationScreen({ onBack }: NotificationScreenProps) {
 
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="care-shell care-padding flex h-screen flex-col bg-black/5 pb-6 pt-3">
+      <div className="care-shell care-padding flex h-screen flex-col bg-[#FAF9F8] pb-6 pt-3">
         <div className="flex items-center justify-between">
           <button
             type="button"
@@ -318,7 +318,7 @@ export function NotificationScreen({ onBack }: NotificationScreenProps) {
           </button>
         </div>
 
-        <div className="mt-4 rounded-num-100 bg-white p-1 shadow-sm">
+        <div className="mt-4 rounded-lg bg-white p-1 shadow-sm">
           <div className="grid grid-cols-4 text-xs text-center text-gray-500 font-ibm-plex-sans">
             {categoryTabs.map((tab) => (
               <button
@@ -335,7 +335,7 @@ export function NotificationScreen({ onBack }: NotificationScreenProps) {
           </div>
         </div>
 
-        <div className="mt-4 flex-1 overflow-hidden rounded-num-20 bg-white p-2 shadow-md">
+        <div className="mt-4 flex-1 overflow-hidden rounded-2xl bg-white p-2 shadow-md">
           <div className="flex h-full flex-col overflow-y-auto">
             {filteredItems.map((item, index) => (
               <div

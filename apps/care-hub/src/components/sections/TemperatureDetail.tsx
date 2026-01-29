@@ -5,8 +5,6 @@ import { ProfileHeader } from "@care-hub/components/sections/ProfileHeader";
 
 type TemperatureDetailProps = {
   onBack?: () => void;
-  onNotificationsClick?: () => void;
-  onProfileClick?: () => void;
 };
 
 const ranges = [
@@ -75,18 +73,9 @@ const factors = [
   },
 ];
 
-export function TemperatureDetail({ onBack, onNotificationsClick, onProfileClick }: TemperatureDetailProps) {
+export function TemperatureDetail({ onBack}: TemperatureDetailProps) {
   return (
-    <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="care-shell care-padding bg-black/5 pb-6 pt-3">
-        <ProfileHeader
-          name="Rashi Agrawal"
-          handle="#rashi.agrawal0789"
-          avatarSrc="/icons/patient.svg"
-          bellIconSrc="/icons/bell-01.svg"
-          onBellClick={onNotificationsClick}
-          onProfileClick={onProfileClick}
-        />
+<>
 
         <div className="mt-4 flex items-center gap-2 text-lg font-semibold">
           <button
@@ -100,7 +89,7 @@ export function TemperatureDetail({ onBack, onNotificationsClick, onProfileClick
           <span>Temperature</span>
         </div>
 
-        <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="flex items-start justify-between">
             <div>
               <div className="flex items-end gap-2 text-gray-400">
@@ -132,7 +121,7 @@ export function TemperatureDetail({ onBack, onNotificationsClick, onProfileClick
           </div>
         </div>
 
-        <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="text-base font-semibold">Temperature Ranges</div>
           <div className="mt-3 flex flex-col gap-3">
             {ranges.map((range) => (
@@ -154,11 +143,11 @@ export function TemperatureDetail({ onBack, onNotificationsClick, onProfileClick
           </div>
         </div>
 
-        <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="text-base font-semibold">Recent Readings</div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
             {readings.map((reading) => (
-              <div key={reading.time} className="rounded-xl bg-black/5 px-3 py-3 flex items-center justify-between">
+              <div key={reading.time} className="rounded-xl bg-[#FAF9F8] px-3 py-3 flex items-center justify-between">
                 <div>
                   <div className="text-xs text-gray-700">{reading.time}</div>
                   <div className="text-xs">{reading.sub}</div>
@@ -172,7 +161,7 @@ export function TemperatureDetail({ onBack, onNotificationsClick, onProfileClick
           </div>
         </div>
 
-        <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="flex items-center justify-between">
             <div className="text-base font-semibold">7-Day Trend</div>
             <svg viewBox="0 0 20 20" className="h-4 w-4 text-teal" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -192,21 +181,21 @@ export function TemperatureDetail({ onBack, onNotificationsClick, onProfileClick
           </div>
         </div>
 
-        <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="flex items-center gap-2 text-base font-semibold">
             <div className="h-5 w-5 rounded-full bg-sky-100 text-sky-500 flex items-center justify-center text-xs">i</div>
             Factors That Affect Body Temperature
           </div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
             {factors.map((factor) => (
-              <div key={factor.title} className="rounded-xl bg-black/5 p-3">
+              <div key={factor.title} className="rounded-xl bg-[#FAF9F8] p-3">
                 <div className="text-sm text-gray-700 font-semibold">{factor.title}</div>
                 <div className="text-xs">{factor.detail}</div>
               </div>
             ))}
           </div>
         </div>
-      </div>
-    </div>
+      
+    </>
   );
 }

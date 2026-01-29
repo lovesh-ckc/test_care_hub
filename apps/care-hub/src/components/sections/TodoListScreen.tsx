@@ -77,7 +77,7 @@ function TodoCard({ title, time, onClick }: { title: string; time: string; onCli
 function PreviousTasks({ onBack }: { onBack: () => void }) {
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="care-shell min-h-screen care-padding bg-black/5 pb-6 pt-4">
+      <div className="care-shell min-h-screen care-padding bg-[#FAF9F8] pb-6 pt-4">
         <button
           type="button"
           className="flex h-8 w-8 items-center justify-center rounded-full border border-sandybrown text-sandybrown"
@@ -137,7 +137,7 @@ export function TodoListScreen({ onNavClick, activeItem = "list" }: TodoListScre
 
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="care-shell care-padding flex h-screen flex-col bg-black/5 pb-4 pt-4">
+      <div className="care-shell care-padding flex h-screen flex-col bg-[#FAF9F8] pb-4 pt-4">
         <div className="text-lg font-semibold">To Do Lists</div>
 
         <div className="mt-6 flex items-center justify-between text-sm text-gray-700">

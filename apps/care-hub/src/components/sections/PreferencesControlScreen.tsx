@@ -34,7 +34,7 @@ function SettingsCard({ title, items }: { title: string; items: { label: string;
   return (
     <div className="mt-4">
       <div className="text-sm font-semibold text-gray-700">{title}</div>
-      <div className="mt-3 rounded-num-20 bg-white p-4 shadow-sm">
+      <div className="mt-3 rounded-2xl bg-white p-4 shadow-sm">
         <div className="flex flex-col gap-4 text-gray-500 font-ibm-plex-sans">
           {items.map((item, index) => (
             <div key={item.label} className={`${index < items.length - 1 ? "border-b border-gray-100 pb-4" : ""}`}>
@@ -56,7 +56,7 @@ function SettingsCard({ title, items }: { title: string; items: { label: string;
 export function PreferencesControlScreen({ onBack }: PreferencesControlScreenProps) {
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="care-shell min-h-screen bg-black/5 care-padding bg-black/5 pb-6 pt-3">
+      <div className="care-shell min-h-screen bg-[#FAF9F8] care-padding bg-[#FAF9F8] pb-6 pt-3">
         <button
           type="button"
           className="flex h-8 w-8 items-center justify-center rounded-full border border-sandybrown text-sandybrown"
@@ -75,7 +75,7 @@ export function PreferencesControlScreen({ onBack }: PreferencesControlScreenPro
         <SettingsCard title="Communication Permissions" items={communicationSettings} />
         <SettingsCard title="Display & Sound" items={displaySettings} />
 
-        <button type="button" className="mt-6 w-full rounded-num-20 bg-orange-400 px-4 py-3 text-sm font-semibold text-white">
+        <button type="button" className="mt-6 w-full rounded-2xl bg-orange-400 px-4 py-3 text-sm font-semibold text-white">
           Save Preferences
         </button>
       </div>

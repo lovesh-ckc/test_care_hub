@@ -22,7 +22,7 @@ const testResults = [
 export function ClinicalCareOverview({ onBack }: ClinicalCareOverviewProps) {
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial ">
-      <div className="care-shell min-h-screen care-padding bg-black/5 pb-6 pt-3 bg-black/5">
+      <div className="care-shell min-h-screen care-padding bg-[#FAF9F8] pb-6 pt-3 bg-[#FAF9F8]">
         <button
           type="button"
           className="flex h-8 w-8 items-center justify-center rounded-full border border-sandybrown text-sandybrown"
@@ -41,7 +41,7 @@ export function ClinicalCareOverview({ onBack }: ClinicalCareOverviewProps) {
           <div className="text-sm font-semibold text-gray-700">Vital Signs</div>
           <div className="mt-3 grid grid-cols-2 gap-3 text-gray-500 font-ibm-plex-sans">
             {vitalCards.map((card) => (
-              <div key={card.label} className="rounded-num-20 bg-white p-4 shadow-sm">
+              <div key={card.label} className="rounded-2xl bg-white p-4 shadow-sm">
                 <div className="flex items-center justify-between">
                   <div className="text-sm text-gray-700">{card.label}</div>
                   <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs text-emerald-600">Normal</span>
@@ -59,7 +59,7 @@ export function ClinicalCareOverview({ onBack }: ClinicalCareOverviewProps) {
           <div className="text-sm font-semibold text-gray-700">Test Results</div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
             {testResults.map((item) => (
-              <div key={item.label} className={`rounded-num-20 bg-white p-4 shadow-sm border-l-4 ${item.accent}`}>
+              <div key={item.label} className={`rounded-2xl bg-white p-4 shadow-sm border-l-4 ${item.accent}`}>
                 <div className="flex items-center justify-between">
                   <div className="text-sm font-semibold text-gray-700">{item.label}</div>
                   <span className={`rounded-full px-3 py-1 text-xs ${item.pill}`}>{item.status}</span>

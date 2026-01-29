@@ -33,7 +33,7 @@ const settings = [
 export function DeviceManagementScreen({ onBack }: DeviceManagementScreenProps) {
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="care-shell min-h-screen bg-black/5 care-padding bg-black/5 pb-6 pt-3">
+      <div className="care-shell min-h-screen bg-[#FAF9F8] care-padding bg-[#FAF9F8] pb-6 pt-3">
         <button
           type="button"
           className="flex h-8 w-8 items-center justify-center rounded-full border border-sandybrown text-sandybrown"
@@ -52,7 +52,7 @@ export function DeviceManagementScreen({ onBack }: DeviceManagementScreenProps) 
           <div className="text-sm font-semibold text-gray-700">Connected Devices</div>
           <div className="mt-3 flex flex-col gap-4">
             {devices.map((device) => (
-              <div key={device.name} className="rounded-num-20 bg-white p-4 shadow-sm">
+              <div key={device.name} className="rounded-2xl bg-white p-4 shadow-sm">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 text-orange-500">
@@ -102,7 +102,7 @@ export function DeviceManagementScreen({ onBack }: DeviceManagementScreenProps) 
 
         <div className="mt-6">
           <div className="text-sm font-semibold text-gray-700">Device Settings</div>
-          <div className="mt-3 rounded-num-20 bg-white p-4 shadow-sm">
+          <div className="mt-3 rounded-2xl bg-white p-4 shadow-sm">
             <div className="flex flex-col gap-4 text-gray-500 font-ibm-plex-sans">
               {settings.map((setting, index) => (
                 <div key={setting.label} className={`${index < settings.length - 1 ? "border-b border-gray-100 pb-4" : ""}`}>
@@ -119,7 +119,7 @@ export function DeviceManagementScreen({ onBack }: DeviceManagementScreenProps) 
               ))}
             </div>
           </div>
-          <button type="button" className="mt-4 w-full rounded-num-20 bg-orange-400 px-4 py-3 text-sm font-semibold text-white">
+          <button type="button" className="mt-4 w-full rounded-2xl bg-orange-400 px-4 py-3 text-sm font-semibold text-white">
             Add New Device
           </button>
         </div>

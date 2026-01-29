@@ -5,8 +5,6 @@ import { ProfileHeader } from "@care-hub/components/sections/ProfileHeader";
 
 type RespiratoryDetailProps = {
   onBack?: () => void;
-  onNotificationsClick?: () => void;
-  onProfileClick?: () => void;
 };
 
 const ranges = [
@@ -16,18 +14,9 @@ const ranges = [
   { label: "High", range: "> 25 breaths/min", status: "Tachypnea", color: "bg-red-500", bar: "bg-gray-200" },
 ];
 
-export function RespiratoryDetail({ onBack, onNotificationsClick, onProfileClick }: RespiratoryDetailProps) {
+export function RespiratoryDetail({ onBack }: RespiratoryDetailProps) {
   return (
-    <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="care-shell care-padding bg-black/5 pb-6 pt-3">
-        <ProfileHeader
-          name="Rashi Agrawal"
-          handle="#rashi.agrawal0789"
-          avatarSrc="/icons/patient.svg"
-          bellIconSrc="/icons/bell-01.svg"
-          onBellClick={onNotificationsClick}
-          onProfileClick={onProfileClick}
-        />
+    <>
 
         <div className="mt-4 flex items-center gap-2 text-lg font-semibold">
           <button
@@ -41,7 +30,7 @@ export function RespiratoryDetail({ onBack, onNotificationsClick, onProfileClick
           <span>Respiratory Rate</span>
         </div>
 
-        <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="flex items-start justify-between">
             <div>
               <div className="flex items-end gap-2 text-gray-400">
@@ -55,7 +44,7 @@ export function RespiratoryDetail({ onBack, onNotificationsClick, onProfileClick
             </div>
           </div>
 
-          <div className="mt-4 rounded-xl bg-black/5 p-4">
+          <div className="mt-4 rounded-xl bg-[#FAF9F8] p-4">
             <div className="mx-auto flex items-center justify-center">
               <svg width="161" height="161" viewBox="0 0 161 161" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g opacity="0.665435">
@@ -77,7 +66,7 @@ export function RespiratoryDetail({ onBack, onNotificationsClick, onProfileClick
           </div>
         </div>
 
-        <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="text-base font-semibold">Normal Ranges</div>
           <div className="mt-3 flex flex-col gap-3">
             {ranges.map((range) => (
@@ -95,7 +84,7 @@ export function RespiratoryDetail({ onBack, onNotificationsClick, onProfileClick
           </div>
         </div>
 
-        <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="flex items-center justify-between">
             <div className="text-base font-semibold">Total Statistics</div>
             <svg viewBox="0 0 20 20" className="h-4 w-4 text-gray-500" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -103,17 +92,17 @@ export function RespiratoryDetail({ onBack, onNotificationsClick, onProfileClick
             </svg>
           </div>
           <div className="mt-3 grid grid-cols-3 gap-2 text-center text-gray-500 font-ibm-plex-sans">
-            <div className="rounded-xl bg-black/5 p-3">
+            <div className="rounded-xl bg-[#FAF9F8] p-3">
               <div className="text-xs">Average</div>
               <div className="text-lg font-semibold text-gray-400">16</div>
               <div className="text-xs">br/min</div>
             </div>
-            <div className="rounded-xl bg-black/5 p-3">
+            <div className="rounded-xl bg-[#FAF9F8] p-3">
               <div className="text-xs">Lowest</div>
               <div className="text-lg font-semibold text-gray-400">14</div>
               <div className="text-xs">br/min</div>
             </div>
-            <div className="rounded-xl bg-black/5 p-3">
+            <div className="rounded-xl bg-[#FAF9F8] p-3">
               <div className="text-xs">Highest</div>
               <div className="text-lg font-semibold text-gray-400">20</div>
               <div className="text-xs">br/min</div>
@@ -121,7 +110,7 @@ export function RespiratoryDetail({ onBack, onNotificationsClick, onProfileClick
           </div>
         </div>
 
-        <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="flex items-center justify-between">
             <div className="text-base font-semibold">7-Day Average</div>
             <svg viewBox="0 0 20 20" className="h-4 w-4 text-teal" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -141,7 +130,7 @@ export function RespiratoryDetail({ onBack, onNotificationsClick, onProfileClick
           </div>
         </div>
 
-        <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="text-base font-semibold">Recent Readings</div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
             {[
@@ -150,7 +139,7 @@ export function RespiratoryDetail({ onBack, onNotificationsClick, onProfileClick
               { label: "Yesterday, 9:00 AM", value: "17", status: "Normal" },
               { label: "Jan 26, 7:30 PM", value: "16", status: "Normal" },
             ].map((reading) => (
-              <div key={reading.label} className="flex items-center justify-between rounded-xl bg-black/5 px-3 py-3">
+              <div key={reading.label} className="flex items-center justify-between rounded-xl bg-[#FAF9F8] px-3 py-3">
                 <div>
                   <div className="text-sm text-gray-700">{reading.label}</div>
                   <div className="text-xs text-teal">{reading.status}</div>
@@ -164,7 +153,7 @@ export function RespiratoryDetail({ onBack, onNotificationsClick, onProfileClick
           </div>
         </div>
 
-        <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="text-base font-semibold">Breathing Exercises</div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
             {[
@@ -173,7 +162,7 @@ export function RespiratoryDetail({ onBack, onNotificationsClick, onProfileClick
               { title: "Box Breathing", desc: "Inhale, hold, exhale, hold - each for 4 seconds", time: "5 minutes" },
               { title: "Pursed Lip Breathing", desc: "Inhale through nose, exhale slowly through pursed lips", time: "10 minutes" },
             ].map((exercise) => (
-              <div key={exercise.title} className="flex items-center justify-between rounded-xl bg-black/5 px-3 py-3">
+              <div key={exercise.title} className="flex items-center justify-between rounded-xl bg-[#FAF9F8] px-3 py-3">
                 <div>
                   <div className="text-sm text-gray-700 font-semibold">{exercise.title}</div>
                   <div className="text-xs">{exercise.desc}</div>
@@ -184,20 +173,20 @@ export function RespiratoryDetail({ onBack, onNotificationsClick, onProfileClick
           </div>
         </div>
 
-        <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="text-base font-semibold">Health Insights</div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
-            <div className="rounded-xl bg-black/5 p-3">
+            <div className="rounded-xl bg-[#FAF9F8] p-3">
               <div className="text-sm text-gray-700 font-semibold">What Affects Respiratory Rate?</div>
               <div className="text-xs">Physical activity, stress, anxiety, medications, and medical conditions can all influence your breathing rate.</div>
             </div>
-            <div className="rounded-xl bg-black/5 p-3">
+            <div className="rounded-xl bg-[#FAF9F8] p-3">
               <div className="text-sm text-gray-700 font-semibold">Benefits of Controlled Breathing</div>
               <div className="text-xs">Regular breathing exercises can reduce stress, lower blood pressure, and improve overall lung function.</div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      
+    </>
   );
 }

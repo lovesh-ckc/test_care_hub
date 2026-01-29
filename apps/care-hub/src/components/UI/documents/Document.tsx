@@ -85,7 +85,7 @@ export function DocumentScreen({ onNavClick, activeItem = "documents" }: Documen
 
   return (
     <section className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="care-shell care-padding flex h-screen flex-col bg-black/5 bg-black/5 pb-4 pt-4">
+      <div className="care-shell care-padding flex h-screen flex-col bg-[#FAF9F8] bg-[#FAF9F8] pb-4 pt-4">
         <div className="text-lg font-semibold">Documents</div>
 
         <div className="mt-3">
@@ -125,7 +125,7 @@ export function DocumentScreen({ onNavClick, activeItem = "documents" }: Documen
           </div>
         </div>
 
-        <div className="mt-3 flex-1 overflow-hidden rounded-num-20 bg-white rounded-md p-2 shadow-sm">
+        <div className="mt-3 flex-1 overflow-hidden rounded-2xl bg-white rounded-md p-2 shadow-sm">
           <div className="flex h-full flex-col overflow-y-auto">
             {filteredDocuments.map((doc) => (
               <div key={doc.id} className="flex items-center gap-3 border-b border-gray-100 px-2 py-3 last:border-b-0">

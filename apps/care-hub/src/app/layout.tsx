@@ -13,8 +13,9 @@ const displayFont = Space_Grotesk({
   subsets: ["latin"],
 });
 
-const bodyFont = Plus_Jakarta_Sans({
+const bodyFont = IBM_Plex_Sans({
   variable: "--font-body",
+  weight: ["400", "500", "600"],
   subsets: ["latin"],
 });
 
@@ -24,9 +25,8 @@ const greetingFont = Sofia({
   subsets: ["latin"],
 });
 
-const bodyAltFont = IBM_Plex_Sans({
+const bodyAltFont = Plus_Jakarta_Sans({
   variable: "--font-plex",
-  weight: ["400", "500", "600"],
   subsets: ["latin"],
 });
 

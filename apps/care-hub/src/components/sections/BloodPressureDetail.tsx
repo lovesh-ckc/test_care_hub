@@ -5,8 +5,6 @@ import { ProfileHeader } from "@care-hub/components/sections/ProfileHeader";
 
 type BloodPressureDetailProps = {
   onBack?: () => void;
-  onNotificationsClick?: () => void;
-  onProfileClick?: () => void;
 };
 
 const categories = [
@@ -59,19 +57,9 @@ const tips = [
   { title: "Monitor Regularly", detail: "Check your blood pressure at the same time each day" },
 ];
 
-export function BloodPressureDetail({ onBack, onNotificationsClick,
-  onProfileClick}: BloodPressureDetailProps) {
+export function BloodPressureDetail({ onBack}: BloodPressureDetailProps) {
   return (
-    <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="care-shell care-padding bg-black/5 pb-6 pt-3">
-        <ProfileHeader
-          name="Rashi Agrawal"
-          handle="#rashi.agrawal0789"
-          avatarSrc="/icons/patient.svg"
-          bellIconSrc="/icons/bell-01.svg"
-          onProfileClick={onProfileClick}
-          onBellClick={onNotificationsClick}
-        />
+    <>
 
         <div className="mt-4 flex items-center gap-2 text-lg font-semibold">
           <button
@@ -85,7 +73,7 @@ export function BloodPressureDetail({ onBack, onNotificationsClick,
           <span>Blood Pressure</span>
         </div>
 
-        <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="flex items-start justify-between">
             <div>
               <div className="text-3xl font-semibold text-gray-400">108/78</div>
@@ -98,12 +86,12 @@ export function BloodPressureDetail({ onBack, onNotificationsClick,
           </div>
 
           <div className="mt-4 grid grid-cols-2 gap-3 text-gray-500 font-ibm-plex-sans">
-            <div className="rounded-xl bg-black/5 p-3">
+            <div className="rounded-xl bg-[#FAF9F8] p-3">
               <div className="text-xs text-gray-700">Systolic</div>
               <div className="text-xl font-semibold text-gray-400">108</div>
               <div className="text-xs text-teal">Normal</div>
             </div>
-            <div className="rounded-xl bg-black/5 p-3">
+            <div className="rounded-xl bg-[#FAF9F8] p-3">
               <div className="text-xs text-gray-700">Diastolic</div>
               <div className="text-xl font-semibold text-gray-400">78</div>
               <div className="text-xs text-teal">Normal</div>
@@ -111,7 +99,7 @@ export function BloodPressureDetail({ onBack, onNotificationsClick,
           </div>
         </div>
 
-        <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="text-base font-semibold">Blood Pressure Categories</div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
             {categories.map((category) => (
@@ -132,7 +120,7 @@ export function BloodPressureDetail({ onBack, onNotificationsClick,
           </div>
         </div>
 
-        <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="flex items-center justify-between">
             <div className="text-base font-semibold">Recent Readings</div>
             <svg viewBox="0 0 20 20" className="h-4 w-4 text-teal" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -141,7 +129,7 @@ export function BloodPressureDetail({ onBack, onNotificationsClick,
           </div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
             {recentReadings.map((reading) => (
-              <div key={reading.time} className="rounded-xl bg-black/5 px-3 py-3 flex items-center justify-between">
+              <div key={reading.time} className="rounded-xl bg-[#FAF9F8] px-3 py-3 flex items-center justify-between">
                 <div>
                   <div className="text-xs text-gray-700">{reading.time}</div>
                   <div className="text-xs">{reading.pulse}</div>
@@ -155,7 +143,7 @@ export function BloodPressureDetail({ onBack, onNotificationsClick,
           </div>
         </div>
 
-        <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="text-base font-semibold">7-Day Trend</div>
           <div className="mt-3 text-xs text-gray-500 font-ibm-plex-sans">Systolic</div>
           <div className="mt-2 flex items-center justify-between text-xs text-gray-500 font-ibm-plex-sans">
@@ -179,21 +167,21 @@ export function BloodPressureDetail({ onBack, onNotificationsClick,
           </div>
         </div>
 
-        <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="flex items-center gap-2 text-base font-semibold">
             <div className="h-5 w-5 rounded-full bg-sky-100 text-sky-500 flex items-center justify-center text-xs">!</div>
             Maintaining Healthy Blood Pressure
           </div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
             {tips.map((tip) => (
-              <div key={tip.title} className="rounded-xl bg-black/5 p-3">
+              <div key={tip.title} className="rounded-xl bg-[#FAF9F8] p-3">
                 <div className="text-sm text-gray-700 font-semibold">{tip.title}</div>
                 <div className="text-xs">{tip.detail}</div>
               </div>
             ))}
           </div>
         </div>
-      </div>
-    </div>
+     
+    </>
   );
 }

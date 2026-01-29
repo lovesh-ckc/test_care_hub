@@ -16,6 +16,7 @@ import { PreferencesControlScreen } from "@care-hub/components/sections/Preferen
 import { DevicesGridScreen } from "@care-hub/components/sections/DevicesGridScreen";
 import { TodoListScreen } from "@care-hub/components/sections/TodoListScreen";
 import type { Dashboard } from "@care-hub/lib/types";
+import { ProfileHeader } from "./ProfileHeader";
 
 type ScreenType =
   | "dashboard"
@@ -59,6 +60,19 @@ export function DashboardContainer({ section }: DashboardContainerProps) {
 
   return (
     <>
+    {["dashboard","temperature","heartRate","spo2","respiratory","bloodPressure"].includes(currentScreen) &&
+    <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
+    <div className="care-shell care-padding flex h-full flex-col bg-[#FAF9F8] pb-4 pt-3">
+      <div className="sticky top-3 topbar shadow-2xl rounded-2xl p-2">
+    <ProfileHeader
+          name="Rashi Agrawal"
+          handle="#rashi.agrawal0789"
+          avatarSrc="/icons/patient.svg"
+          bellIconSrc="/icons/bell-01.svg"
+          onBellClick={() => setCurrentScreen("notifications")}
+          onProfileClick={() => setCurrentScreen("profile")}
+        />
+        </div>
       {currentScreen === "dashboard" && (
         <DashboardScreen
           section={section}
@@ -69,10 +83,39 @@ export function DashboardContainer({ section }: DashboardContainerProps) {
           onRespiratoryClick={() => setCurrentScreen("respiratory")}
           onTemperatureClick={() => setCurrentScreen("temperature")}
           onBloodPressureClick={() => setCurrentScreen("bloodPressure")}
-          onNotificationsClick={() => setCurrentScreen("notifications")}
-          onProfileClick={() => setCurrentScreen("profile")}
         />
       )}
+      
+      {currentScreen === "temperature" && (
+        <TemperatureDetail 
+        onBack={handleBackClick}
+           />
+      )}
+      
+      {currentScreen === "heartRate" && (
+        <HeartRateDetail 
+        onBack={handleBackClick}
+        />
+      )}
+      {currentScreen === "spo2" && (
+        <Spo2Detail 
+        onBack={handleBackClick}
+           />
+      )}
+      {currentScreen === "respiratory" && (
+        <RespiratoryDetail 
+        onBack={handleBackClick}
+           />
+      )}
+      
+      {currentScreen === "bloodPressure" && (
+        <BloodPressureDetail 
+        onBack={handleBackClick} 
+       />
+      )}
+      </div>
+</div>
+}
       {currentScreen === "documents" && (
         <DocumentScreen
           onBack={handleBackClick}
@@ -86,40 +129,7 @@ export function DashboardContainer({ section }: DashboardContainerProps) {
       {currentScreen === "grid" && (
         <DevicesGridScreen onNavClick={handleNavClick} activeItem="grid" />
       )}
-      {currentScreen === "heartRate" && (
-        <HeartRateDetail 
-        onBack={handleBackClick}
-        onNotificationsClick={() => setCurrentScreen("notifications")}
-        onProfileClick={() => setCurrentScreen("profile")}
-        />
-      )}
-      {currentScreen === "spo2" && (
-        <Spo2Detail 
-        onBack={handleBackClick}
-        onNotificationsClick={() => setCurrentScreen("notifications")}
-        onProfileClick={() => setCurrentScreen("profile")}
-           />
-      )}
-      {currentScreen === "respiratory" && (
-        <RespiratoryDetail 
-        onBack={handleBackClick}
-        onNotificationsClick={() => setCurrentScreen("notifications")}
-        onProfileClick={() => setCurrentScreen("profile")}
-           />
-      )}
-      {currentScreen === "temperature" && (
-        <TemperatureDetail 
-        onBack={handleBackClick}
-        onNotificationsClick={() => setCurrentScreen("notifications")}
-        onProfileClick={() => setCurrentScreen("profile")}
-           />
-      )}
-      {currentScreen === "bloodPressure" && (
-        <BloodPressureDetail 
-        onBack={handleBackClick} 
-        onNotificationsClick={() => setCurrentScreen("notifications")}
-        onProfileClick={() => setCurrentScreen("profile")} />
-      )}
+      
       {currentScreen === "notifications" && (
         <NotificationScreen onBack={handleBackClick} />
       )}

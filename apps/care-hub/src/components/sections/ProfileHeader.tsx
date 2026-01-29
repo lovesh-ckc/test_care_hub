@@ -71,7 +71,7 @@ export function ProfileHeader({
         >
           <Image className="h-12 w-12 rounded-full object-cover" width={48} height={48} alt="" src={avatarSrc} />
           <div>
-            <div className="text-base font-semibold">{name}</div>
+            <div className="text-base  font-semibold">{name}</div>
             <div className="text-sm text-gray-500 font-ibm-plex-sans">{handle}</div>
           </div>
         </button>

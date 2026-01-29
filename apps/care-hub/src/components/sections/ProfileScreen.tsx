@@ -56,7 +56,7 @@ export function ProfileScreen({
 
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="care-shell min-h-screen care-padding bg-black/5 bg-black/5 pb-6 pt-3">
+      <div className="care-shell min-h-screen care-padding bg-[#FAF9F8] bg-[#FAF9F8] pb-6 pt-3">
         <button
           type="button"
           className="flex h-8 w-8 items-center justify-center rounded-full border border-sandybrown text-sandybrown"
@@ -66,7 +66,7 @@ export function ProfileScreen({
           <Image className="h-4 w-4" width={16} height={16} alt="" src="/Leftarrow.svg" />
         </button>
 
-        <div className="mt-6 rounded-num-20 bg-white p-4 shadow-md">
+        <div className="mt-6 rounded-2xl bg-white p-4 shadow-md">
           <div className="flex items-center gap-4">
             <div className="relative">
               <Image
@@ -108,7 +108,7 @@ export function ProfileScreen({
             <button
               key={item.id}
               type="button"
-              className="flex items-center justify-between rounded-num-20 bg-white px-4 py-3 text-left shadow-sm"
+              className="flex items-center justify-between rounded-2xl bg-white px-4 py-3 text-left shadow-sm"
               onClick={() => handleItemClick(item.id)}
             >
               <div className="flex items-start gap-3">

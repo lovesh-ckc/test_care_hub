@@ -10,7 +10,7 @@
   --brand-contrast: #f7fff9;
   --radius: 16px;
   --font-display: "Space Grotesk", system-ui;
-  --font-body: "Plus Jakarta Sans", system-ui;
+  --font-body: "IBM Plex Sans", system-ui;
 }
 
 .theme-default {
@@ -127,4 +127,9 @@ html {
 
 input, textarea, select {
   font-size: 16px;
+}
+
+
+.topbar{
+  background-color: linear-gradient(97.8deg, rgba(244, 242, 238, 0.69), rgba(244, 242, 238, 0.69) 25.96%, rgba(237, 235, 233, 0.69) 58.17%, rgba(243, 244, 245, 0.69) 83.17%, rgba(230, 227, 221, 0.69));
 }
