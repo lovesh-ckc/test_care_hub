@@ -2,6 +2,7 @@
 
 import type { WelcomeSection } from "@care-hub/lib/types";
 import Image from "next/image";
+import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
 
 type WelcomeHeroProps = {
   section: WelcomeSection;
@@ -9,6 +10,7 @@ type WelcomeHeroProps = {
 };
 
 export function WelcomeHero({ section, onStart }: WelcomeHeroProps) {
+  const { confirm } = useFeedback();
   const { title, subtitle, buttonLabel, note } = section.props;
 
   return (
@@ -26,7 +28,10 @@ export function WelcomeHero({ section, onStart }: WelcomeHeroProps) {
         <button
           className="flex w-full max-w-sm items-center justify-center gap-3 rounded-full bg-(--brand) px-6 py-[0.915rem] text-sm font-semibold text-(--brand-contrast) sm:max-w-md sm:text-base lg:max-w-lg"
           type="button"
-          onClick={onStart}
+          onClick={() => {
+            confirm();
+            onStart?.();
+          }}
         >
           {buttonLabel}
         </button>

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
 
 type ProfileScreenProps = {
   onBack?: () => void;
@@ -48,6 +49,7 @@ export function ProfileScreen({
   onDeviceManagement,
   onPreferences,
 }: ProfileScreenProps) {
+  const { tap } = useFeedback();
   const handleItemClick = (id: string) => {
     if (id === "clinical") onClinicalCare?.();
     if (id === "devices") onDeviceManagement?.();
@@ -60,13 +62,16 @@ export function ProfileScreen({
         <button
           type="button"
           className="flex h-8 w-8 items-center justify-center rounded-full border border-sandybrown text-sandybrown"
-          onClick={onBack}
+          onClick={() => {
+            tap();
+            onBack?.();
+          }}
           aria-label="Back"
         >
           <Image className="h-4 w-4" width={16} height={16} alt="" src="/Leftarrow.svg" />
         </button>
 
-        <div className="mt-6 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-6 rounded-2xl bg-white p-4 shadow-md motion-fade-up card-hover">
           <div className="flex items-center gap-4">
             <div className="relative">
               <Image
@@ -104,12 +109,17 @@ export function ProfileScreen({
         </div>
 
         <div className="mt-4 flex flex-col gap-3">
-          {profileItems.map((item) => (
+          {profileItems.map((item, index) => {
+            const delayClass = ["", "delay-1", "delay-2", "delay-3", "delay-4"][index] ?? "";
+            return (
             <button
               key={item.id}
               type="button"
-              className="flex items-center justify-between rounded-2xl bg-white px-4 py-3 text-left shadow-sm"
-              onClick={() => handleItemClick(item.id)}
+              className={`flex items-center justify-between rounded-2xl bg-white px-4 py-3 text-left shadow-sm motion-fade-up card-hover ${delayClass}`}
+              onClick={() => {
+                tap();
+                handleItemClick(item.id);
+              }}
             >
               <div className="flex items-start gap-3">
                 <div className="mt-1 h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-700">
@@ -138,7 +148,8 @@ export function ProfileScreen({
                 />
               </svg>
             </button>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

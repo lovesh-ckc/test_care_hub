@@ -8,6 +8,7 @@ import {
 import "./globals.css";
 import { PwaRegister } from "@care-hub/components/PwaRegister";
 import { IntroGate } from "@care-hub/components/intro/IntroGate";
+import { FeedbackProvider } from "@care-hub/components/feedback/FeedbackProvider";
 
 const displayFont = Space_Grotesk({
   variable: "--font-display",
@@ -68,7 +69,9 @@ export default function RootLayout({
         className={`${displayFont.variable} ${bodyFont.variable} ${greetingFont.variable} ${bodyAltFont.variable} bg-[color:var(--surface)] text-[color:var(--ink)] antialiased`}
       >
         <PwaRegister />
-        <IntroGate>{children}</IntroGate>
+        <FeedbackProvider>
+          <IntroGate>{children}</IntroGate>
+        </FeedbackProvider>
       </body>
     </html>
   );

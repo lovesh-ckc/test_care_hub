@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { SosButton } from "@care-hub/components/sections/SosButton";
 
 type ProfileHeaderProps = {
   name: string;
@@ -10,6 +10,7 @@ type ProfileHeaderProps = {
   bellIconSrc: string;
   onBellClick?: () => void;
   onProfileClick?: () => void;
+  onSettingsClick?: () => void;
 };
 
 export function ProfileHeader({
@@ -19,49 +20,10 @@ export function ProfileHeader({
   bellIconSrc,
   onBellClick,
   onProfileClick,
+  onSettingsClick,
 }: ProfileHeaderProps) {
-  const trackRef = useRef<HTMLDivElement | null>(null);
-  const [dragX, setDragX] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-
-  const clamp = (value: number, min: number, max: number) =>
-    Math.min(Math.max(value, min), max);
-
-  const getMaxDrag = () => {
-    const track = trackRef.current;
-    if (!track) return 0;
-    const trackWidth = track.clientWidth;
-    const knobSize = 36;
-    return Math.max(trackWidth - knobSize - 2, 0);
-  };
-
-  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-    const track = trackRef.current;
-    if (!track) return;
-    track.setPointerCapture(event.pointerId);
-    setIsDragging(true);
-  };
-
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDragging) return;
-    const track = trackRef.current;
-    if (!track) return;
-    const rect = track.getBoundingClientRect();
-    const maxDrag = getMaxDrag();
-    const nextX = clamp(event.clientX - rect.left - 18, 0, maxDrag);
-    setDragX(nextX);
-  };
-
-  const handlePointerUp = () => {
-    if (!isDragging) return;
-    const maxDrag = getMaxDrag();
-    const shouldLatch = dragX > maxDrag * 0.6;
-    setDragX(shouldLatch ? maxDrag : 0);
-    setIsDragging(false);
-  };
-
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex z-1000 items-center justify-between motion-fade-up">
       {onProfileClick ? (
         <button
           type="button"
@@ -85,52 +47,30 @@ export function ProfileHeader({
         </div>
       )}
       <div className="flex items-center gap-3">
-        <div
-          ref={trackRef}
-          className="relative flex h-10 w-28 items-center rounded-3xl bg-[#F7E7E7]"
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-          onPointerCancel={handlePointerUp}
-        >
-          <div
-            className="absolute left-1 top-0.5 flex h-9 w-9 items-center justify-center rounded-full transition-transform"
-            style={{ transform: `translateX(${dragX}px)` }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="60"
-              height="60"
-              fill="#AD3C3C"
-              viewBox="0 0 60 60"
-            >
-              <rect
-                width="60"
-                height="60"
-                fill=""
-                rx="30"
-              ></rect>
-              <path
-                fill="color(display-p3 0.9569 0.2627 0.2118)"
-                d="M52.5 30c0 12.426-10.074 22.5-22.5 22.5S7.5 42.426 7.5 30 17.574 7.5 30 7.5 52.5 17.574 52.5 30"
-              ></path>
-              <path
-                stroke="color(display-p3 0.9686 0.9059 0.9059)"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M30 30V18.75m0 19.589v.099M52.5 30c0 12.426-10.074 22.5-22.5 22.5S7.5 42.426 7.5 30 17.574 7.5 30 7.5 52.5 17.574 52.5 30"
-              ></path>
-            </svg>
-          </div>
-        </div>
+        <SosButton variant="compact" />
         <button
           type="button"
-          className="h-10 w-10 rounded-full border border-[#FF8B00] flex items-center justify-center text-sandybrown"
+          className="h-10 w-10 rounded-full border border-[#FF8B00] flex items-center justify-center text-sandybrown glow-accent"
           onClick={onBellClick}
           aria-label="Notifications"
         >
           <Image className="h-6 w-6" width={24} height={24} alt="" src={bellIconSrc} />
+        </button>
+        <button
+          type="button"
+          className="h-10 w-10 rounded-full border border-[#FF8B00] flex items-center justify-center text-sandybrown"
+          onClick={onSettingsClick}
+          aria-label="Feedback settings"
+        >
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden="true">
+            <path
+              d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm8.5 4a1 1 0 0 0 .01-.2 1 1 0 0 0-.01-.2l2.02-1.58a.6.6 0 0 0 .14-.78l-1.92-3.32a.6.6 0 0 0-.74-.27l-2.38.96a7.2 7.2 0 0 0-1.7-.98l-.36-2.53A.6.6 0 0 0 13.5 2h-3a.6.6 0 0 0-.59.5l-.36 2.53a7.2 7.2 0 0 0-1.7.98l-2.38-.96a.6.6 0 0 0-.74.27L1.81 8.3a.6.6 0 0 0 .14.78l2.02 1.58a1 1 0 0 0-.01.2c0 .07 0 .14.01.2L1.95 12.64a.6.6 0 0 0-.14.78l1.92 3.32c.15.26.46.36.74.27l2.38-.96c.53.4 1.1.72 1.7.98l.36 2.53c.05.29.3.5.59.5h3c.29 0 .54-.21.59-.5l.36-2.53c.6-.26 1.17-.58 1.7-.98l2.38.96c.28.09.59-.01.74-.27l1.92-3.32a.6.6 0 0 0-.14-.78L20.5 12Z"
+              stroke="currentColor"
+              strokeWidth="1.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </button>
       </div>
     </div>

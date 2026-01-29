@@ -84,7 +84,7 @@
 
 @layer utilities {
   .care-shell {
-    @apply mx-auto w-full max-w-2xl sm:max-w-lg md:max-w-4xl lg:max-w-7xl xl:max-w-7xl;
+    @apply mx-auto w-full max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-5xl xl:max-w-5xl;
   }
 
   .care-padding {
@@ -183,4 +183,215 @@ input, textarea, select {
 
 .topbar{
   background-color: linear-gradient(97.8deg, rgba(244, 242, 238, 0.69), rgba(244, 242, 238, 0.69) 25.96%, rgba(237, 235, 233, 0.69) 58.17%, rgba(243, 244, 245, 0.69) 83.17%, rgba(230, 227, 221, 0.69));
+}
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 0.85;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes draw-stroke {
+  0% {
+    stroke-dashoffset: 900;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dash-flow {
+  0% {
+    stroke-dashoffset: 900;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(255, 139, 0, 0);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(255, 139, 0, 0.45);
+  }
+}
+
+@keyframes sweep {
+  0% {
+    background-position: -120% 0;
+  }
+  100% {
+    background-position: 120% 0;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 139, 0, 0.35);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 139, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 139, 0, 0);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+.motion-fade-up {
+  animation: fade-up 0.6s ease both;
+}
+
+.motion-fade-in {
+  animation: fade-in 0.5s ease both;
+}
+
+.motion-float {
+  animation: float-soft 6s ease-in-out infinite;
+}
+
+.motion-pulse {
+  animation: pulse-soft 2.8s ease-in-out infinite;
+}
+
+.motion-shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0.25), rgba(255,255,255,0.6), rgba(255,255,255,0.25));
+  background-size: 200% 100%;
+  animation: shimmer 2.5s linear infinite;
+}
+
+.stroke-draw {
+  stroke-dasharray: 900;
+  stroke-dashoffset: 900;
+  animation: draw-stroke 1.8s ease forwards;
+}
+
+.graph-stroke {
+  stroke-dasharray: 900;
+  stroke-dashoffset: 900;
+  animation: dash-flow 2.4s ease forwards;
+}
+
+.graph-fill {
+  animation: shimmer 3s linear infinite;
+  background-size: 220% 100%;
+}
+
+.sos-track {
+  background: linear-gradient(110deg, rgba(255,139,0,0.18), rgba(255,139,0,0.08));
+  background-size: 200% 100%;
+  animation: sweep 5s linear infinite;
+}
+
+.sos-knob {
+  animation: pulse-ring 2.4s ease-in-out infinite;
+}
+
+.glow-accent {
+  animation: glow-pulse 2.6s ease-in-out infinite;
+}
+
+.graph-breathe {
+  animation: breathe 3.2s ease-in-out infinite;
+}
+
+.card-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(15, 10, 5, 0.12);
+}
+
+.delay-1 {
+  animation-delay: 0.08s;
+}
+
+.delay-2 {
+  animation-delay: 0.16s;
+}
+
+.delay-3 {
+  animation-delay: 0.24s;
+}
+
+.delay-4 {
+  animation-delay: 0.32s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-fade-up,
+  .motion-fade-in,
+  .motion-float,
+  .motion-pulse,
+  .motion-shimmer,
+  .stroke-draw,
+  .graph-stroke,
+  .graph-breathe,
+  .sos-track,
+  .sos-knob,
+  .glow-accent,
+  .card-hover {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
 }

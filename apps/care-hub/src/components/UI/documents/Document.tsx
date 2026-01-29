@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Bottombar } from "@care-hub/components/UI/bottombar/Bottombar";
 import LiquidMorph from "../LiquidMorph";
+import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
 
 type DocumentCategory = "all" | "lab" | "imaging" | "prescription";
 
@@ -72,6 +73,7 @@ function DownloadIcon() {
 }
 
 export function DocumentScreen({ onNavClick, activeItem = "documents" }: DocumentScreenProps) {
+  const { tap } = useFeedback();
   const [activeTab, setActiveTab] = useState<DocumentCategory>("all");
   const [query, setQuery] = useState("");
 
@@ -87,12 +89,12 @@ export function DocumentScreen({ onNavClick, activeItem = "documents" }: Documen
   return (
     <section className="min-h-screen text-left text-black font-haas-grot-disp-trial">
       <div className="care-shell care-padding flex h-screen flex-col bg-[#FAF9F8] pb-4 pt-4">
-        <div className="text-lg font-semibold">Documents</div>
+        <div className="text-lg font-semibold motion-fade-up">Documents</div>
 
-        <div className="mt-3">
+        <div className="mt-3 motion-fade-up delay-1">
           <div className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-sm text-gray-500 font-ibm-plex-sans">
             <input
-              className="w-full bg-transparent text-sm text-gray-700 placeholder:text-gray-500 focus:outline-none"
+              className="w-full bg-transparent text-sm text-gray-700 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-200"
               placeholder="Search documents....."
               value={query}
               onChange={(event) => setQuery(event.target.value)}
@@ -109,7 +111,7 @@ export function DocumentScreen({ onNavClick, activeItem = "documents" }: Documen
           </div>
         </div>
 
-        <div className="mt-3 rounded-full bg-white p-1 shadow-sm ">
+        <div className="mt-3 rounded-full bg-white p-1 shadow-sm motion-fade-up delay-2">
           <div className="grid grid-cols-4 text-center text-xs text-gray-400 font-ibm-plex-sans">
             {tabs.map((tab) => (
               <button
@@ -118,7 +120,10 @@ export function DocumentScreen({ onNavClick, activeItem = "documents" }: Documen
                 className={`rounded-full py-2 ${
                   activeTab === tab.id ? "bg-gray-200 text-gray-400 font-semibold" : "text-gray-500"
                 }`}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => {
+                  tap();
+                  setActiveTab(tab.id);
+                }}
               >
                 {tab.label}
               </button>
@@ -126,15 +131,15 @@ export function DocumentScreen({ onNavClick, activeItem = "documents" }: Documen
           </div>
         </div>
 
-        <div className="mt-3 flex-1 overflow-hidden bg-white rounded-md p-2 shadow-sm">
+        <div className="mt-3 flex-1 overflow-hidden bg-white rounded-md p-2 shadow-sm motion-fade-up delay-3">
           <div className="flex h-full flex-col overflow-y-auto">
             {filteredDocuments.map((doc) => (
-              <div key={doc.id} className="flex items-center gap-3 border-b border-gray-100 px-2 py-3 last:border-b-0">
+              <div key={doc.id} className="flex items-center gap-3 border-b border-gray-100 px-2 py-3 last:border-b-0 motion-fade-up card-hover">
                 <DocumentIcon />
                 <div className="flex-1">
                   <div className="text-sm font-semibold text-gray-700">{doc.title}</div>
                   <div className="text-xs text-gray-500 font-ibm-plex-sans">
-                    {doc.size} • {doc.date}
+                    {doc.size} - {doc.date}
                   </div>
                 </div>
                 <DownloadIcon />

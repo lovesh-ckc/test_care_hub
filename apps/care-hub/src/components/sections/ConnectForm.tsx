@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import type { ConnectFormSection } from "@care-hub/lib/types";
+import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
 
 type ConnectFormProps = {
   section: ConnectFormSection;
@@ -11,6 +12,7 @@ type ConnectFormProps = {
 };
 
 export function ConnectForm({ section, onBack, onNext }: ConnectFormProps) {
+  const { tap, confirm, error } = useFeedback();
   const {
     title,
     description,
@@ -32,7 +34,10 @@ export function ConnectForm({ section, onBack, onNext }: ConnectFormProps) {
           type="button"
           className="flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--muted-ink)]/30"
           aria-label="Go back"
-          onClick={onBack}
+          onClick={() => {
+            tap();
+            onBack?.();
+          }}
         >
           <Image src="/Leftarrow.svg" alt="Go back" width={24} height={24} />
         </button>
@@ -56,7 +61,7 @@ export function ConnectForm({ section, onBack, onNext }: ConnectFormProps) {
           {description}
         </p>
         <input
-          className="h-11 w-full rounded-full border border-[color:var(--muted-ink)]/30 px-4 text-sm text-[color:var(--ink)] outline-none placeholder:text-zinc-400"
+          className="h-11 w-full rounded-full border border-[color:var(--muted-ink)]/30 px-4 text-sm text-[color:var(--ink)] outline-none placeholder:text-zinc-400 focus:ring-2 focus:ring-orange-200"
           placeholder={abhaPlaceholder}
           value={abhaValue}
           onChange={(event) => setAbhaValue(event.target.value)}
@@ -72,7 +77,7 @@ export function ConnectForm({ section, onBack, onNext }: ConnectFormProps) {
           </span>
           <div className="mx-2 h-5 w-px bg-zinc-200" />
           <input
-            className="h-full w-full bg-transparent text-sm text-[color:var(--ink)] outline-none placeholder:text-zinc-400"
+            className="h-full w-full bg-transparent text-sm text-[color:var(--ink)] outline-none placeholder:text-zinc-400 focus:ring-2 focus:ring-orange-200"
             placeholder={mobilePlaceholder}
             value={mobileValue}
             onChange={(event) => setMobileValue(event.target.value)}
@@ -84,7 +89,10 @@ export function ConnectForm({ section, onBack, onNext }: ConnectFormProps) {
           type="button"
           onClick={() => {
             if (isValid) {
+              confirm();
               onNext?.();
+            } else {
+              error();
             }
           }}
         >

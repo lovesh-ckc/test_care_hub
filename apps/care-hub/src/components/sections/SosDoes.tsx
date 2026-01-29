@@ -2,6 +2,8 @@
 
 import type { SosDoesSection } from "@care-hub/lib/types";
 import Image from "next/image";
+import { SosButton } from "@care-hub/components/sections/SosButton";
+import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
 
 type SosDoesProps = {
   section: SosDoesSection;
@@ -10,7 +12,8 @@ type SosDoesProps = {
 };
 
 export function SosDoes({ section, onNext, onBack }: SosDoesProps) {
-  const { title, subtitle, buttonLabel } = section.props;
+  const { title, subtitle } = section.props;
+  const { tap } = useFeedback();
 
   return (
     <section className="flex h-screen flex-col items-center justify-center gap-6 px-5 py-10 text-center sm:gap-8 sm:px-6 sm:py-12">
@@ -19,7 +22,10 @@ export function SosDoes({ section, onNext, onBack }: SosDoesProps) {
           type="button"
           className="flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--muted-ink)]/30"
           aria-label="Go back"
-          onClick={onBack}
+          onClick={() => {
+            tap();
+            onBack?.();
+          }}
         >
           <Image src="/Leftarrow.svg" alt="Go back" width={24} height={24} />
         </button>
@@ -35,13 +41,14 @@ export function SosDoes({ section, onNext, onBack }: SosDoesProps) {
           {subtitle}
         </p>
       </div>
-      <button
-        className="flex w-full max-w-sm items-center justify-center gap-3 rounded-full bg-[color:var(--brand)] px-6 py-[0.915rem] text-sm font-semibold text-[color:var(--brand-contrast)] sm:max-w-md sm:text-base lg:max-w-lg"
-        type="button"
-        onClick={onNext}
-      >
-        {buttonLabel}
-      </button>
+      <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg">
+        <SosButton
+          variant="full"
+          onTriggered={() => {
+            onNext?.();
+          }}
+        />
+      </div>
     </section>
   );
 }

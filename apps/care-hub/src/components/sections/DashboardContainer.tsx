@@ -17,6 +17,8 @@ import { DevicesGridScreen } from "@care-hub/components/sections/DevicesGridScre
 import { TodoListScreen } from "@care-hub/components/sections/TodoListScreen";
 import type { Dashboard } from "@care-hub/lib/types";
 import { ProfileHeader } from "./ProfileHeader";
+import { FeedbackSettingsSheet } from "@care-hub/components/feedback/FeedbackSettingsSheet";
+import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
 
 type ScreenType =
   | "dashboard"
@@ -43,6 +45,8 @@ type DashboardContainerProps = {
 export function DashboardContainer({ section }: DashboardContainerProps) {
   const [currentScreen, setCurrentScreen] = useState<ScreenType>("dashboard");
   const [activeNavItem, setActiveNavItem] = useState<string>("home");
+  const [showSettings, setShowSettings] = useState(false);
+  const { tap } = useFeedback();
 
   const handleNavClick = (itemId: "home" | "documents" | "list" | "grid") => {
     setActiveNavItem(itemId);
@@ -63,14 +67,18 @@ export function DashboardContainer({ section }: DashboardContainerProps) {
     {["dashboard","temperature","heartRate","spo2","respiratory","bloodPressure"].includes(currentScreen) &&
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
     <div className="care-shell care-padding flex h-full flex-col bg-[#FAF9F8] pb-4 pt-3">
-      <div className="sticky top-3 topbar shadow-2xl rounded-2xl p-2">
+      <div className="sticky top-3 topbar shadow-2xl rounded-2xl p-2 z-100">
     <ProfileHeader
           name="Rashi Agrawal"
-          handle="#rashi.agrawal0789"
+          handle="+91 1234567890"
           avatarSrc="/icons/patient.svg"
           bellIconSrc="/icons/bell-01.svg"
           onBellClick={() => setCurrentScreen("notifications")}
           onProfileClick={() => setCurrentScreen("profile")}
+          onSettingsClick={() => {
+            tap();
+            setShowSettings(true);
+          }}
         />
         </div>
       {currentScreen === "dashboard" && (
@@ -150,6 +158,8 @@ export function DashboardContainer({ section }: DashboardContainerProps) {
       {currentScreen === "preferences" && (
         <PreferencesControlScreen onBack={() => setCurrentScreen("profile")} />
       )}
+
+      <FeedbackSettingsSheet open={showSettings} onClose={() => setShowSettings(false)} />
 
     </>
   );

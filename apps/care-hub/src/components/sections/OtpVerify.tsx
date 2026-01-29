@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useMemo, useRef, useState } from "react";
 import type { OtpVerifySection } from "@care-hub/lib/types";
+import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
 
 type OtpVerifyProps = {
   section: OtpVerifySection;
@@ -11,6 +12,7 @@ type OtpVerifyProps = {
 };
 
 export function OtpVerify({ section, onBack, onNext }: OtpVerifyProps) {
+  const { tap, confirm, error } = useFeedback();
   const {
     description,
     helperText,
@@ -75,7 +77,10 @@ export function OtpVerify({ section, onBack, onNext }: OtpVerifyProps) {
           type="button"
           className="flex h-10 w-10 items-center justify-center rounded-full border border-var(--muted-ink)/30"
           aria-label="Go back"
-          onClick={onBack}
+          onClick={() => {
+            tap();
+            onBack?.();
+          }}
         >
           <Image src="/Leftarrow.svg" alt="Go back" width={24} height={24} />
         </button>
@@ -93,7 +98,7 @@ export function OtpVerify({ section, onBack, onNext }: OtpVerifyProps) {
           {digits.map((digit, index) => (
             <input
               key={`otp-${index}`}
-              className="h-10 w-10 px-2 rounded-2xl border border-(--muted-ink)/30 text-center text-sm text-(--ink) outline-none"
+              className="h-10 w-10 px-2 rounded-2xl border border-(--muted-ink)/30 text-center text-sm text-(--ink) outline-none focus:ring-2 focus:ring-orange-200"
               inputMode="numeric"
               ref={(el) => {
                 inputRefs.current[index] = el;
@@ -110,6 +115,7 @@ export function OtpVerify({ section, onBack, onNext }: OtpVerifyProps) {
           <button
             type="button"
             className="text-xs text-(--muted-ink) cursor-pointer"
+            onClick={tap}
           >
             {resendLabel}
           </button>
@@ -119,7 +125,12 @@ export function OtpVerify({ section, onBack, onNext }: OtpVerifyProps) {
             ${isComplete ? "bg-(--brand)" : "bg-(--brand)/40"}`}
           type="button"
           onClick={() => {
-            if (isComplete && onNext) onNext();
+            if (isComplete && onNext) {
+              confirm();
+              onNext();
+            } else {
+              error();
+            }
           }}
           disabled={!isComplete}
         >

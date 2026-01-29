@@ -58,12 +58,12 @@ export function UpcomingAppointments({ appointments = [defaultAppointment] }: Up
   const appointment = appointments[0] ?? defaultAppointment;
 
   return (
-    <div className="w-full flex flex-col items-start gap-4 [font-family:var(--font-display),'Haas_Grot_Disp_Trial',sans-serif]">
+    <div className="w-full flex flex-col items-start gap-4 [font-family:var(--font-display),'Haas_Grot_Disp_Trial',sans-serif] motion-fade-up delay-2">
       <h2 className="text-[clamp(1.5rem,6vw,2.2rem)] font-semibold tracking-[1px] text-[#1a1a1a]">
         Upcoming appointments
       </h2>
 
-      <div className="w-full rounded-[20px] bg-white p-4 shadow-[4px_3px_11px_rgba(49,23,23,0),159px_74px_70px_rgba(49,23,23,0.01),90px_42px_59px_rgba(49,23,23,0.03),40px_19px_44px_rgba(49,23,23,0.06),10px_5px_24px_rgba(49,23,23,0.07)] flex flex-col items-start gap-6">
+      <div className="w-full rounded-[20px] bg-white p-4 shadow-[4px_3px_11px_rgba(49,23,23,0),159px_74px_70px_rgba(49,23,23,0.01),90px_42px_59px_rgba(49,23,23,0.03),40px_19px_44px_rgba(49,23,23,0.06),10px_5px_24px_rgba(49,23,23,0.07)] flex flex-col items-start gap-6 card-hover">
         <div className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 relative">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex-shrink-0 w-[100px] h-[100px] rounded-full bg-gray-200 overflow-hidden">

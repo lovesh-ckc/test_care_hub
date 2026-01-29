@@ -15,12 +15,17 @@ type LetterDef = {
   dim: number;
 };
 
-const buildLetters = (word: string): LetterDef[] =>
-  word.split("").map((char) => ({
-    char,
-    delay: Math.random() * LETTER_DELAY_RANGE,
-    dim: 0.15 + Math.random() * 0.35,
-  }));
+const buildLetters = (word: string): LetterDef[] => {
+  const chars = word.split("");
+  return chars.map((char, index) => {
+    const ratio = chars.length > 1 ? index / (chars.length - 1) : 0;
+    return {
+      char,
+      delay: ratio * LETTER_DELAY_RANGE,
+      dim: 0.15 + ratio * 0.35,
+    };
+  });
+};
 
 const LEFT_LETTERS = buildLetters("Lemnyscate");
 const RIGHT_LETTERS = buildLetters("Eumetise");
@@ -47,6 +52,48 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const animationIdRef = useRef<number | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+
+  const triggerHaptics = () => {
+    if (typeof navigator !== "undefined" && "vibrate" in navigator) {
+      navigator.vibrate([14, 24, 14]);
+    }
+  };
+
+  const playEnterSound = () => {
+    try {
+      const AudioContextCtor =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+      if (!AudioContextCtor) return;
+
+      if (!audioContextRef.current) {
+        audioContextRef.current = new AudioContextCtor();
+      }
+      const ctx = audioContextRef.current;
+      if (ctx.state === "suspended") {
+        void ctx.resume();
+      }
+      const oscillator = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(220, ctx.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(420, ctx.currentTime + 0.12);
+
+      gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.05, ctx.currentTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.18);
+
+      oscillator.connect(gain);
+      gain.connect(ctx.destination);
+
+      oscillator.start();
+      oscillator.stop(ctx.currentTime + 0.22);
+    } catch {
+      // Ignore audio failures in unsupported environments.
+    }
+  };
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -240,6 +287,11 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
     setAnimationPhase(1);
     setLetterCycleKey((prev) => prev + 1);
 
+    if (withSound) {
+      playEnterSound();
+      triggerHaptics();
+    }
+
     setTimeout(() => {
       setIsExitFade(true);
     }, (EXIT_REPLAY_TOTAL + EXIT_HOLD) * 1000);
@@ -320,7 +372,7 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
                   style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   Enter with sound
-                  <span className="text-[10px]">»</span>
+                  <span className="text-[10px]">{">>"}</span>
                 </button>
               </div>
             </div>
@@ -378,7 +430,7 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
             className="text-[10px] uppercase tracking-[0.2em] text-gray-500 md:text-xs"
             style={{ fontFamily: "'Inter', sans-serif" }}
           >
-            DESIGN AND DEVELOPMENT IN HARMONY—
+            DESIGN AND DEVELOPMENT IN HARMONY -
           </p>
           <p
             className="text-[10px] uppercase tracking-[0.2em] text-gray-500 md:text-xs"

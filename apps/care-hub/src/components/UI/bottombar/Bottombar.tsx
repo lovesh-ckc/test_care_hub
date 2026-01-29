@@ -1,5 +1,7 @@
 "use client";
 
+import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
+
 type BottombarProps = {
   activeItem?: "home" | "documents" | "list" | "grid";
   onItemClick?: (itemId: "home" | "documents" | "list" | "grid") => void;
@@ -88,6 +90,7 @@ const navItems: NavItem[] = [
 ];
 
 export function Bottombar({ activeItem = "home", onItemClick }: BottombarProps) {
+  const { tap } = useFeedback();
   return (
     <nav className="flex w-full items-center justify-between gap-2 rounded-full  px-3 py-2">
       {navItems.map((item) => {
@@ -96,7 +99,10 @@ export function Bottombar({ activeItem = "home", onItemClick }: BottombarProps) 
           <button   
             key={item.id}
             type="button"
-            onClick={() => onItemClick?.(item.id)}
+            onClick={() => {
+              tap();
+              onItemClick?.(item.id);
+            }}
             className={`flex flex-1 items-center justify-center gap-2 rounded-full px-3 py-2 text-sm transition ${
               isActive ? "bg-black text-white" : "text-gray-700"
             }`}

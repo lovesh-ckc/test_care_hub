@@ -60,7 +60,7 @@ function DeviceCard({ device, onClick }: { device: DeviceItem; onClick?: () => v
   return (
     <button
       type="button"
-      className="flex flex-col rounded-xl bg-white p-4 text-left shadow-sm"
+      className="flex flex-col rounded-xl bg-white p-4 text-left shadow-sm motion-fade-up card-hover"
       onClick={onClick}
     >
       <div className="text-sm font-semibold text-gray-700">{device.name}</div>
@@ -92,9 +92,9 @@ function DeviceCard({ device, onClick }: { device: DeviceItem; onClick?: () => v
 function Overlay({ open, onClose, deviceName }: { open: boolean; onClose: () => void; deviceName: string }) {
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/30 px-4 py-6">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/30 px-4 py-6 motion-fade-in">
       <button type="button" className="absolute inset-0" onClick={onClose} aria-label="Close overlay" />
-      <div className="relative w-full max-w-md rounded-2xl bg-white px-6 py-6 text-center shadow-xl">
+      <div className="relative w-full max-w-md rounded-2xl bg-white px-6 py-6 text-center shadow-xl motion-fade-up">
         <div className="flex justify-end">
           <button
             type="button"
@@ -120,8 +120,8 @@ export function DevicesGridScreen({ onNavClick, activeItem = "grid" }: DevicesGr
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
       <div className="care-shell care-padding flex h-screen flex-col bg-[#FAF9F8] pb-4 pt-4">
-        <div className="text-xl font-semibold text-gray-700">Connected devices</div>
-        <div className="mt-1 text-sm text-gray-500 font-ibm-plex-sans">
+        <div className="text-xl font-semibold text-gray-700 motion-fade-up">Connected devices</div>
+        <div className="mt-1 text-sm text-gray-500 font-ibm-plex-sans motion-fade-up delay-1">
           Add and manage devices to keep track of your daily health readings.
         </div>
 

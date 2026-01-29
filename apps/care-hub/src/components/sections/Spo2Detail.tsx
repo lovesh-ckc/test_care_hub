@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ProfileHeader } from "@care-hub/components/sections/ProfileHeader";
-import { on } from "events";
+import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
 
 type Spo2DetailProps = {
   onBack?: () => void;
@@ -17,13 +16,17 @@ const levels = [
 
 
 export function Spo2Detail({ onBack }: Spo2DetailProps) {
+  const { tap } = useFeedback();
   return (
    <>
-        <div className="mt-4 flex items-center gap-2 text-lg font-semibold">
+        <div className="mt-4 flex items-center gap-2 text-lg font-semibold motion-fade-up">
           <button
             type="button"
             className="flex h-8 w-8 items-center justify-center rounded-full border border-sandybrown text-sandybrown"
-            onClick={onBack}
+            onClick={() => {
+              tap();
+              onBack?.();
+            }}
             aria-label="Back"
           >
             <Image className="h-4 w-4" width={16} height={16} alt="" src="/Leftarrow.svg" />
@@ -31,7 +34,7 @@ export function Spo2Detail({ onBack }: Spo2DetailProps) {
           <span>Blood Oxygen (SpO2)</span>
         </div>
 
-        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-1 card-hover">
           <div className="flex items-start justify-between">
             <div>
               <div className="flex items-end gap-2 text-gray-400">
@@ -40,14 +43,15 @@ export function Spo2Detail({ onBack }: Spo2DetailProps) {
               </div>
               <div className="text-sm text-[#518D73] font-ibm-plex-sans">Normal</div>
             </div>
-            <div className="h-10 w-10 rounded-full bg-sky-100 flex items-center justify-center text-sky-500">
+            <div className="h-10 w-10 rounded-full bg-sky-100 flex items-center justify-center text-sky-500 glow-accent motion-pulse">
               <Image className="h-5 w-5" width={20} height={20} alt="" src="/vitals/blood.svg" />
             </div>
           </div>
 
-          <div className="mt-4 rounded-xl bg-[#FAF9F8] p-4">
-            <svg viewBox="0 0 706 58" className="w-full h-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0 9.6L88.25 3.6L176.5 7.2L264.75 0L353 4.8L441.25 2.4L529.5 7.2L617.75 3.6L706 9.6V57.6H0V9.6Z" fill="url(#paint0_linear_1461_22029)"/>
+          <div className="mt-4 rounded-xl bg-[#FAF9F8] p-4 motion-shimmer">
+            <svg viewBox="0 0 706 58" className="w-full h-auto motion-fade-in" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path className="graph-breathe" d="M0 9.6L88.25 3.6L176.5 7.2L264.75 0L353 4.8L441.25 2.4L529.5 7.2L617.75 3.6L706 9.6V57.6H0V9.6Z" fill="url(#paint0_linear_1461_22029)"/>
+              <path className="graph-stroke" d="M0 9.6L88.25 3.6L176.5 7.2L264.75 0L353 4.8L441.25 2.4L529.5 7.2L617.75 3.6L706 9.6" stroke="#FF8B00" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
               <defs>
                 <linearGradient id="paint0_linear_1461_22029" x1="0" y1="0" x2="0" y2="5760" gradientUnits="userSpaceOnUse">
                   <stop stopColor="#FFA500" stopOpacity="0.3"/>
@@ -59,7 +63,7 @@ export function Spo2Detail({ onBack }: Spo2DetailProps) {
           </div>
         </div>
 
-        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-2 card-hover">
           <div className="text-base font-semibold">Understanding SpO2 Levels</div>
           <div className="mt-3 flex flex-col gap-3">
             {levels.map((level) => (
@@ -68,13 +72,13 @@ export function Spo2Detail({ onBack }: Spo2DetailProps) {
                   <div className="text-sm">{level.label}{level.status ? ` (${level.status})` : ""}</div>
                   <div className="text-xs text-gray-500 font-ibm-plex-sans">{level.range}</div>
                 </div>
-                <span className={`h-3 w-3 rounded-full ${level.color}`} />
+                <span className={`h-3 w-3 rounded-full ${level.color} ${level.status ? "motion-pulse" : ""}`} />
               </div>
             ))}
           </div>
         </div>
 
-        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-3 card-hover">
           <div className="text-base font-semibold">Today's Statistics</div>
           <div className="mt-3 grid grid-cols-3 gap-2 text-center text-gray-500 font-ibm-plex-sans">
             <div className="rounded-xl bg-[#FAF9F8] p-3">
@@ -95,7 +99,7 @@ export function Spo2Detail({ onBack }: Spo2DetailProps) {
           </div>
         </div>
 
-        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-4 card-hover">
           <div className="flex items-center justify-between">
             <div className="text-base font-semibold">7-Day Average</div>
             <svg viewBox="0 0 20 20" className="h-4 w-4 text-[#518D73]" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -115,7 +119,7 @@ export function Spo2Detail({ onBack }: Spo2DetailProps) {
           </div>
         </div>
 
-        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-4 card-hover">
           <div className="flex items-center gap-2 text-base font-semibold">
             <svg viewBox="0 0 20 20" className="h-4 w-4 text-sky-500" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M2 12l4-4 3 3 5-6 4 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>

@@ -16,10 +16,12 @@ const vitals: Vital[] = [
 export function Vitals() {
   return (
     <div className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {vitals.map((vital) => (
+      {vitals.map((vital, index) => {
+        const delayClass = ["", "delay-1", "delay-2", "delay-3"][index] ?? "";
+        return (
         <div
           key={vital.label}
-          className={`rounded-[18px] bg-white p-4 shadow-[0_10px_20px_rgba(15,10,5,0.06)] [--accent:${vital.accent}]`}
+          className={`rounded-[18px] bg-white p-4 shadow-[0_10px_20px_rgba(15,10,5,0.06)] [--accent:${vital.accent}] motion-fade-up card-hover ${delayClass}`}
         >
           <div className="flex items-center justify-between">
             <span className="text-sm uppercase tracking-[0.2em] text-[#777]">
@@ -33,7 +35,8 @@ export function Vitals() {
           </div>
           <p className="mt-4 text-2xl font-semibold text-[#1a1a1a]">{vital.value}</p>
         </div>
-      ))}
+      );
+      })}
     </div>
   );
 }

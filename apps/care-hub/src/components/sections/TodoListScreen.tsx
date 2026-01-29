@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import { Bottombar } from "@care-hub/components/UI/bottombar/Bottombar";
 import LiquidMorph from "../UI/LiquidMorph";
+import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
 
 type TodoListScreenProps = {
   onNavClick?: (itemId: "home" | "documents" | "list" | "grid") => void;
@@ -33,9 +34,11 @@ const weekDays = ["M", "T", "W", "T", "F", "S", "S"];
 function Overlay({ open, onClose, children }: { open: boolean; onClose: () => void; children: React.ReactNode }) {
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/30 px-4 py-6">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/30 px-4 py-6 motion-fade-in">
       <button type="button" className="absolute inset-0" onClick={onClose} aria-label="Close overlay" />
-      <div className="relative w-full max-w-md rounded-2xl bg-white shadow-xl">{children}</div>
+      <div className="relative w-full max-w-md rounded-2xl bg-white shadow-xl motion-fade-up">
+        {children}
+      </div>
     </div>
   );
 }
@@ -59,7 +62,7 @@ function TodoCard({ title, time, onClick }: { title: string; time: string; onCli
   return (
     <button
       type="button"
-      className="flex w-full items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-3 text-left"
+      className="flex w-full items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-3 text-left motion-fade-up card-hover"
       onClick={onClick}
     >
       <div>
@@ -87,8 +90,8 @@ function PreviousTasks({ onBack }: { onBack: () => void }) {
         >
           <Image className="h-4 w-4" width={16} height={16} alt="" src="/Leftarrow.svg" />
         </button>
-        <div className="mt-4 text-lg font-semibold">Previous tasks</div>
-        <div className="mt-1 text-sm text-gray-500 font-ibm-plex-sans">Only the last 3 months of Tasks visible</div>
+        <div className="mt-4 text-lg font-semibold motion-fade-up">Previous tasks</div>
+        <div className="mt-1 text-sm text-gray-500 font-ibm-plex-sans motion-fade-up delay-1">Only the last 3 months of Tasks visible</div>
 
         <div className="mt-4 flex flex-col gap-3">
           {[
@@ -96,7 +99,7 @@ function PreviousTasks({ onBack }: { onBack: () => void }) {
             { title: "Vitamins C Updated", time: "02:02 pm" },
             { title: "Blood pressure updated", time: "03:09 pm" },
           ].map((item) => (
-            <div key={item.title} className="flex items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-3">
+            <div key={item.title} className="flex items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-3 motion-fade-up card-hover">
               <div className="flex items-center gap-3">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 text-gray-700">
                   <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" aria-hidden="true">
@@ -126,6 +129,7 @@ function PreviousTasks({ onBack }: { onBack: () => void }) {
 }
 
 export function TodoListScreen({ onNavClick, activeItem = "list" }: TodoListScreenProps) {
+  const { tap, confirm } = useFeedback();
   const [activeOverlay, setActiveOverlay] = useState<DetailSheet>("none");
   const [showPrevious, setShowPrevious] = useState(false);
 
@@ -139,9 +143,9 @@ export function TodoListScreen({ onNavClick, activeItem = "list" }: TodoListScre
   return (
     <div className="min-h-screen text-left text-black bg-amber-400 font-haas-grot-disp-trial">
       <div className="care-shell care-padding min-h-screen flex flex-col bg-[#FAF9F8] pb-4 pt-4">
-        <div className="text-lg font-semibold">To Do Lists</div>
+        <div className="text-lg font-semibold motion-fade-up">To Do Lists</div>
 
-        <div className="mt-6 flex items-center justify-between text-sm text-gray-700">
+        <div className="mt-6 flex items-center justify-between text-sm text-gray-700 motion-fade-up delay-1">
           <span className="font-semibold text-gray-700">2 items to do</span>
           <button type="button" className="text-gray-700" onClick={() => setShowPrevious(true)}>
             Show previous
@@ -150,14 +154,30 @@ export function TodoListScreen({ onNavClick, activeItem = "list" }: TodoListScre
 
         <div className="mt-3 flex flex-col gap-3">
           {todayItems.map((item) => (
-            <TodoCard key={item.id} title={item.title} time={item.time} onClick={() => setActiveOverlay(item.detail)} />
+            <TodoCard
+              key={item.id}
+              title={item.title}
+              time={item.time}
+              onClick={() => {
+                tap();
+                setActiveOverlay(item.detail);
+              }}
+            />
           ))}
         </div>
 
-        <div className="mt-6 text-sm font-semibold text-gray-700">Upcoming</div>
+        <div className="mt-6 text-sm font-semibold text-gray-700 motion-fade-up delay-2">Upcoming</div>
         <div className="mt-3 flex flex-col gap-3">
           {upcomingItems.map((item) => (
-            <TodoCard key={item.id} title={item.title} time={item.time} onClick={() => setActiveOverlay(item.detail)} />
+            <TodoCard
+              key={item.id}
+              title={item.title}
+              time={item.time}
+              onClick={() => {
+                tap();
+                setActiveOverlay(item.detail);
+              }}
+            />
           ))}
         </div>
 
@@ -177,7 +197,11 @@ export function TodoListScreen({ onNavClick, activeItem = "list" }: TodoListScre
           <div className="mt-2 text-sm text-gray-500 font-ibm-plex-sans">
             Please measure and record your blood pressure to keep your care team updated.
           </div>
-          <button type="button" className="mt-6 w-full rounded-full bg-orange-400 px-4 py-3 text-sm font-semibold text-white">
+          <button
+            type="button"
+            className="mt-6 w-full rounded-full bg-orange-400 px-4 py-3 text-sm font-semibold text-white"
+            onClick={confirm}
+          >
             Record now
           </button>
         </div>
@@ -227,7 +251,11 @@ export function TodoListScreen({ onNavClick, activeItem = "list" }: TodoListScre
             rows={3}
             placeholder="Add any notes about this medication...."
           />
-          <button type="button" className="mt-4 w-full rounded-full bg-orange-400 px-4 py-3 text-sm font-semibold text-white">
+          <button
+            type="button"
+            className="mt-4 w-full rounded-full bg-orange-400 px-4 py-3 text-sm font-semibold text-white"
+            onClick={confirm}
+          >
             Mark as Taken
           </button>
         </div>
@@ -270,7 +298,11 @@ export function TodoListScreen({ onNavClick, activeItem = "list" }: TodoListScre
               </button>
             ))}
           </div>
-          <button type="button" className="mt-4 w-full rounded-full bg-orange-400 px-4 py-3 text-sm font-semibold text-white">
+          <button
+            type="button"
+            className="mt-4 w-full rounded-full bg-orange-400 px-4 py-3 text-sm font-semibold text-white"
+            onClick={confirm}
+          >
             Complete Check In
           </button>
         </div>
@@ -314,7 +346,11 @@ export function TodoListScreen({ onNavClick, activeItem = "list" }: TodoListScre
             PDF Report
             <div className="text-xs text-gray-500 font-ibm-plex-sans">Readable document with charts</div>
           </div>
-          <button type="button" className="mt-4 w-full rounded-full bg-orange-400 px-4 py-3 text-sm font-semibold text-white">
+          <button
+            type="button"
+            className="mt-4 w-full rounded-full bg-orange-400 px-4 py-3 text-sm font-semibold text-white"
+            onClick={confirm}
+          >
             Export Data
           </button>
         </div>

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
 
 type NotificationCategory = "all" | "schedules" | "alerts" | "messages";
 
@@ -293,6 +294,7 @@ function NotificationIcon({ category }: { category: NotificationItem["category"]
 }
 
 export function NotificationScreen({ onBack }: NotificationScreenProps) {
+  const { tap } = useFeedback();
   const [activeTab, setActiveTab] = useState<NotificationCategory>("all");
 
   const filteredItems = useMemo(() => {
@@ -307,7 +309,10 @@ export function NotificationScreen({ onBack }: NotificationScreenProps) {
           <button
             type="button"
             className="flex h-8 w-8 items-center justify-center rounded-full border border-sandybrown text-sandybrown"
-            onClick={onBack}
+            onClick={() => {
+              tap();
+              onBack?.();
+            }}
             aria-label="Back"
           >
             <Image className="h-4 w-4" width={16} height={16} alt="" src="/Leftarrow.svg" />
@@ -318,7 +323,7 @@ export function NotificationScreen({ onBack }: NotificationScreenProps) {
           </button>
         </div>
 
-        <div className="mt-4 rounded-lg bg-white p-1 shadow-sm">
+        <div className="mt-4 rounded-lg bg-white p-1 shadow-sm motion-fade-up">
           <div className="grid grid-cols-4 text-xs text-center text-gray-500 font-ibm-plex-sans">
             {categoryTabs.map((tab) => (
               <button
@@ -327,7 +332,10 @@ export function NotificationScreen({ onBack }: NotificationScreenProps) {
                 className={`rounded-md py-2 ${
                   activeTab === tab.id ? "bg-gray-200 text-gray-400 font-semibold" : "text-gray-500"
                 }`}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => {
+                  tap();
+                  setActiveTab(tab.id);
+                }}
               >
                 {tab.label}
               </button>
@@ -335,12 +343,14 @@ export function NotificationScreen({ onBack }: NotificationScreenProps) {
           </div>
         </div>
 
-        <div className="mt-4 flex-1 overflow-hidden rounded-2xl bg-white p-2 shadow-md">
+        <div className="mt-4 flex-1 overflow-hidden rounded-2xl bg-white p-2 shadow-md motion-fade-up delay-1">
           <div className="flex h-full flex-col overflow-y-auto">
-            {filteredItems.map((item, index) => (
+            {filteredItems.map((item, index) => {
+              const delayClass = ["", "delay-1", "delay-2", "delay-3", "delay-4"][index % 5] ?? "";
+              return (
               <div
                 key={item.id}
-                className={`flex items-center gap-3 px-2 py-3 ${
+                className={`flex items-center gap-3 px-2 py-3 motion-fade-up card-hover ${delayClass} ${
                   index < filteredItems.length - 1 ? "border-b border-gray-100" : ""
                 }`}
               >
@@ -351,7 +361,8 @@ export function NotificationScreen({ onBack }: NotificationScreenProps) {
                 </div>
                 {item.unread ? <span className="h-2 w-2 rounded-full bg-orange-400" /> : null}
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

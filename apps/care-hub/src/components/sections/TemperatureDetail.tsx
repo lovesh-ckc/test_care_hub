@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ProfileHeader } from "@care-hub/components/sections/ProfileHeader";
+import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
 
 type TemperatureDetailProps = {
   onBack?: () => void;
@@ -74,14 +74,18 @@ const factors = [
 ];
 
 export function TemperatureDetail({ onBack}: TemperatureDetailProps) {
+  const { tap } = useFeedback();
   return (
 <>
 
-        <div className="mt-4 flex items-center gap-2 text-lg font-semibold">
+        <div className="mt-4 flex items-center gap-2 text-lg font-semibold motion-fade-up">
           <button
             type="button"
             className="flex h-8 w-8 items-center justify-center rounded-full border border-sandybrown text-sandybrown"
-            onClick={onBack}
+            onClick={() => {
+              tap();
+              onBack?.();
+            }}
             aria-label="Back"
           >
             <Image className="h-4 w-4" width={16} height={16} alt="" src="/Leftarrow.svg" />
@@ -89,7 +93,7 @@ export function TemperatureDetail({ onBack}: TemperatureDetailProps) {
           <span>Temperature</span>
         </div>
 
-        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-1 card-hover">
           <div className="flex items-start justify-between">
             <div>
               <div className="flex items-end gap-2 text-gray-400">
@@ -99,20 +103,26 @@ export function TemperatureDetail({ onBack}: TemperatureDetailProps) {
               <div className="text-sm text-[#518D73] ">Normal</div>
               <div className="mt-1 text-xs text-gray-500 font-ibm-plex-sans">98.1°F</div>
             </div>
-            <Image className="h-8 w-8" width={32} height={32} alt="" src="/vitals/Temperature.svg" />
+            <Image className="h-8 w-8 motion-pulse" width={32} height={32} alt="" src="/vitals/Temperature.svg" />
           </div>
 
-          <div className="mt-4">
-            <div className="relative h-3 w-full overflow-hidden rounded-full">
-              <div className="flex h-full w-full">
-                <div className="h-full w-1/5 bg-sky-400" />
-                <div className="h-full w-1/5 bg-emerald-500" />
-                <div className="h-full w-1/5 bg-yellow-400" />
-                <div className="h-full w-1/5 bg-orange-400" />
-                <div className="h-full w-1/5 bg-red-500" />
-              </div>
-              <div className="absolute left-2/5 top-1/2 h-4 w-10 -translate-y-1/2 rounded-full border-2 border-gray-400 bg-white shadow-sm" />
-            </div>
+          <div className="mt-4 rounded-2xl bg-[#FAF9F8] p-4">
+            <svg viewBox="0 0 320 110" className="w-full" fill="none" aria-hidden="true">
+              <path
+                d="M20 70 C60 20, 120 20, 160 70 C200 120, 260 120, 300 70"
+                stroke="#E5E7EB"
+                strokeWidth="10"
+                strokeLinecap="round"
+              />
+              <path
+                className="graph-stroke"
+                d="M20 70 C60 20, 120 20, 160 70 C200 120, 260 120, 300 70"
+                stroke="#F97316"
+                strokeWidth="10"
+                strokeLinecap="round"
+              />
+              <circle cx="160" cy="70" r="12" fill="#fff" stroke="#F97316" strokeWidth="3" className="motion-pulse" />
+            </svg>
             <div className="mt-2 flex items-center justify-between text-xs text-gray-500 font-ibm-plex-sans">
               <span>Low</span>
               <span>Normal</span>
@@ -121,7 +131,7 @@ export function TemperatureDetail({ onBack}: TemperatureDetailProps) {
           </div>
         </div>
 
-        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-2 card-hover">
           <div className="text-base font-semibold">Temperature Ranges</div>
           <div className="mt-3 flex flex-col gap-3">
             {ranges.map((range) => (
@@ -137,13 +147,13 @@ export function TemperatureDetail({ onBack}: TemperatureDetailProps) {
                   <div className="text-xs text-gray-500 font-ibm-plex-sans">{range.range}</div>
                   <div className="text-xs text-gray-500 font-ibm-plex-sans">{range.note}</div>
                 </div>
-                <span className={`h-3 w-3 rounded-full ${range.color}`} />
+                <span className={`h-3 w-3 rounded-full ${range.color} ${range.status ? "motion-pulse" : ""}`} />
               </div>
             ))}
           </div>
         </div>
 
-        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-3 card-hover">
           <div className="text-base font-semibold">Recent Readings</div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
             {readings.map((reading) => (
@@ -161,7 +171,7 @@ export function TemperatureDetail({ onBack}: TemperatureDetailProps) {
           </div>
         </div>
 
-        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-4 card-hover">
           <div className="flex items-center justify-between">
             <div className="text-base font-semibold">7-Day Trend</div>
             <svg viewBox="0 0 20 20" className="h-4 w-4 text-[#518D73]" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -181,7 +191,7 @@ export function TemperatureDetail({ onBack}: TemperatureDetailProps) {
           </div>
         </div>
 
-        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-4 card-hover">
           <div className="flex items-center gap-2 text-base font-semibold">
             <div className="h-5 w-5 rounded-full bg-sky-100 text-sky-500 flex items-center justify-center text-xs">i</div>
             Factors That Affect Body Temperature

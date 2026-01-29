@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import type { OnboardingSliderSection } from "@care-hub/lib/types";
 import Image from "next/image";
+import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
 
 type OnboardingSliderProps = {
   section: OnboardingSliderSection;
@@ -20,6 +21,7 @@ export function OnboardingSlider({
   section,
   onComplete,
 }: OnboardingSliderProps) {
+  const { tap, confirm } = useFeedback();
   const {
     slides,
     textAlign = "left",
@@ -89,7 +91,10 @@ export function OnboardingSlider({
             className={`h-1 rounded-full transition-all duration-200
               ${index === activeIndex ? "w-6 opacity-100 bg-(--brand)" : "w-2 opacity-50 bg-(--brand)"}`}
             type="button"
-            onClick={() => setActiveIndex(index)}
+            onClick={() => {
+              tap();
+              setActiveIndex(index);
+            }}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
@@ -100,12 +105,14 @@ export function OnboardingSlider({
           type="button"
           onClick={() => {
             if (activeIndex < slides.length - 1) {
+              tap();
               setActiveIndex((current) =>
                 Math.min(current + 1, slides.length - 1)
               );
               return;
             }
 
+            confirm();
             onComplete?.();
           }}
         >

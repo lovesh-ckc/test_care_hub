@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
 
 type ClinicalCareOverviewProps = {
   onBack?: () => void;
@@ -20,28 +21,32 @@ const testResults = [
 ];
 
 export function ClinicalCareOverview({ onBack }: ClinicalCareOverviewProps) {
+  const { tap } = useFeedback();
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial ">
       <div className="care-shell min-h-screen care-padding bg-[#FAF9F8] pb-6 pt-3 bg-[#FAF9F8]">
         <button
           type="button"
           className="flex h-8 w-8 items-center justify-center rounded-full border border-sandybrown text-sandybrown"
-          onClick={onBack}
+          onClick={() => {
+            tap();
+            onBack?.();
+          }}
           aria-label="Back"
         >
           <Image className="h-4 w-4" width={16} height={16} alt="" src="/Leftarrow.svg" />
         </button>
 
         <div className="mt-4">
-          <div className="text-xl font-semibold">Clinical Care Overview</div>
-          <div className="text-sm text-gray-500 font-ibm-plex-sans">St. Jude Medical Center</div>
+          <div className="text-xl font-semibold motion-fade-up">Clinical Care Overview</div>
+          <div className="text-sm text-gray-500 font-ibm-plex-sans motion-fade-up delay-1">St. Jude Medical Center</div>
         </div>
 
         <div className="mt-6">
-          <div className="text-sm font-semibold text-gray-700">Vital Signs</div>
+          <div className="text-sm font-semibold text-gray-700 motion-fade-up delay-2">Vital Signs</div>
           <div className="mt-3 grid grid-cols-2 gap-3 text-gray-500 font-ibm-plex-sans">
             {vitalCards.map((card) => (
-              <div key={card.label} className="rounded-2xl bg-white p-4 shadow-sm">
+              <div key={card.label} className="rounded-2xl bg-white p-4 shadow-sm motion-fade-up card-hover">
                 <div className="flex items-center justify-between">
                   <div className="text-sm text-gray-700">{card.label}</div>
                   <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs text-emerald-600">Normal</span>
@@ -56,10 +61,10 @@ export function ClinicalCareOverview({ onBack }: ClinicalCareOverviewProps) {
         </div>
 
         <div className="mt-6">
-          <div className="text-sm font-semibold text-gray-700">Test Results</div>
+          <div className="text-sm font-semibold text-gray-700 motion-fade-up delay-3">Test Results</div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
             {testResults.map((item) => (
-              <div key={item.label} className={`rounded-2xl bg-white p-4 shadow-sm border-l-4 ${item.accent}`}>
+              <div key={item.label} className={`rounded-2xl bg-white p-4 shadow-sm border-l-4 ${item.accent} motion-fade-up card-hover`}>
                 <div className="flex items-center justify-between">
                   <div className="text-sm font-semibold text-gray-700">{item.label}</div>
                   <span className={`rounded-full px-3 py-1 text-xs ${item.pill}`}>{item.status}</span>
@@ -71,7 +76,7 @@ export function ClinicalCareOverview({ onBack }: ClinicalCareOverviewProps) {
         </div>
 
         <div className="mt-6">
-          <div className="text-sm font-semibold text-gray-700">Quick Actions</div>
+          <div className="text-sm font-semibold text-gray-700 motion-fade-up delay-4">Quick Actions</div>
           <div className="mt-3 grid grid-cols-2 gap-3">
             <button type="button" className="rounded-xl bg-orange-400 p-2 text-sm font-semibold text-white">
               Schedule Appointment

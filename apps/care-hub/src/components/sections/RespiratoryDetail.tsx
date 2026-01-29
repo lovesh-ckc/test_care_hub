@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ProfileHeader } from "@care-hub/components/sections/ProfileHeader";
+import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
 
 type RespiratoryDetailProps = {
   onBack?: () => void;
@@ -15,14 +15,18 @@ const ranges = [
 ];
 
 export function RespiratoryDetail({ onBack }: RespiratoryDetailProps) {
+  const { tap } = useFeedback();
   return (
     <>
 
-        <div className="mt-4 flex items-center gap-2 text-lg font-semibold">
+        <div className="mt-4 flex items-center gap-2 text-lg font-semibold motion-fade-up">
           <button
             type="button"
             className="flex h-8 w-8 items-center justify-center rounded-full border border-sandybrown text-sandybrown"
-            onClick={onBack}
+            onClick={() => {
+              tap();
+              onBack?.();
+            }}
             aria-label="Back"
           >
             <Image className="h-4 w-4" width={16} height={16} alt="" src="/Leftarrow.svg" />
@@ -30,7 +34,7 @@ export function RespiratoryDetail({ onBack }: RespiratoryDetailProps) {
           <span>Respiratory Rate</span>
         </div>
 
-        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-1 card-hover">
           <div className="flex items-start justify-between">
             <div>
               <div className="flex items-end gap-2 text-gray-400">
@@ -39,34 +43,25 @@ export function RespiratoryDetail({ onBack }: RespiratoryDetailProps) {
               </div>
               <div className="text-sm text-[#518D73] font-ibm-plex-sans">Normal</div>
             </div>
-            <div className="h-10 w-10 rounded-full bg-sky-100 flex items-center justify-center text-sky-500">
+            <div className="h-10 w-10 rounded-full bg-sky-100 flex items-center justify-center text-sky-500 glow-accent motion-pulse">
               <Image className="h-5 w-5" width={20} height={20} alt="" src="/vitals/Lungs.svg" />
             </div>
           </div>
 
           <div className="mt-4 rounded-xl bg-[#FAF9F8] p-4">
             <div className="mx-auto flex items-center justify-center">
-              <svg width="161" height="161" viewBox="0 0 161 161" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g opacity="0.665435">
-                  <mask id="path-1-inside-1_1461_22219" fill="white">
-                    <path d="M0 80.2368C0 35.9232 35.9233 0 80.2368 0C124.55 0 160.474 35.9232 160.474 80.2368C160.474 124.55 124.55 160.474 80.2368 160.474C35.9233 160.474 0 124.55 0 80.2368Z"/>
-                  </mask>
-                  <path d="M0 80.2368C0 35.9232 35.9233 0 80.2368 0C124.55 0 160.474 35.9232 160.474 80.2368C160.474 124.55 124.55 160.474 80.2368 160.474C35.9233 160.474 0 124.55 0 80.2368Z" fill="url(#paint0_linear_1461_22219)"/>
-                  <path d="M80.2368 160.474V156.474C38.1324 156.474 4 122.341 4 80.2368H0H-4C-4 126.76 33.7141 164.474 80.2368 164.474V160.474ZM160.474 80.2368H156.474C156.474 122.341 122.341 156.474 80.2368 156.474V160.474V164.474C126.76 164.474 164.474 126.76 164.474 80.2368H160.474ZM80.2368 0V4C122.341 4 156.474 38.1324 156.474 80.2368H160.474H164.474C164.474 33.7141 126.76 -4 80.2368 -4V0ZM80.2368 0V-4C33.7141 -4 -4 33.7141 -4 80.2368H0H4C4 38.1324 38.1324 4 80.2368 4V0Z" fill="#00BCD4" mask="url(#path-1-inside-1_1461_22219)"/>
-                </g>
-                <defs>
-                  <linearGradient id="paint0_linear_1461_22219" x1="0" y1="0" x2="160.474" y2="160.474" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#00BCD4" stopOpacity="0.3"/>
-                    <stop offset="1" stopColor="#2196F3" stopOpacity="0.3"/>
-                  </linearGradient>
-                </defs>
+              <svg viewBox="0 0 160 160" className="h-40 w-40" fill="none" aria-hidden="true">
+                <circle cx="80" cy="80" r="62" stroke="#E5E7EB" strokeWidth="10" />
+                <circle cx="80" cy="80" r="62" stroke="#38BDF8" strokeWidth="10" className="graph-stroke" />
+                <circle cx="80" cy="80" r="38" stroke="#93C5FD" strokeWidth="8" className="graph-breathe" />
+                <circle cx="80" cy="80" r="12" fill="#38BDF8" className="motion-pulse" />
               </svg>
             </div>
             <div className="mt-2 text-xs text-gray-500 font-ibm-plex-sans">Breathing pattern visualization</div>
           </div>
         </div>
 
-        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-2 card-hover">
           <div className="text-base font-semibold">Normal Ranges</div>
           <div className="mt-3 flex flex-col gap-3">
             {ranges.map((range) => (
@@ -78,13 +73,13 @@ export function RespiratoryDetail({ onBack }: RespiratoryDetailProps) {
                   <div className="text-xs text-gray-500 font-ibm-plex-sans">{range.range}</div>
                   <div className="text-xs text-gray-500 font-ibm-plex-sans">{range.status}</div>
                 </div>
-                <span className={`h-3 w-3 rounded-full ${range.color}`} />
+                <span className={`h-3 w-3 rounded-full ${range.color} ${range.current ? "motion-pulse" : ""}`} />
               </div>
             ))}
           </div>
         </div>
 
-        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-3 card-hover">
           <div className="flex items-center justify-between">
             <div className="text-base font-semibold">Total Statistics</div>
             <svg viewBox="0 0 20 20" className="h-4 w-4 text-gray-500" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -110,7 +105,7 @@ export function RespiratoryDetail({ onBack }: RespiratoryDetailProps) {
           </div>
         </div>
 
-        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-4 card-hover">
           <div className="flex items-center justify-between">
             <div className="text-base font-semibold">7-Day Average</div>
             <svg viewBox="0 0 20 20" className="h-4 w-4 text-[#518D73]" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -130,7 +125,7 @@ export function RespiratoryDetail({ onBack }: RespiratoryDetailProps) {
           </div>
         </div>
 
-        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-4 card-hover">
           <div className="text-base font-semibold">Recent Readings</div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
             {[
@@ -153,7 +148,7 @@ export function RespiratoryDetail({ onBack }: RespiratoryDetailProps) {
           </div>
         </div>
 
-        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-4 card-hover">
           <div className="text-base font-semibold">Breathing Exercises</div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
             {[
@@ -173,7 +168,7 @@ export function RespiratoryDetail({ onBack }: RespiratoryDetailProps) {
           </div>
         </div>
 
-        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-4 card-hover">
           <div className="text-base font-semibold">Health Insights</div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
             <div className="rounded-xl bg-[#FAF9F8] p-3">

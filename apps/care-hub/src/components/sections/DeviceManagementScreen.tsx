@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
 
 type DeviceManagementScreenProps = {
   onBack?: () => void;
@@ -31,28 +32,32 @@ const settings = [
 ];
 
 export function DeviceManagementScreen({ onBack }: DeviceManagementScreenProps) {
+  const { tap } = useFeedback();
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
       <div className="care-shell min-h-screen bg-[#FAF9F8] care-padding bg-[#FAF9F8] pb-6 pt-3">
         <button
           type="button"
           className="flex h-8 w-8 items-center justify-center rounded-full border border-sandybrown text-sandybrown"
-          onClick={onBack}
+          onClick={() => {
+            tap();
+            onBack?.();
+          }}
           aria-label="Back"
         >
           <Image className="h-4 w-4" width={16} height={16} alt="" src="/Leftarrow.svg" />
         </button>
 
         <div className="mt-4">
-          <div className="text-xl font-semibold">Device Management</div>
-          <div className="text-sm text-gray-500 font-ibm-plex-sans">Connected Devices & Settings</div>
+          <div className="text-xl font-semibold motion-fade-up">Device Management</div>
+          <div className="text-sm text-gray-500 font-ibm-plex-sans motion-fade-up delay-1">Connected Devices & Settings</div>
         </div>
 
         <div className="mt-6">
-          <div className="text-sm font-semibold text-gray-700">Connected Devices</div>
+          <div className="text-sm font-semibold text-gray-700 motion-fade-up delay-2">Connected Devices</div>
           <div className="mt-3 flex flex-col gap-4">
             {devices.map((device) => (
-              <div key={device.name} className="rounded-2xl bg-white p-4 shadow-sm">
+              <div key={device.name} className="rounded-2xl bg-white p-4 shadow-sm motion-fade-up card-hover">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 text-orange-500">
@@ -101,8 +106,8 @@ export function DeviceManagementScreen({ onBack }: DeviceManagementScreenProps) 
         </div>
 
         <div className="mt-6">
-          <div className="text-sm font-semibold text-gray-700">Device Settings</div>
-          <div className="mt-3 rounded-2xl bg-white p-4 shadow-sm">
+          <div className="text-sm font-semibold text-gray-700 motion-fade-up delay-3">Device Settings</div>
+          <div className="mt-3 rounded-2xl bg-white p-4 shadow-sm motion-fade-up delay-4 card-hover">
             <div className="flex flex-col gap-4 text-gray-500 font-ibm-plex-sans">
               {settings.map((setting, index) => (
                 <div key={setting.label} className={`${index < settings.length - 1 ? "border-b border-gray-100 pb-4" : ""}`}>
@@ -119,7 +124,7 @@ export function DeviceManagementScreen({ onBack }: DeviceManagementScreenProps) 
               ))}
             </div>
           </div>
-          <button type="button" className="mt-4 w-full rounded-2xl bg-orange-400 px-4 py-3 text-sm font-semibold text-white">
+          <button type="button" className="mt-4 w-full rounded-2xl bg-orange-400 px-4 py-3 text-sm font-semibold text-white motion-fade-up delay-4">
             Add New Device
           </button>
         </div>
