@@ -1,4 +1,4 @@
-export type HapticPattern = number | number[];
+export type HapticPattern = number | ReadonlyArray<number>;
 
 export const hapticPatterns = {
   lightTap: 12,
