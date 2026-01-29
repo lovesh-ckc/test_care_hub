@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { Bottombar } from "@care-hub/components/UI/bottombar/Bottombar";
+import LiquidMorph from "../UI/LiquidMorph";
 
 type TodoListScreenProps = {
   onNavClick?: (itemId: "home" | "documents" | "list" | "grid") => void;
@@ -136,8 +137,8 @@ export function TodoListScreen({ onNavClick, activeItem = "list" }: TodoListScre
   }
 
   return (
-    <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="care-shell care-padding flex h-screen flex-col bg-[#FAF9F8] pb-4 pt-4">
+    <div className="min-h-screen text-left text-black bg-amber-400 font-haas-grot-disp-trial">
+      <div className="care-shell care-padding min-h-screen flex flex-col bg-[#FAF9F8] pb-4 pt-4">
         <div className="text-lg font-semibold">To Do Lists</div>
 
         <div className="mt-6 flex items-center justify-between text-sm text-gray-700">
@@ -160,11 +161,13 @@ export function TodoListScreen({ onNavClick, activeItem = "list" }: TodoListScre
           ))}
         </div>
 
-        <div className="mt-auto pt-6">
-          <Bottombar activeItem={activeItem} onItemClick={onNavClick} />
-        </div>
+        
       </div>
-
+          <div className="pt-3 sticky bottom-4">
+                  <LiquidMorph>
+                  <Bottombar activeItem={activeItem} onItemClick={onNavClick} />
+                  </LiquidMorph>
+          </div>
       <Overlay open={activeOverlay === "bp"} onClose={() => setActiveOverlay("none")}>
         <div className="p-6 text-center">
           <div className="flex justify-end">

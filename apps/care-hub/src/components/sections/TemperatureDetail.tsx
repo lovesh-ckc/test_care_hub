@@ -93,10 +93,10 @@ export function TemperatureDetail({ onBack}: TemperatureDetailProps) {
           <div className="flex items-start justify-between">
             <div>
               <div className="flex items-end gap-2 text-gray-400">
-                <span className="text-3xl font-semibold text-gray-400">34.5</span>
+                <span className="text-3xl font-semibold text-black">34.5</span>
                 <span className="text-sm text-gray-500 font-ibm-plex-sans">°C</span>
               </div>
-              <div className="text-sm text-teal font-ibm-plex-sans">Normal</div>
+              <div className="text-sm text-[#518D73] ">Normal</div>
               <div className="mt-1 text-xs text-gray-500 font-ibm-plex-sans">98.1°F</div>
             </div>
             <Image className="h-8 w-8" width={32} height={32} alt="" src="/vitals/Temperature.svg" />
@@ -154,7 +154,7 @@ export function TemperatureDetail({ onBack}: TemperatureDetailProps) {
                 </div>
                 <div className="text-right">
                   <div className="text-sm font-semibold text-gray-400">{reading.value}</div>
-                  <div className="text-xs text-teal">{reading.status}</div>
+                  <div className="text-xs text-[#518D73]">{reading.status}</div>
                 </div>
               </div>
             ))}
@@ -164,7 +164,7 @@ export function TemperatureDetail({ onBack}: TemperatureDetailProps) {
         <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="flex items-center justify-between">
             <div className="text-base font-semibold">7-Day Trend</div>
-            <svg viewBox="0 0 20 20" className="h-4 w-4 text-teal" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 20 20" className="h-4 w-4 text-[#518D73]" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M3 13l5-5 3 3 6-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>

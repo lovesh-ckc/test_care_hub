@@ -78,7 +78,7 @@ export function BloodPressureDetail({ onBack}: BloodPressureDetailProps) {
             <div>
               <div className="text-3xl font-semibold text-gray-400">108/78</div>
               <div className="mt-1 text-sm text-gray-500 font-ibm-plex-sans">mmHg</div>
-              <div className="text-sm text-teal font-ibm-plex-sans">Normal</div>
+              <div className="text-sm text-[#518D73] font-ibm-plex-sans">Normal</div>
             </div>
             <svg viewBox="0 0 64 64" className="h-8 w-8 text-emerald-700" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M58.6668 31.9997H52.0535C50.8881 31.9972 49.7539 32.3765 48.8245 33.0796C47.895 33.7827 47.2215 34.7709 46.9068 35.893L40.6402 58.1863C40.5998 58.3248 40.5156 58.4465 40.4002 58.533C40.2848 58.6196 40.1444 58.6663 40.0002 58.6663C39.8559 58.6663 39.7156 58.6196 39.6002 58.533C39.4848 58.4465 39.4006 58.3248 39.3602 58.1863L24.6402 5.81301C24.5998 5.67453 24.5156 5.55289 24.4002 5.46634C24.2848 5.37979 24.1444 5.33301 24.0002 5.33301C23.8559 5.33301 23.7156 5.37979 23.6002 5.46634C23.4848 5.55289 23.4006 5.67453 23.3602 5.81301L17.0935 28.1063C16.7801 29.2241 16.1105 30.209 15.1865 30.9117C14.2624 31.6144 13.1343 31.9964 11.9735 31.9997H5.3335" stroke="currentColor" strokeWidth="5.33333" strokeLinecap="round" strokeLinejoin="round"/>
@@ -89,12 +89,12 @@ export function BloodPressureDetail({ onBack}: BloodPressureDetailProps) {
             <div className="rounded-xl bg-[#FAF9F8] p-3">
               <div className="text-xs text-gray-700">Systolic</div>
               <div className="text-xl font-semibold text-gray-400">108</div>
-              <div className="text-xs text-teal">Normal</div>
+              <div className="text-xs text-[#518D73]">Normal</div>
             </div>
             <div className="rounded-xl bg-[#FAF9F8] p-3">
               <div className="text-xs text-gray-700">Diastolic</div>
               <div className="text-xl font-semibold text-gray-400">78</div>
-              <div className="text-xs text-teal">Normal</div>
+              <div className="text-xs text-[#518D73]">Normal</div>
             </div>
           </div>
         </div>
@@ -123,7 +123,7 @@ export function BloodPressureDetail({ onBack}: BloodPressureDetailProps) {
         <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="flex items-center justify-between">
             <div className="text-base font-semibold">Recent Readings</div>
-            <svg viewBox="0 0 20 20" className="h-4 w-4 text-teal" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 20 20" className="h-4 w-4 text-[#518D73]" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M3 13l5-5 3 3 6-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
@@ -136,7 +136,7 @@ export function BloodPressureDetail({ onBack}: BloodPressureDetailProps) {
                 </div>
                 <div className="text-right">
                   <div className="text-sm font-semibold text-gray-400">{reading.value}</div>
-                  <div className="text-xs text-teal">{reading.status}</div>
+                  <div className="text-xs text-[#518D73]">{reading.status}</div>
                 </div>
               </div>
             ))}

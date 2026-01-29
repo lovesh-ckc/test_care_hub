@@ -87,7 +87,7 @@ export function ProfileHeader({
       <div className="flex items-center gap-3">
         <div
           ref={trackRef}
-          className="relative flex h-10 w-28 items-center rounded-3xl bg-red-300"
+          className="relative flex h-10 w-28 items-center rounded-3xl bg-[#F7E7E7]"
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
@@ -101,13 +101,13 @@ export function ProfileHeader({
               xmlns="http://www.w3.org/2000/svg"
               width="60"
               height="60"
-              fill="none"
+              fill="#AD3C3C"
               viewBox="0 0 60 60"
             >
               <rect
                 width="60"
                 height="60"
-                fill="color(display-p3 0.9569 0.2627 0.2118)"
+                fill=""
                 rx="30"
               ></rect>
               <path
@@ -126,7 +126,7 @@ export function ProfileHeader({
         </div>
         <button
           type="button"
-          className="h-10 w-10 rounded-full border border-sandybrown flex items-center justify-center text-sandybrown"
+          className="h-10 w-10 rounded-full border border-[#FF8B00] flex items-center justify-center text-sandybrown"
           onClick={onBellClick}
           aria-label="Notifications"
         >

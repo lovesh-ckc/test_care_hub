@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Bottombar } from "@care-hub/components/UI/bottombar/Bottombar";
+import LiquidMorph from "../UI/LiquidMorph";
 
 type DevicesGridScreenProps = {
   onNavClick?: (itemId: "home" | "documents" | "list" | "grid") => void;
@@ -132,8 +133,10 @@ export function DevicesGridScreen({ onNavClick, activeItem = "grid" }: DevicesGr
           </div>
         </div>
 
-        <div className="pt-4">
-          <Bottombar activeItem={activeItem} onItemClick={onNavClick} />
+        <div className="pt-3 sticky bottom-4">
+                  <LiquidMorph>
+                  <Bottombar activeItem={activeItem} onItemClick={onNavClick} />
+                  </LiquidMorph>
         </div>
       </div>
 

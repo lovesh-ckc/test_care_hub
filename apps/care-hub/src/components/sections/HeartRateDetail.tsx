@@ -36,7 +36,7 @@ export function HeartRateDetail({ onBack }: HeartRateDetailProps) {
                 <span className="text-3xl font-semibold text-gray-400">72</span>
                 <span className="text-sm text-gray-500 font-ibm-plex-sans">bpm</span>
               </div>
-              <div className="text-sm text-teal font-ibm-plex-sans">Everything looks stable today.</div>
+              <div className="text-sm text-[#518D73] font-ibm-plex-sans">Everything looks stable today.</div>
             </div>
             <div className="h-10 w-10 rounded-full bg-rose-100 flex items-center justify-center text-red-500 text-xl">
               ♥
@@ -115,7 +115,7 @@ export function HeartRateDetail({ onBack }: HeartRateDetailProps) {
         <div className="mt-4 rounded-2xl bg-white p-4 shadow-md">
           <div className="flex items-center justify-between">
             <div className="text-base font-semibold">7-Day Average</div>
-            <svg viewBox="0 0 20 20" className="h-4 w-4 text-teal" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 20 20" className="h-4 w-4 text-[#518D73]" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M3 13l5-5 3 3 6-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>

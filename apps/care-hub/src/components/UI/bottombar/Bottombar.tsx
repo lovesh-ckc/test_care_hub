@@ -89,7 +89,7 @@ const navItems: NavItem[] = [
 
 export function Bottombar({ activeItem = "home", onItemClick }: BottombarProps) {
   return (
-    <nav className="flex w-full items-center justify-between gap-2 rounded-full bg-gray-200 px-3 py-2">
+    <nav className="flex w-full items-center justify-between gap-2 rounded-full  px-3 py-2">
       {navItems.map((item) => {
         const isActive = item.id === activeItem;
         return (
