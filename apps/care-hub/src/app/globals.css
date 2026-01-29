@@ -129,6 +129,48 @@ body {
   background: transparent;
 }
 
+.title-word {
+  display: inline-flex;
+  gap: 0.05em;
+}
+
+.title-letter {
+  display: inline-block;
+  opacity: calc(var(--dim, 0.6));
+  animation: lumio-letter var(--duration, 0.28s) ease forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+.title-word.exit-seq .title-letter {
+  animation: lumio-letter var(--duration, 0.36s) ease forwards;
+}
+
+.title-word.exit .title-letter {
+  animation: lumio-letter-exit var(--exit-duration, 0.24s) ease forwards;
+}
+
+@keyframes lumio-letter {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lumio-letter-exit {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;

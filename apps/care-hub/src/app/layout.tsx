@@ -7,6 +7,7 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import { PwaRegister } from "@care-hub/components/PwaRegister";
+import { IntroGate } from "@care-hub/components/intro/IntroGate";
 
 const displayFont = Space_Grotesk({
   variable: "--font-display",
@@ -67,7 +68,7 @@ export default function RootLayout({
         className={`${displayFont.variable} ${bodyFont.variable} ${greetingFont.variable} ${bodyAltFont.variable} bg-[color:var(--surface)] text-[color:var(--ink)] antialiased`}
       >
         <PwaRegister />
-        {children}
+        <IntroGate>{children}</IntroGate>
       </body>
     </html>
   );
