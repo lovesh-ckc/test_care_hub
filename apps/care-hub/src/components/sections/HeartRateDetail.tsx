@@ -5,6 +5,8 @@ import { ProfileHeader } from "@care-hub/components/sections/ProfileHeader";
 
 type HeartRateDetailProps = {
   onBack?: () => void;
+  onNotificationsClick?: () => void;
+  onProfileClick?: () => void;
 };
 
 const zones = [
@@ -14,7 +16,7 @@ const zones = [
   { label: "Peak", range: "135-155 bpm", color: "bg-red-500", bar: "bg-gray-200" },
 ];
 
-export function HeartRateDetail({ onBack }: HeartRateDetailProps) {
+export function HeartRateDetail({ onBack , onNotificationsClick, onProfileClick }: HeartRateDetailProps) {
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
       <div className="care-shell care-padding bg-black/5 pb-6 pt-3">
@@ -23,6 +25,8 @@ export function HeartRateDetail({ onBack }: HeartRateDetailProps) {
           handle="#rashi.agrawal0789"
           avatarSrc="/icons/patient.svg"
           bellIconSrc="/icons/bell-01.svg"
+          onBellClick={onNotificationsClick}
+          onProfileClick={onProfileClick}
         />
 
         <div className="mt-4 flex items-center gap-2 text-lg font-semibold">

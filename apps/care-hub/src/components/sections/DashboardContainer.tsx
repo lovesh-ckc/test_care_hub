@@ -87,19 +87,38 @@ export function DashboardContainer({ section }: DashboardContainerProps) {
         <DevicesGridScreen onNavClick={handleNavClick} activeItem="grid" />
       )}
       {currentScreen === "heartRate" && (
-        <HeartRateDetail onBack={handleBackClick} />
+        <HeartRateDetail 
+        onBack={handleBackClick}
+        onNotificationsClick={() => setCurrentScreen("notifications")}
+        onProfileClick={() => setCurrentScreen("profile")}
+        />
       )}
       {currentScreen === "spo2" && (
-        <Spo2Detail onBack={handleBackClick} />
+        <Spo2Detail 
+        onBack={handleBackClick}
+        onNotificationsClick={() => setCurrentScreen("notifications")}
+        onProfileClick={() => setCurrentScreen("profile")}
+           />
       )}
       {currentScreen === "respiratory" && (
-        <RespiratoryDetail onBack={handleBackClick} />
+        <RespiratoryDetail 
+        onBack={handleBackClick}
+        onNotificationsClick={() => setCurrentScreen("notifications")}
+        onProfileClick={() => setCurrentScreen("profile")}
+           />
       )}
       {currentScreen === "temperature" && (
-        <TemperatureDetail onBack={handleBackClick} />
+        <TemperatureDetail 
+        onBack={handleBackClick}
+        onNotificationsClick={() => setCurrentScreen("notifications")}
+        onProfileClick={() => setCurrentScreen("profile")}
+           />
       )}
       {currentScreen === "bloodPressure" && (
-        <BloodPressureDetail onBack={handleBackClick} />
+        <BloodPressureDetail 
+        onBack={handleBackClick} 
+        onNotificationsClick={() => setCurrentScreen("notifications")}
+        onProfileClick={() => setCurrentScreen("profile")} />
       )}
       {currentScreen === "notifications" && (
         <NotificationScreen onBack={handleBackClick} />

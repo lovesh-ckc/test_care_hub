@@ -5,6 +5,8 @@ import { ProfileHeader } from "@care-hub/components/sections/ProfileHeader";
 
 type BloodPressureDetailProps = {
   onBack?: () => void;
+  onNotificationsClick?: () => void;
+  onProfileClick?: () => void;
 };
 
 const categories = [
@@ -57,7 +59,8 @@ const tips = [
   { title: "Monitor Regularly", detail: "Check your blood pressure at the same time each day" },
 ];
 
-export function BloodPressureDetail({ onBack }: BloodPressureDetailProps) {
+export function BloodPressureDetail({ onBack, onNotificationsClick,
+  onProfileClick}: BloodPressureDetailProps) {
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
       <div className="care-shell care-padding bg-black/5 pb-6 pt-3">
@@ -66,6 +69,8 @@ export function BloodPressureDetail({ onBack }: BloodPressureDetailProps) {
           handle="#rashi.agrawal0789"
           avatarSrc="/icons/patient.svg"
           bellIconSrc="/icons/bell-01.svg"
+          onProfileClick={onProfileClick}
+          onBellClick={onNotificationsClick}
         />
 
         <div className="mt-4 flex items-center gap-2 text-lg font-semibold">

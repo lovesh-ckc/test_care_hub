@@ -2,9 +2,12 @@
 
 import Image from "next/image";
 import { ProfileHeader } from "@care-hub/components/sections/ProfileHeader";
+import { on } from "events";
 
 type Spo2DetailProps = {
   onBack?: () => void;
+  onNotificationsClick?: () => void;
+  onProfileClick?: () => void;
 };
 
 const levels = [
@@ -13,7 +16,7 @@ const levels = [
   { label: "Low - Seek Medical Attention", range: "Below 90%", color: "bg-red-500", bar: "bg-gray-200" },
 ];
 
-export function Spo2Detail({ onBack }: Spo2DetailProps) {
+export function Spo2Detail({ onBack , onNotificationsClick, onProfileClick }: Spo2DetailProps) {
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
       <div className="care-shell care-padding bg-black/5 pb-6 pt-3">
@@ -22,6 +25,8 @@ export function Spo2Detail({ onBack }: Spo2DetailProps) {
           handle="#rashi.agrawal0789"
           avatarSrc="/icons/patient.svg"
           bellIconSrc="/icons/bell-01.svg"
+          onBellClick={() => {onNotificationsClick}}
+          onProfileClick={() => {onProfileClick}}
         />
 
         <div className="mt-4 flex items-center gap-2 text-lg font-semibold">

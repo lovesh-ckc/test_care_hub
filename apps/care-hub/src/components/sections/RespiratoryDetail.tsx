@@ -5,6 +5,8 @@ import { ProfileHeader } from "@care-hub/components/sections/ProfileHeader";
 
 type RespiratoryDetailProps = {
   onBack?: () => void;
+  onNotificationsClick?: () => void;
+  onProfileClick?: () => void;
 };
 
 const ranges = [
@@ -14,7 +16,7 @@ const ranges = [
   { label: "High", range: "> 25 breaths/min", status: "Tachypnea", color: "bg-red-500", bar: "bg-gray-200" },
 ];
 
-export function RespiratoryDetail({ onBack }: RespiratoryDetailProps) {
+export function RespiratoryDetail({ onBack, onNotificationsClick, onProfileClick }: RespiratoryDetailProps) {
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
       <div className="care-shell care-padding bg-black/5 pb-6 pt-3">
@@ -23,6 +25,8 @@ export function RespiratoryDetail({ onBack }: RespiratoryDetailProps) {
           handle="#rashi.agrawal0789"
           avatarSrc="/icons/patient.svg"
           bellIconSrc="/icons/bell-01.svg"
+          onBellClick={onNotificationsClick}
+          onProfileClick={onProfileClick}
         />
 
         <div className="mt-4 flex items-center gap-2 text-lg font-semibold">
