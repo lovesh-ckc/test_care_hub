@@ -73,7 +73,7 @@ export function OtpVerify({ section, onBack, onNext }: OtpVerifyProps) {
       <div className="flex w-full max-w-sm items-center gap-3 sm:max-w-md lg:max-w-lg">
         <button
           type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--muted-ink)]/30"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-var(--muted-ink)/30"
           aria-label="Go back"
           onClick={onBack}
         >
@@ -93,7 +93,7 @@ export function OtpVerify({ section, onBack, onNext }: OtpVerifyProps) {
           {digits.map((digit, index) => (
             <input
               key={`otp-${index}`}
-              className="h-10 w-10 px-4 rounded-2xl border border-(--muted-ink)/30 text-center text-sm text-(--ink) outline-none"
+              className="h-10 w-10 px-2 rounded-2xl border border-(--muted-ink)/30 text-center text-sm text-(--ink) outline-none"
               inputMode="numeric"
               ref={(el) => {
                 inputRefs.current[index] = el;
