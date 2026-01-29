@@ -18,15 +18,15 @@ export const feedback = (opts: FeedbackOptions) => ({
     if (shouldPlaySound(opts)) playSound("tap");
   },
   confirm: () => {
-    if (shouldVibrate(opts)) vibrate(hapticPatterns.confirm);
+    if (shouldVibrate(opts)) vibrate([...hapticPatterns.confirm]);
     if (shouldPlaySound(opts)) playSound("confirm");
   },
   error: () => {
-    if (shouldVibrate(opts)) vibrate(hapticPatterns.error);
+    if (shouldVibrate(opts)) vibrate([...hapticPatterns.error]);
     if (shouldPlaySound(opts)) playSound("error");
   },
   sos: () => {
-    if (shouldVibrate(opts)) vibrate(hapticPatterns.sos);
+    if (shouldVibrate(opts)) vibrate([...hapticPatterns.sos]);
     if (shouldPlaySound(opts)) playSound("sos");
   },
 });
