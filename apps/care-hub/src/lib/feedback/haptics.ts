@@ -1,4 +1,4 @@
-export type HapticPattern = number | ReadonlyArray<number>;
+export type HapticPattern = number | number[];
 
 export const hapticPatterns = {
   lightTap: 12,
@@ -13,7 +13,8 @@ export const isHapticsSupported = () =>
 export const vibrate = (pattern: HapticPattern) => {
   if (!isHapticsSupported()) return;
   try {
-    navigator.vibrate(pattern);
+    const payload = Array.isArray(pattern) ? [...pattern] : pattern;
+    navigator.vibrate(payload);
   } catch {
     // Ignore unsupported/blocked vibrate calls.
   }
