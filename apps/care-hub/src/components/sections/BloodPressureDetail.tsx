@@ -60,7 +60,7 @@ const tips = [
 export function BloodPressureDetail({ onBack }: BloodPressureDetailProps) {
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="mx-auto w-full max-w-md bg-whitesmoke px-4 pb-6 pt-3">
+      <div className="care-shell care-padding bg-black/5 pb-6 pt-3">
         <ProfileHeader
           name="Rashi Agrawal"
           handle="#rashi.agrawal0789"
@@ -93,12 +93,12 @@ export function BloodPressureDetail({ onBack }: BloodPressureDetailProps) {
           </div>
 
           <div className="mt-4 grid grid-cols-2 gap-3 text-gray-500 font-ibm-plex-sans">
-            <div className="rounded-xl bg-whitesmoke p-3">
+            <div className="rounded-xl bg-black/5 p-3">
               <div className="text-xs text-gray-700">Systolic</div>
               <div className="text-xl font-semibold text-gray-400">108</div>
               <div className="text-xs text-teal">Normal</div>
             </div>
-            <div className="rounded-xl bg-whitesmoke p-3">
+            <div className="rounded-xl bg-black/5 p-3">
               <div className="text-xs text-gray-700">Diastolic</div>
               <div className="text-xl font-semibold text-gray-400">78</div>
               <div className="text-xs text-teal">Normal</div>
@@ -136,7 +136,7 @@ export function BloodPressureDetail({ onBack }: BloodPressureDetailProps) {
           </div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
             {recentReadings.map((reading) => (
-              <div key={reading.time} className="rounded-xl bg-whitesmoke px-3 py-3 flex items-center justify-between">
+              <div key={reading.time} className="rounded-xl bg-black/5 px-3 py-3 flex items-center justify-between">
                 <div>
                   <div className="text-xs text-gray-700">{reading.time}</div>
                   <div className="text-xs">{reading.pulse}</div>
@@ -181,7 +181,7 @@ export function BloodPressureDetail({ onBack }: BloodPressureDetailProps) {
           </div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
             {tips.map((tip) => (
-              <div key={tip.title} className="rounded-xl bg-whitesmoke p-3">
+              <div key={tip.title} className="rounded-xl bg-black/5 p-3">
                 <div className="text-sm text-gray-700 font-semibold">{tip.title}</div>
                 <div className="text-xs">{tip.detail}</div>
               </div>

@@ -76,7 +76,7 @@ const factors = [
 export function TemperatureDetail({ onBack }: TemperatureDetailProps) {
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="mx-auto w-full max-w-md bg-whitesmoke px-4 pb-6 pt-3">
+      <div className="care-shell care-padding bg-black/5 pb-6 pt-3">
         <ProfileHeader
           name="Rashi Agrawal"
           handle="#rashi.agrawal0789"
@@ -154,7 +154,7 @@ export function TemperatureDetail({ onBack }: TemperatureDetailProps) {
           <div className="text-base font-semibold">Recent Readings</div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
             {readings.map((reading) => (
-              <div key={reading.time} className="rounded-xl bg-whitesmoke px-3 py-3 flex items-center justify-between">
+              <div key={reading.time} className="rounded-xl bg-black/5 px-3 py-3 flex items-center justify-between">
                 <div>
                   <div className="text-xs text-gray-700">{reading.time}</div>
                   <div className="text-xs">{reading.sub}</div>
@@ -195,7 +195,7 @@ export function TemperatureDetail({ onBack }: TemperatureDetailProps) {
           </div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
             {factors.map((factor) => (
-              <div key={factor.title} className="rounded-xl bg-whitesmoke p-3">
+              <div key={factor.title} className="rounded-xl bg-black/5 p-3">
                 <div className="text-sm text-gray-700 font-semibold">{factor.title}</div>
                 <div className="text-xs">{factor.detail}</div>
               </div>

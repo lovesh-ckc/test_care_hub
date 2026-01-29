@@ -85,7 +85,7 @@ export function DocumentScreen({ onNavClick, activeItem = "documents" }: Documen
 
   return (
     <section className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="mx-auto bg-black/5 flex h-screen w-full max-w-md flex-col bg-whitesmoke px-4 pb-4 pt-4">
+      <div className="care-shell care-padding flex h-screen flex-col bg-black/5 bg-black/5 pb-4 pt-4">
         <div className="text-lg font-semibold">Documents</div>
 
         <div className="mt-3">

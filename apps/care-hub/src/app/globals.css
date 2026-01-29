@@ -73,6 +73,16 @@
   --font-sans: var(--font-body);
 }
 
+@layer utilities {
+  .care-shell {
+    @apply mx-auto w-full max-w-2xl sm:max-w-lg md:max-w-4xl lg:max-w-7xl xl:max-w-7xl;
+  }
+
+  .care-padding {
+    @apply px-4 sm:px-5 md:px-6;
+  }
+}
+
 *,
 *::before,
 *::after {

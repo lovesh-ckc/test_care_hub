@@ -118,7 +118,7 @@ export function DevicesGridScreen({ onNavClick, activeItem = "grid" }: DevicesGr
 
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="mx-auto flex bg-black/5 h-screen w-full max-w-md flex-col px-4 pb-4 pt-4">
+      <div className="care-shell care-padding flex h-screen flex-col bg-black/5 pb-4 pt-4">
         <div className="text-xl font-semibold text-gray-700">Connected devices</div>
         <div className="mt-1 text-sm text-gray-500 font-ibm-plex-sans">
           Add and manage devices to keep track of your daily health readings.

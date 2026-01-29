@@ -17,7 +17,7 @@ const zones = [
 export function HeartRateDetail({ onBack }: HeartRateDetailProps) {
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="mx-auto w-full max-w-md bg-whitesmoke px-4 pb-6 pt-3">
+      <div className="care-shell care-padding bg-black/5 pb-6 pt-3">
         <ProfileHeader
           name="Rashi Agrawal"
           handle="#rashi.agrawal0789"
@@ -51,7 +51,7 @@ export function HeartRateDetail({ onBack }: HeartRateDetailProps) {
             </div>
           </div>
 
-          <div className="mt-4 rounded-xl bg-whitesmoke p-4">
+          <div className="mt-4 rounded-xl bg-black/5 p-4">
             <svg viewBox="0 0 672 48" className="w-full h-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M0 45.1071C11.2 45.1071 22.4 34.4404 33.6 13.1071C44.8 -8.22624 56 2.44043 67.2 45.1071C78.4 45.1071 89.6 34.4404 100.8 13.1071C112 -8.22624 123.2 2.44043 134.4 45.1071C145.6 45.1071 156.8 34.4404 168 13.1071C179.2 -8.22624 190.4 2.44043 201.6 45.1071C212.8 45.1071 224 34.4404 235.2 13.1071C246.4 -8.22624 257.6 2.44043 268.8 45.1071C280 45.1071 291.2 34.4404 302.4 13.1071C313.6 -8.22624 324.8 2.44043 336 45.1071C347.2 45.1071 358.4 34.4404 369.6 13.1071C380.8 -8.22624 392 2.44043 403.2 45.1071C414.4 45.1071 425.6 34.4404 436.8 13.1071C448 -8.22624 459.2 2.44043 470.4 45.1071C481.6 45.1071 492.8 34.4404 504 13.1071C515.2 -8.22624 526.4 2.44043 537.6 45.1071C548.8 45.1071 560 34.4404 571.2 13.1071C582.4 -8.22624 593.6 2.44043 604.8 45.1071C616 45.1071 627.2 34.4404 638.4 13.1071C649.6 -8.22624 660.8 2.44043 672 45.1071" stroke="#518D73" strokeWidth="4.91854" strokeDasharray="0.94 1.64" />
             </svg>
@@ -91,17 +91,17 @@ export function HeartRateDetail({ onBack }: HeartRateDetailProps) {
             </svg>
           </div>
           <div className="mt-3 grid grid-cols-3 gap-2 text-center text-gray-500 font-ibm-plex-sans">
-            <div className="rounded-xl bg-whitesmoke p-3">
+            <div className="rounded-xl bg-black/5 p-3">
               <div className="text-xs">Average</div>
               <div className="text-lg font-semibold text-gray-400">68</div>
               <div className="text-xs">bpm</div>
             </div>
-            <div className="rounded-xl bg-whitesmoke p-3">
+            <div className="rounded-xl bg-black/5 p-3">
               <div className="text-xs">Lowest</div>
               <div className="text-lg font-semibold text-gray-400">58</div>
               <div className="text-xs">bpm</div>
             </div>
-            <div className="rounded-xl bg-whitesmoke p-3">
+            <div className="rounded-xl bg-black/5 p-3">
               <div className="text-xs">Highest</div>
               <div className="text-lg font-semibold text-gray-400">125</div>
               <div className="text-xs">bpm</div>
@@ -146,11 +146,11 @@ export function HeartRateDetail({ onBack }: HeartRateDetailProps) {
             Health Insights
           </div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
-            <div className="rounded-xl bg-whitesmoke p-3">
+            <div className="rounded-xl bg-black/5 p-3">
               <div className="text-sm text-gray-700 font-semibold">Normal Resting Heart Rate</div>
               <div className="text-xs">A resting heart rate of 60-100 bpm is considered healthy. Your rate of 72 bpm is excellent.</div>
             </div>
-            <div className="rounded-xl bg-whitesmoke p-3">
+            <div className="rounded-xl bg-black/5 p-3">
               <div className="text-sm text-gray-700 font-semibold">Cardiovascular Fitness</div>
               <div className="text-xs">Regular exercise can help lower your resting heart rate and improve overall cardiovascular health.</div>
             </div>

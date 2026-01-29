@@ -39,7 +39,7 @@ export function DashboardScreen({
 
   return (
     <div className="h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="mx-auto flex h-full w-full max-w-md flex-col bg-black/5 px-4 pb-4 pt-3">
+      <div className="care-shell care-padding flex h-full flex-col bg-black/5 pb-4 pt-3">
         <ProfileHeader
           name="Rashi Agrawal"
           handle="#rashi.agrawal0789"
@@ -157,7 +157,7 @@ export function DashboardScreen({
               </div>
               <div className="h-9 w-9 rounded-full bg-sandybrown flex items-center justify-center text-white">VC</div>
             </div>
-            <div className="mt-3 rounded-lg bg-whitesmoke p-3 text-sm text-gray-500 font-ibm-plex-sans">
+            <div className="mt-3 rounded-lg bg-black/5 p-3 text-sm text-gray-500 font-ibm-plex-sans">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Image className="h-4 w-4" width={16} height={16} alt="" src="/icons/patient.svg" />

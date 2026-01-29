@@ -17,7 +17,7 @@ const ranges = [
 export function RespiratoryDetail({ onBack }: RespiratoryDetailProps) {
   return (
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-      <div className="mx-auto w-full max-w-md bg-whitesmoke px-4 pb-6 pt-3">
+      <div className="care-shell care-padding bg-black/5 pb-6 pt-3">
         <ProfileHeader
           name="Rashi Agrawal"
           handle="#rashi.agrawal0789"
@@ -51,7 +51,7 @@ export function RespiratoryDetail({ onBack }: RespiratoryDetailProps) {
             </div>
           </div>
 
-          <div className="mt-4 rounded-xl bg-whitesmoke p-4">
+          <div className="mt-4 rounded-xl bg-black/5 p-4">
             <div className="mx-auto flex items-center justify-center">
               <svg width="161" height="161" viewBox="0 0 161 161" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g opacity="0.665435">
@@ -99,17 +99,17 @@ export function RespiratoryDetail({ onBack }: RespiratoryDetailProps) {
             </svg>
           </div>
           <div className="mt-3 grid grid-cols-3 gap-2 text-center text-gray-500 font-ibm-plex-sans">
-            <div className="rounded-xl bg-whitesmoke p-3">
+            <div className="rounded-xl bg-black/5 p-3">
               <div className="text-xs">Average</div>
               <div className="text-lg font-semibold text-gray-400">16</div>
               <div className="text-xs">br/min</div>
             </div>
-            <div className="rounded-xl bg-whitesmoke p-3">
+            <div className="rounded-xl bg-black/5 p-3">
               <div className="text-xs">Lowest</div>
               <div className="text-lg font-semibold text-gray-400">14</div>
               <div className="text-xs">br/min</div>
             </div>
-            <div className="rounded-xl bg-whitesmoke p-3">
+            <div className="rounded-xl bg-black/5 p-3">
               <div className="text-xs">Highest</div>
               <div className="text-lg font-semibold text-gray-400">20</div>
               <div className="text-xs">br/min</div>
@@ -146,7 +146,7 @@ export function RespiratoryDetail({ onBack }: RespiratoryDetailProps) {
               { label: "Yesterday, 9:00 AM", value: "17", status: "Normal" },
               { label: "Jan 26, 7:30 PM", value: "16", status: "Normal" },
             ].map((reading) => (
-              <div key={reading.label} className="flex items-center justify-between rounded-xl bg-whitesmoke px-3 py-3">
+              <div key={reading.label} className="flex items-center justify-between rounded-xl bg-black/5 px-3 py-3">
                 <div>
                   <div className="text-sm text-gray-700">{reading.label}</div>
                   <div className="text-xs text-teal">{reading.status}</div>
@@ -169,7 +169,7 @@ export function RespiratoryDetail({ onBack }: RespiratoryDetailProps) {
               { title: "Box Breathing", desc: "Inhale, hold, exhale, hold - each for 4 seconds", time: "5 minutes" },
               { title: "Pursed Lip Breathing", desc: "Inhale through nose, exhale slowly through pursed lips", time: "10 minutes" },
             ].map((exercise) => (
-              <div key={exercise.title} className="flex items-center justify-between rounded-xl bg-whitesmoke px-3 py-3">
+              <div key={exercise.title} className="flex items-center justify-between rounded-xl bg-black/5 px-3 py-3">
                 <div>
                   <div className="text-sm text-gray-700 font-semibold">{exercise.title}</div>
                   <div className="text-xs">{exercise.desc}</div>
@@ -183,11 +183,11 @@ export function RespiratoryDetail({ onBack }: RespiratoryDetailProps) {
         <div className="mt-4 rounded-num-20 bg-white p-4 shadow-md">
           <div className="text-base font-semibold">Health Insights</div>
           <div className="mt-3 flex flex-col gap-3 text-gray-500 font-ibm-plex-sans">
-            <div className="rounded-xl bg-whitesmoke p-3">
+            <div className="rounded-xl bg-black/5 p-3">
               <div className="text-sm text-gray-700 font-semibold">What Affects Respiratory Rate?</div>
               <div className="text-xs">Physical activity, stress, anxiety, medications, and medical conditions can all influence your breathing rate.</div>
             </div>
-            <div className="rounded-xl bg-whitesmoke p-3">
+            <div className="rounded-xl bg-black/5 p-3">
               <div className="text-sm text-gray-700 font-semibold">Benefits of Controlled Breathing</div>
               <div className="text-xs">Regular breathing exercises can reduce stress, lower blood pressure, and improve overall lung function.</div>
             </div>
