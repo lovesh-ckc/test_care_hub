@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
@@ -29,7 +29,7 @@ const categories = [
   },
   {
     label: "High BP Stage 2",
-    range: "Systolic: ≥ 140 / Diastolic: ≥ 90",
+    range: "Systolic: â‰¥ 140 / Diastolic: â‰¥ 90",
     color: "bg-red-500",
     background: "bg-gray-200",
   },
@@ -200,3 +200,4 @@ export function BloodPressureDetail({ onBack}: BloodPressureDetailProps) {
     </>
   );
 }
+

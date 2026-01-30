@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
@@ -43,7 +43,7 @@ export function HeartRateDetail({ onBack }: HeartRateDetailProps) {
               <div className="text-sm text-[#518D73] font-ibm-plex-sans">Everything looks stable today.</div>
             </div>
             <div className="h-10 w-10 rounded-full bg-rose-100 flex items-center justify-center text-red-500 text-xl glow-accent motion-pulse">
-              ♥
+              â™¥
             </div>
           </div>
 
@@ -156,3 +156,4 @@ export function HeartRateDetail({ onBack }: HeartRateDetailProps) {
     </>
   );
 }
+

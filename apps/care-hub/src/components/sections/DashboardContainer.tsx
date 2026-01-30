@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { DashboardScreen } from "@care-hub/components/sections/Dashboard";
 import { DocumentScreen } from "@care-hub/components/UI/documents/Document";
 import { HeartRateDetail } from "@care-hub/components/sections/HeartRateDetail";
@@ -9,7 +10,6 @@ import { RespiratoryDetail } from "@care-hub/components/sections/RespiratoryDeta
 import { TemperatureDetail } from "@care-hub/components/sections/TemperatureDetail";
 import { BloodPressureDetail } from "@care-hub/components/sections/BloodPressureDetail";
 import { NotificationScreen } from "@care-hub/components/sections/NotificationScreen";
-import { ProfileScreen } from "@care-hub/components/sections/ProfileScreen";
 import { ClinicalCareOverview } from "@care-hub/components/sections/ClinicalCareOverview";
 import { DeviceManagementScreen } from "@care-hub/components/sections/DeviceManagementScreen";
 import { PreferencesControlScreen } from "@care-hub/components/sections/PreferencesControlScreen";
@@ -19,104 +19,166 @@ import type { Dashboard } from "@care-hub/lib/types";
 import { ProfileHeader } from "./ProfileHeader";
 import { FeedbackSettingsSheet } from "@care-hub/components/feedback/FeedbackSettingsSheet";
 import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
-
-type ScreenType =
-  | "dashboard"
-  | "documents"
-  | "list"
-  | "grid"
-  | "heartRate"
-  | "spo2"
-  | "respiratory"
-  | "temperature"
-  | "bloodPressure"
-  | "notifications"
-  | "profile"
-  | "clinicalCare"
-  | "deviceManagement"
-  | "preferences";
+import { Bottombar } from "../UI/bottombar/Bottombar";
 
 type DashboardContainerProps = {
   section: Dashboard;
+  token: string;
   onNext?: () => void;
   onBack?: () => void;
 };
 
-export function DashboardContainer({ section }: DashboardContainerProps) {
-  const [currentScreen, setCurrentScreen] = useState<ScreenType>("dashboard");
-  const [activeNavItem, setActiveNavItem] = useState<string>("home");
+const DASHBOARD_SCREENS = [
+  "dashboard",
+  "documents",
+  "list",
+  "grid",
+  "heartRate",
+  "spo2",
+  "respiratory",
+  "temperature",
+  "bloodPressure",
+  "notifications",
+  "clinicalCare",
+  "deviceManagement",
+  "preferences",
+] as const;
+
+type DashboardScreenKey = (typeof DASHBOARD_SCREENS)[number];
+
+export function DashboardContainer({ section, token }: DashboardContainerProps) {
   const [showSettings, setShowSettings] = useState(false);
   const { tap } = useFeedback();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const hasSyncedRef = useRef(false);
+  const storageKey = `carehub:lastRoute:${token}`;
+
+  const screenParam = searchParams.get("screen");
+  const normalizeScreen = (value: string | null): DashboardScreenKey | null => {
+    if (!value) return null;
+    return DASHBOARD_SCREENS.includes(value as DashboardScreenKey)
+      ? (value as DashboardScreenKey)
+      : null;
+  };
+
+  const resolvedScreen = normalizeScreen(screenParam) ?? "dashboard";
+  const activeNavItem =
+    resolvedScreen === "documents" || resolvedScreen === "list" || resolvedScreen === "grid"
+      ? resolvedScreen
+      : "home";
+
+  useEffect(() => {
+    if (!hasSyncedRef.current) {
+      hasSyncedRef.current = true;
+    }
+  }, []);
+
+  const navigateTo = (nextScreen: DashboardScreenKey, replace = false) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("step", "dashboard");
+    if (nextScreen === "dashboard") {
+      params.delete("screen");
+    } else {
+      params.set("screen", nextScreen);
+    }
+    const nextUrl = `${pathname}?${params.toString()}`;
+    const currentUrl = `${pathname}?${searchParams.toString()}`;
+    if (nextUrl === currentUrl) return;
+    if (replace) {
+      router.replace(nextUrl);
+    } else {
+      router.push(nextUrl);
+    }
+  };
+
+  useEffect(() => {
+    if (!hasSyncedRef.current) return;
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(
+        storageKey,
+        JSON.stringify({ step: "dashboard", screen: resolvedScreen, ts: Date.now() })
+      );
+    }
+  }, [resolvedScreen, storageKey]);
 
   const handleNavClick = (itemId: "home" | "documents" | "list" | "grid") => {
-    setActiveNavItem(itemId);
     if (itemId === "home") {
-      setCurrentScreen("dashboard");
+      navigateTo("dashboard");
       return;
     }
-    setCurrentScreen(itemId);
+    navigateTo(itemId);
   };
 
   const handleBackClick = () => {
-    setCurrentScreen("dashboard");
-    setActiveNavItem("home");
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      router.back();
+      return;
+    }
+    navigateTo("dashboard", true);
   };
 
   return (
     <>
-    {["dashboard","temperature","heartRate","spo2","respiratory","bloodPressure"].includes(currentScreen) &&
+    {["dashboard","temperature","heartRate","spo2","respiratory","bloodPressure"].includes(resolvedScreen) &&
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-    <div className="care-shell care-padding flex h-full flex-col bg-[#FAF9F8] pb-4 pt-3">
-      <div className="sticky top-3 topbar shadow-2xl rounded-2xl p-2 z-100">
+    <div className="care-shell care-padding flex h-screen flex-col bg-[#FAF9F8] pb-4 pt-3">
+      <div className="sticky top-3 z-40 rounded-2xl bg-white/70 p-2">
     <ProfileHeader
           name="Rashi Agrawal"
           handle="+91 1234567890"
           avatarSrc="/icons/patient.svg"
           bellIconSrc="/icons/bell-01.svg"
-          onBellClick={() => setCurrentScreen("notifications")}
-          onProfileClick={() => setCurrentScreen("profile")}
+          onBellClick={() => navigateTo("notifications")}
+          onProfileClick={() => navigateTo("dashboard")}
           onSettingsClick={() => {
             tap();
             setShowSettings(true);
           }}
         />
         </div>
-      {currentScreen === "dashboard" && (
+      {resolvedScreen === "dashboard" && (
+        <>
         <DashboardScreen
           section={section}
           onNavClick={handleNavClick}
           activeNavItem={activeNavItem}
-          onHeartRateClick={() => setCurrentScreen("heartRate")}
-          onSpo2Click={() => setCurrentScreen("spo2")}
-          onRespiratoryClick={() => setCurrentScreen("respiratory")}
-          onTemperatureClick={() => setCurrentScreen("temperature")}
-          onBloodPressureClick={() => setCurrentScreen("bloodPressure")}
+          onHeartRateClick={() => navigateTo("heartRate")}
+          onSpo2Click={() => navigateTo("spo2")}
+          onRespiratoryClick={() => navigateTo("respiratory")}
+          onTemperatureClick={() => navigateTo("temperature")}
+          onBloodPressureClick={() => navigateTo("bloodPressure")}
         />
+        <div className="sticky bottom-2">
+      <Bottombar activeItem={activeNavItem} onItemClick={handleNavClick} />
+     </div>
+        </>
       )}
       
-      {currentScreen === "temperature" && (
+      {resolvedScreen === "temperature" && (
         <TemperatureDetail 
         onBack={handleBackClick}
            />
       )}
       
-      {currentScreen === "heartRate" && (
+      {resolvedScreen === "heartRate" && (
         <HeartRateDetail 
         onBack={handleBackClick}
         />
       )}
-      {currentScreen === "spo2" && (
+      {resolvedScreen === "spo2" && (
         <Spo2Detail 
         onBack={handleBackClick}
            />
       )}
-      {currentScreen === "respiratory" && (
+      {resolvedScreen === "respiratory" && (
         <RespiratoryDetail 
         onBack={handleBackClick}
            />
       )}
       
-      {currentScreen === "bloodPressure" && (
+      {resolvedScreen === "bloodPressure" && (
         <BloodPressureDetail 
         onBack={handleBackClick} 
        />
@@ -124,39 +186,31 @@ export function DashboardContainer({ section }: DashboardContainerProps) {
       </div>
 </div>
 }
-      {currentScreen === "documents" && (
+      {resolvedScreen === "documents" && (
         <DocumentScreen
           onBack={handleBackClick}
           onNavClick={handleNavClick}
           activeItem="documents"
         />
       )}
-      {currentScreen === "list" && (
+      {resolvedScreen === "list" && (
         <TodoListScreen onNavClick={handleNavClick} activeItem="list" />
       )}
-      {currentScreen === "grid" && (
+      {resolvedScreen === "grid" && (
         <DevicesGridScreen onNavClick={handleNavClick} activeItem="grid" />
       )}
       
-      {currentScreen === "notifications" && (
+      {resolvedScreen === "notifications" && (
         <NotificationScreen onBack={handleBackClick} />
       )}
-      {currentScreen === "profile" && (
-        <ProfileScreen
-          onBack={handleBackClick}
-          onClinicalCare={() => setCurrentScreen("clinicalCare")}
-          onDeviceManagement={() => setCurrentScreen("deviceManagement")}
-          onPreferences={() => setCurrentScreen("preferences")}
-        />
+      {resolvedScreen === "clinicalCare" && (
+        <ClinicalCareOverview onBack={handleBackClick} />
       )}
-      {currentScreen === "clinicalCare" && (
-        <ClinicalCareOverview onBack={() => setCurrentScreen("profile")} />
+      {resolvedScreen === "deviceManagement" && (
+        <DeviceManagementScreen onBack={handleBackClick} />
       )}
-      {currentScreen === "deviceManagement" && (
-        <DeviceManagementScreen onBack={() => setCurrentScreen("profile")} />
-      )}
-      {currentScreen === "preferences" && (
-        <PreferencesControlScreen onBack={() => setCurrentScreen("profile")} />
+      {resolvedScreen === "preferences" && (
+        <PreferencesControlScreen onBack={handleBackClick} />
       )}
 
       <FeedbackSettingsSheet open={showSettings} onClose={() => setShowSettings(false)} />

@@ -27,16 +27,16 @@ export function DashboardScreen({
   onTemperatureClick,
   onBloodPressureClick,
 }: DashboardProps) {
-  const [activeTab, setActiveTab] = useState<"home" | "documents" | "list" | "grid">("home");
+
   const { tap } = useFeedback();
 
   const handleNav = (id: "home" | "documents" | "list" | "grid") => {
-    setActiveTab(id);
+    // setActiveTab(id);
     onNavClick?.(id);
   };
 
   return (
-<>
+    <>
         <div className="mt-4 flex-1 overflow-y-auto pb-4">
           <div className="rounded-2xl bg-white p-4 shadow-lg motion-fade-up card-hover">
             <div className="text-2xl font-semibold">Good Morning</div>
@@ -158,6 +158,22 @@ export function DashboardScreen({
             </button>
           </div>
 
+{/* 
+          <div className="mt-3 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-2 card-hover">
+            <div className="flex items-center justify-between">
+              <div className="text-sm font-semibold text-gray-700">Temperature Trend</div>
+              <span className="text-xs text-gray-500 font-ibm-plex-sans">Last 7 days</span>
+            </div>
+            <svg viewBox="0 0 300 80" className="mt-3 w-full" fill="none" aria-hidden="true">
+              <path d="M10 52 L60 46 L110 50 L160 42 L210 48 L260 44 L290 46" stroke="#E5E7EB" strokeWidth="6" strokeLinecap="round" />
+              <path className="graph-stroke" d="M10 52 L60 46 L110 50 L160 42 L210 48 L260 44 L290 46" stroke="#F97316" strokeWidth="6" strokeLinecap="round" />
+            </svg>
+            <div className="mt-2 flex items-center justify-between text-xs text-gray-500 font-ibm-plex-sans">
+              {["M","T","W","T","F","S","S"].map((day, index) => (
+                <span key={`${day}-${index}`}>{day}</span>
+              ))}
+            </div>
+          </div> */}
           <div className="mt-5 text-lg font-bold motion-fade-up delay-3">Upcoming appointments</div>
           <div className="mt-3 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-2 card-hover" >
             <div className="flex items-center gap-3">
@@ -181,13 +197,6 @@ export function DashboardScreen({
             </div>
           </div>
         </div>
-      
-        <div className="pt-3 sticky bottom-4">
-          <LiquidMorph>
-          <Bottombar activeItem={activeTab} onItemClick={handleNav} />
-          </LiquidMorph>
-        </div>
-     
-    </>
+        </>
   );
 }

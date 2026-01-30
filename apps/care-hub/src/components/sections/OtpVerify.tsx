@@ -82,7 +82,13 @@ export function OtpVerify({ section, onBack, onNext }: OtpVerifyProps) {
             onBack?.();
           }}
         >
-          <Image src="/Leftarrow.svg" alt="Go back" width={24} height={24} />
+          <Image
+            src="/Leftarrow.svg"
+            alt="Go back"
+            width={24}
+            height={24}
+            className="h-6 w-6"
+          />
         </button>
       </div>
 

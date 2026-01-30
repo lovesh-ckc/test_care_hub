@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
@@ -115,14 +115,14 @@ export function ProfileScreen({
             <button
               key={item.id}
               type="button"
-              className={`flex items-center justify-between rounded-2xl bg-white px-4 py-3 text-left shadow-sm motion-fade-up card-hover ${delayClass}`}
+              className={`flex items-start justify-between rounded-2xl bg-white px-4 py-3 text-left shadow-sm motion-fade-up card-hover ${delayClass}`}
               onClick={() => {
                 tap();
                 handleItemClick(item.id);
               }}
             >
               <div className="flex items-start gap-3">
-                <div className="mt-1 h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-700">
+                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-700">
                   <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M12 6v6l4 2M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"
@@ -138,7 +138,7 @@ export function ProfileScreen({
                   <div className="text-xs text-gray-500 font-ibm-plex-sans">{item.subtitle}</div>
                 </div>
               </div>
-              <svg viewBox="0 0 20 20" className="h-4 w-4 text-gray-500" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg viewBox="0 0 20 20" className="mt-1 h-4 w-4 text-gray-500" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M7 4l6 6-6 6"
                   stroke="currentColor"
@@ -155,3 +155,4 @@ export function ProfileScreen({
     </div>
   );
 }
+

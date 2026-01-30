@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
@@ -17,7 +17,7 @@ type NotificationItem = {
 const notificationItems: NotificationItem[] = [
   {
     id: "all-1",
-    title: "It’s time for your Atorvastatin (20mg). Best to take it with food.",
+    title: "It's time for your Atorvastatin (20mg). Best to take it with food.",
     time: "2 min ago.",
     category: "alerts",
     unread: true,
@@ -52,7 +52,7 @@ const notificationItems: NotificationItem[] = [
   },
   {
     id: "all-6",
-    title: "It’s time for your follow-up appointment reminder.",
+    title: "It's time for your follow-up appointment reminder.",
     time: "1 hr ago.",
     category: "schedules",
     unread: true,
@@ -369,3 +369,5 @@ export function NotificationScreen({ onBack }: NotificationScreenProps) {
     </div>
   );
 }
+
+

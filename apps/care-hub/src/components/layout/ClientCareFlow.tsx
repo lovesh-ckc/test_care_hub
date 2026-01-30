@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   ConnectFormSection,
   Dashboard,
@@ -21,12 +22,130 @@ import { DashboardContainer } from "@care-hub/components/sections/DashboardConta
 
 type ClientCareFlowProps = {
   layout: LayoutSection[];
+  token: string;
 };
 
-export function ClientCareFlow({ layout }: ClientCareFlowProps) {
+const FLOW_STEPS = ["welcome", "onboarding", "connect", "otp", "sosDoes", "sosWorks", "dashboard"] as const;
+type FlowStep = (typeof FLOW_STEPS)[number];
+
+const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+
+export function ClientCareFlow({ layout, token }: ClientCareFlowProps) {
   const [step, setStep] = useState<
     "welcome" | "onboarding" | "connect" | "otp" | "sosDoes" | "sosWorks" | "dashboard"
   >("welcome");
+  const [isReady, setIsReady] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const hasRestoredRef = useRef(false);
+  const pendingScreenRef = useRef<string | null>(null);
+
+  const stepParam = searchParams.get("step");
+  const screenParam = searchParams.get("screen");
+
+  const storageKey = `carehub:lastRoute:${token}`;
+
+  const normalizeStep = (value: string | null): FlowStep | null => {
+    if (!value) return null;
+    return FLOW_STEPS.includes(value as FlowStep) ? (value as FlowStep) : null;
+  };
+
+  useEffect(() => {
+    if (hasRestoredRef.current) return;
+    hasRestoredRef.current = true;
+
+    const urlStep = normalizeStep(stepParam);
+    if (urlStep) {
+      setStep(urlStep);
+      setIsReady(true);
+      return;
+    }
+
+    if (typeof window === "undefined") return;
+    const storedRaw = window.localStorage.getItem(storageKey);
+    if (!storedRaw) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("step", "welcome");
+      params.delete("screen");
+      router.replace(`${pathname}?${params.toString()}`);
+      setStep("welcome");
+      setIsReady(true);
+      return;
+    }
+
+    try {
+      const stored = JSON.parse(storedRaw) as { step?: FlowStep; screen?: string; ts?: number };
+      if (!stored?.step || !stored.ts) return;
+      if (Date.now() - stored.ts > ONE_DAY_MS) return;
+      if (!FLOW_STEPS.includes(stored.step)) return;
+
+      pendingScreenRef.current = stored.screen ?? null;
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("step", stored.step);
+      if (stored.step === "dashboard" && stored.screen) {
+        params.set("screen", stored.screen);
+      } else {
+        params.delete("screen");
+      }
+      router.replace(`${pathname}?${params.toString()}`);
+      setStep(stored.step);
+      if (!stored.screen) {
+        setIsReady(true);
+      }
+    } catch {
+      // ignore invalid cache
+      setIsReady(true);
+    }
+  }, [pathname, router, searchParams, stepParam, storageKey]);
+
+  useEffect(() => {
+    const urlStep = normalizeStep(stepParam);
+    if (urlStep && urlStep !== step) {
+      setStep(urlStep);
+    }
+    if (pendingScreenRef.current) {
+      if (screenParam === pendingScreenRef.current) {
+        pendingScreenRef.current = null;
+        setIsReady(true);
+      }
+      return;
+    }
+    if (urlStep && !isReady) {
+      setIsReady(true);
+    }
+  }, [screenParam, stepParam, step]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const payload = {
+      step,
+      screen: step === "dashboard" ? screenParam ?? undefined : undefined,
+      ts: Date.now(),
+    };
+    window.localStorage.setItem(storageKey, JSON.stringify(payload));
+  }, [screenParam, step, storageKey]);
+
+  const pushStep = (nextStep: FlowStep) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("step", nextStep);
+    if (nextStep === "dashboard") {
+      if (!params.get("screen")) {
+        params.delete("screen");
+      }
+    } else {
+      params.delete("screen");
+    }
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const goBack = (fallbackStep: FlowStep) => {
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      router.back();
+      return;
+    }
+    pushStep(fallbackStep);
+  };
 
   const welcomeSection = useMemo(
     () =>
@@ -84,11 +203,15 @@ export function ClientCareFlow({ layout }: ClientCareFlowProps) {
     return null;
   }
 
+  if (!isReady) {
+    return null;
+  }
+
   if (step === "welcome") {
     return (
       <WelcomeHero
         section={welcomeSection}
-        onStart={() => setStep("onboarding")}
+        onStart={() => pushStep("onboarding")}
       />
     );
   }
@@ -97,7 +220,7 @@ export function ClientCareFlow({ layout }: ClientCareFlowProps) {
     return (
       <WelcomeHero
         section={welcomeSection}
-        onStart={() => setStep("onboarding")}
+        onStart={() => pushStep("onboarding")}
       />
     );
   }
@@ -106,7 +229,7 @@ export function ClientCareFlow({ layout }: ClientCareFlowProps) {
     return (
       <OnboardingSlider
         section={sliderSection}
-        onComplete={() => setStep("connect")}
+        onComplete={() => pushStep("connect")}
       />
     );
   }
@@ -116,7 +239,7 @@ export function ClientCareFlow({ layout }: ClientCareFlowProps) {
       return (
         <OnboardingSlider
           section={sliderSection}
-          onComplete={() => setStep("connect")}
+          onComplete={() => pushStep("connect")}
         />
       );
     }
@@ -124,8 +247,8 @@ export function ClientCareFlow({ layout }: ClientCareFlowProps) {
     return (
       <ConnectForm
         section={connectSection}
-        onBack={() => setStep("onboarding")}
-        onNext={() => setStep("otp")}
+        onBack={() => goBack("onboarding")}
+        onNext={() => pushStep("otp")}
       />
     );
   }
@@ -135,7 +258,7 @@ export function ClientCareFlow({ layout }: ClientCareFlowProps) {
       return (
         <OnboardingSlider
           section={sliderSection}
-          onComplete={() => setStep("connect")}
+          onComplete={() => pushStep("connect")}
         />
       );
     }
@@ -143,8 +266,8 @@ export function ClientCareFlow({ layout }: ClientCareFlowProps) {
     return (
       <ConnectForm
         section={connectSection}
-        onBack={() => setStep("onboarding")}
-        onNext={() => setStep("otp")}
+        onBack={() => goBack("onboarding")}
+        onNext={() => pushStep("otp")}
       />
     );
   }
@@ -153,8 +276,8 @@ export function ClientCareFlow({ layout }: ClientCareFlowProps) {
     return (
       <OtpVerify
         section={otpSection}
-        onBack={() => setStep("connect")}
-        onNext={() => setStep("sosDoes")}
+        onBack={() => goBack("connect")}
+        onNext={() => pushStep("sosDoes")}
       />
     );
   }
@@ -164,8 +287,8 @@ export function ClientCareFlow({ layout }: ClientCareFlowProps) {
     return (
       <SosDoes
         section={sosSection}
-        onBack={() => setStep("otp")}
-        onNext={() => setStep("sosWorks")}
+        onBack={() => goBack("otp")}
+        onNext={() => pushStep("sosWorks")}
       />
     );
   }
@@ -175,15 +298,15 @@ export function ClientCareFlow({ layout }: ClientCareFlowProps) {
     return (
       <SosWorks
         section={sosWorksSection}
-        onBack={() => setStep("sosDoes")}
-        onNext={() => setStep("dashboard")}
+        onBack={() => goBack("sosDoes")}
+        onNext={() => pushStep("dashboard")}
       />
     );
   }
 
   if (step === "dashboard") {
     if (!dashboardSection) return null;
-    return <DashboardContainer section={dashboardSection} />;
+    return <DashboardContainer section={dashboardSection} token={token} />;
   }
 
   return null;

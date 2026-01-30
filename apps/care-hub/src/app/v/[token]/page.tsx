@@ -46,7 +46,7 @@ export default async function CareLinkPage({ params }: CareLinkPageProps) {
   return (
     <TabletFrame theme={config.theme} variant={isFullScreenFlow ? "flat" : "frame"}>
       {isFullScreenFlow ? (
-        <ClientCareFlow layout={config.layout} />
+        <ClientCareFlow layout={config.layout} token={token} />
       ) : (
         <LayoutRenderer layout={config.layout} />
       )}

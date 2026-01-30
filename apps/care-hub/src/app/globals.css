@@ -84,7 +84,7 @@
 
 @layer utilities {
   .care-shell {
-    @apply mx-auto w-full max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-5xl xl:max-w-5xl;
+    @apply mx-auto w-full max-w-xl sm:max-w-lg md:max-w-4xl lg:max-w-7xl xl:max-w-5xl;
   }
 
   .care-padding {
@@ -107,6 +107,31 @@ body {
   background: var(--surface);
   color: var(--ink);
   font-family: var(--font-body);
+  overscroll-behavior-y: none;
+  overscroll-behavior-x: none;
+  -webkit-overflow-scrolling: touch;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+html {
+  background: var(--surface);
+  overscroll-behavior-y: none;
+  height: 100%;
+}
+
+#__next {
+  min-height: 100%;
+  background: var(--surface);
+}
+
+.glass-header {
+  background: rgba(255, 255, 255, 0.75);
+  background: color-mix(in srgb, #ffffff 70%, transparent);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 30px rgba(15, 10, 5, 0.1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .hide-scrollbar {
@@ -180,10 +205,6 @@ input, textarea, select {
   font-size: 16px;
 }
 
-
-.topbar{
-  background-color: linear-gradient(97.8deg, rgba(244, 242, 238, 0.69), rgba(244, 242, 238, 0.69) 25.96%, rgba(237, 235, 233, 0.69) 58.17%, rgba(243, 244, 245, 0.69) 83.17%, rgba(230, 227, 221, 0.69));
-}
 
 @keyframes fade-up {
   0% {
@@ -295,6 +316,18 @@ input, textarea, select {
   }
 }
 
+@keyframes temp-scan {
+  0% {
+    left: 12%;
+  }
+  50% {
+    left: 78%;
+  }
+  100% {
+    left: 22%;
+  }
+}
+
 .motion-fade-up {
   animation: fade-up 0.6s ease both;
 }
@@ -350,6 +383,10 @@ input, textarea, select {
 
 .graph-breathe {
   animation: breathe 3.2s ease-in-out infinite;
+}
+
+.temp-marker {
+  animation: temp-scan 6s ease-in-out forwards;
 }
 
 .card-hover {

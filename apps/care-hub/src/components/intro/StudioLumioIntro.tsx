@@ -48,6 +48,7 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
   const [isExitSequence, setIsExitSequence] = useState(false);
   const [isExitFade, setIsExitFade] = useState(false);
   const [letterCycleKey, setLetterCycleKey] = useState(0);
+  const [webglReady, setWebglReady] = useState(true);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
@@ -96,7 +97,38 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
   };
 
   useEffect(() => {
-    if (!canvasRef.current) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    if (typeof window === "undefined") return;
+    if (!("WebGLRenderingContext" in window)) {
+      setWebglReady(false);
+      return;
+    }
+
+    const handleContextError = (event: Event) => {
+      event.preventDefault();
+      setWebglReady(false);
+    };
+
+    canvas.addEventListener("webglcontextcreationerror", handleContextError);
+
+    const gl =
+      canvas.getContext("webgl2") ||
+      canvas.getContext("webgl");
+
+    if (!gl) {
+      setWebglReady(false);
+      canvas.removeEventListener("webglcontextcreationerror", handleContextError);
+      return;
+    }
+
+    try {
+      gl.getParameter(gl.VERSION);
+    } catch {
+      setWebglReady(false);
+      canvas.removeEventListener("webglcontextcreationerror", handleContextError);
+      return;
+    }
 
     const scene = new THREE.Scene();
     sceneRef.current = scene;
@@ -110,11 +142,19 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
     camera.position.z = 30;
     cameraRef.current = camera;
 
-    const renderer = new THREE.WebGLRenderer({
-      canvas: canvasRef.current,
-      alpha: true,
-      antialias: true,
-    });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas,
+        context: gl,
+        alpha: true,
+        antialias: true,
+      });
+    } catch {
+      setWebglReady(false);
+      canvas.removeEventListener("webglcontextcreationerror", handleContextError);
+      return;
+    }
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x0d0d0d, 1);
@@ -263,6 +303,7 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
       gradientGeometry.dispose();
       gradientMaterial.dispose();
       renderer.dispose();
+      canvas.removeEventListener("webglcontextcreationerror", handleContextError);
     };
   }, []);
 
@@ -304,7 +345,11 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
 
   return (
     <div className="relative h-screen w-full overflow-hidden bg-[#0d0d0d]">
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+      {webglReady ? (
+        <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+      ) : (
+        <div className="absolute inset-0 bg-[#0d0d0d]" aria-hidden="true" />
+      )}
 
       <div
         className={`absolute inset-0 z-10 flex flex-col items-center justify-center px-6 transition-opacity duration-700 ${

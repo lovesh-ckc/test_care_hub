@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
@@ -10,14 +10,14 @@ type TemperatureDetailProps = {
 const ranges = [
   {
     label: "Low",
-    range: "< 36.1°C (97°F)",
+    range: "< 36.1Â°C (97Â°F)",
     note: "Hypothermia risk",
     color: "bg-sky-500",
     background: "bg-gray-200",
   },
   {
     label: "Normal",
-    range: "36.1-37.2°C (97-99°F)",
+    range: "36.1-37.2Â°C (97-99Â°F)",
     note: "Healthy range",
     color: "bg-teal",
     background: "bg-emerald-50",
@@ -25,14 +25,14 @@ const ranges = [
   },
   {
     label: "Elevated",
-    range: "37.3-38°C (99-100.4°F)",
+    range: "37.3-38Â°C (99-100.4Â°F)",
     note: "Slightly elevated",
     color: "bg-orange-400",
     background: "bg-gray-200",
   },
   {
     label: "Fever",
-    range: "> 38°C (100.4°F)",
+    range: "> 38Â°C (100.4Â°F)",
     note: "Requires attention",
     color: "bg-red-500",
     background: "bg-gray-200",
@@ -40,10 +40,10 @@ const ranges = [
 ];
 
 const readings = [
-  { time: "Today, 9:30 AM", value: "34.5°C", sub: "98.1°F", status: "Normal" },
-  { time: "Yesterday, 6:00 PM", value: "36.8°C", sub: "98.2°F", status: "Normal" },
-  { time: "Yesterday, 9:00 AM", value: "36.7°C", sub: "98.1°F", status: "Normal" },
-  { time: "Jan 26, 7:30 PM", value: "36.9°C", sub: "98.4°F", status: "Normal" },
+  { time: "Today, 9:30 AM", value: "34.5Â°C", sub: "98.1Â°F", status: "Normal" },
+  { time: "Yesterday, 6:00 PM", value: "36.8Â°C", sub: "98.2Â°F", status: "Normal" },
+  { time: "Yesterday, 9:00 AM", value: "36.7Â°C", sub: "98.1Â°F", status: "Normal" },
+  { time: "Jan 26, 7:30 PM", value: "36.9Â°C", sub: "98.4Â°F", status: "Normal" },
 ];
 
 const factors = [
@@ -98,31 +98,27 @@ export function TemperatureDetail({ onBack}: TemperatureDetailProps) {
             <div>
               <div className="flex items-end gap-2 text-gray-400">
                 <span className="text-3xl font-semibold text-black">34.5</span>
-                <span className="text-sm text-gray-500 font-ibm-plex-sans">°C</span>
+                <span className="text-sm text-gray-500 font-ibm-plex-sans">Â°C</span>
               </div>
               <div className="text-sm text-[#518D73] ">Normal</div>
-              <div className="mt-1 text-xs text-gray-500 font-ibm-plex-sans">98.1°F</div>
+              <div className="mt-1 text-xs text-gray-500 font-ibm-plex-sans">98.1Â°F</div>
             </div>
             <Image className="h-8 w-8 motion-pulse" width={32} height={32} alt="" src="/vitals/Temperature.svg" />
           </div>
 
           <div className="mt-4 rounded-2xl bg-[#FAF9F8] p-4">
-            <svg viewBox="0 0 320 110" className="w-full" fill="none" aria-hidden="true">
-              <path
-                d="M20 70 C60 20, 120 20, 160 70 C200 120, 260 120, 300 70"
-                stroke="#E5E7EB"
-                strokeWidth="10"
-                strokeLinecap="round"
-              />
-              <path
-                className="graph-stroke"
-                d="M20 70 C60 20, 120 20, 160 70 C200 120, 260 120, 300 70"
-                stroke="#F97316"
-                strokeWidth="10"
-                strokeLinecap="round"
-              />
-              <circle cx="160" cy="70" r="12" fill="#fff" stroke="#F97316" strokeWidth="3" className="motion-pulse" />
-            </svg>
+            <div className="relative h-4 w-full overflow-hidden rounded-full bg-gradient-to-r from-yellow-100 via-orange-200 to-red-300">
+              <div className="absolute inset-0 motion-shimmer opacity-40" />
+            </div>
+            <div className="relative mt-5 h-20">
+              <div className="absolute left-0 top-1/2 h-1 w-full -translate-y-1/2 rounded-full bg-gray-200" />
+              <div className="absolute left-0 top-1/2 h-1 w-full -translate-y-1/2 rounded-full bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 opacity-70" />
+              <div className="temp-marker absolute top-1/2 h-6 w-6 -translate-y-1/2 rounded-full border-2 border-white bg-orange-400 shadow-lg motion-pulse">
+                <span className="absolute -top-7 left-1/2 -translate-x-1/2 rounded-full bg-white px-2 py-0.5 text-[10px] text-gray-700 shadow">
+                  34.5Â°C
+                </span>
+              </div>
+            </div>
             <div className="mt-2 flex items-center justify-between text-xs text-gray-500 font-ibm-plex-sans">
               <span>Low</span>
               <span>Normal</span>
@@ -182,7 +178,7 @@ export function TemperatureDetail({ onBack}: TemperatureDetailProps) {
             {["M","T","W","T","F","S","S"].map((day, index) => (
               <div key={`${day}-${index}`} className="text-xs">
                 <div>{day}</div>
-                <div className="text-gray-400">36.7°C</div>
+                <div className="text-gray-400">36.7Â°C</div>
               </div>
             ))}
           </div>
@@ -209,3 +205,4 @@ export function TemperatureDetail({ onBack}: TemperatureDetailProps) {
     </>
   );
 }
+

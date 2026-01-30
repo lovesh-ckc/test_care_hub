@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
@@ -132,3 +132,4 @@ export function DeviceManagementScreen({ onBack }: DeviceManagementScreenProps) 
     </div>
   );
 }
+

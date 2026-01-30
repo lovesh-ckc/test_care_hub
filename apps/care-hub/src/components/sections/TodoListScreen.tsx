@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Bottombar } from "@care-hub/components/UI/bottombar/Bottombar";
 import LiquidMorph from "../UI/LiquidMorph";
 import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
@@ -32,11 +32,28 @@ type DetailSheet = "none" | "bp" | "vitamin" | "health" | "export";
 const weekDays = ["M", "T", "W", "T", "F", "S", "S"];
 
 function Overlay({ open, onClose, children }: { open: boolean; onClose: () => void; children: React.ReactNode }) {
+  const overlayRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (open) {
+      overlayRef.current?.focus();
+    }
+  }, [open]);
+
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/30 px-4 py-6 motion-fade-in">
+    <div
+      ref={overlayRef}
+      tabIndex={-1}
+      className="fixed inset-0 z-50 flex items-end justify-center bg-black/30 px-4 py-6 motion-fade-in"
+      role="dialog"
+      aria-modal="true"
+      onKeyDown={(event) => {
+        if (event.key === "Escape") onClose();
+      }}
+    >
       <button type="button" className="absolute inset-0" onClick={onClose} aria-label="Close overlay" />
-      <div className="relative w-full max-w-md rounded-2xl bg-white shadow-xl motion-fade-up">
+      <div className="relative z-10 w-full max-w-md rounded-2xl bg-white shadow-xl motion-fade-up">
         {children}
       </div>
     </div>
@@ -141,53 +158,62 @@ export function TodoListScreen({ onNavClick, activeItem = "list" }: TodoListScre
   }
 
   return (
-    <div className="min-h-screen text-left text-black bg-amber-400 font-haas-grot-disp-trial">
-      <div className="care-shell care-padding min-h-screen flex flex-col bg-[#FAF9F8] pb-4 pt-4">
-        <div className="text-lg font-semibold motion-fade-up">To Do Lists</div>
+    <div className="min-h-screen w-full text-left text-black font-haas-grot-disp-trial">
+      <div className="w-full bg-[#FAF9F8] pb-4 pt-4">
+        <div className="care-shell care-padding mx-0 max-w-none flex h-screen flex-col">
+          <div className="sticky top-0 z-10 bg-[#FAF9F8] pb-3">
+            <div className="text-lg font-semibold motion-fade-up">To Do Lists</div>
 
-        <div className="mt-6 flex items-center justify-between text-sm text-gray-700 motion-fade-up delay-1">
-          <span className="font-semibold text-gray-700">2 items to do</span>
-          <button type="button" className="text-gray-700" onClick={() => setShowPrevious(true)}>
-            Show previous
-          </button>
-        </div>
-
-        <div className="mt-3 flex flex-col gap-3">
-          {todayItems.map((item) => (
-            <TodoCard
-              key={item.id}
-              title={item.title}
-              time={item.time}
-              onClick={() => {
-                tap();
-                setActiveOverlay(item.detail);
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="mt-6 text-sm font-semibold text-gray-700 motion-fade-up delay-2">Upcoming</div>
-        <div className="mt-3 flex flex-col gap-3">
-          {upcomingItems.map((item) => (
-            <TodoCard
-              key={item.id}
-              title={item.title}
-              time={item.time}
-              onClick={() => {
-                tap();
-                setActiveOverlay(item.detail);
-              }}
-            />
-          ))}
-        </div>
-
-        
-      </div>
-          <div className="pt-3 sticky bottom-4">
-                  <LiquidMorph>
-                  <Bottombar activeItem={activeItem} onItemClick={onNavClick} />
-                  </LiquidMorph>
+            <div className="mt-2 flex items-center justify-between text-sm text-gray-700 motion-fade-up delay-1">
+              <span className="font-bold text-gray-700">2 items to do</span>
+              <button type="button" className="text-gray-700 font-semibold" onClick={() => setShowPrevious(true)}>
+                Show previous
+              </button>
+            </div>
           </div>
+
+          <div className="flex-1 overflow-y-auto pb-4">
+          <div className="mt-2 flex flex-col gap-3">
+            {todayItems.map((item) => (
+              <TodoCard
+                key={item.id}
+                title={item.title}
+                time={item.time}
+                onClick={() => {
+                  tap();
+                  setActiveOverlay(item.detail);
+                }}
+              />
+            ))}
+          </div>
+
+          <div className="mt-6 text-sm font-semibold text-gray-700 motion-fade-up delay-2">Upcoming</div>
+          <div className="mt-3 flex flex-col gap-3">
+            {upcomingItems.map((item) => (
+              <TodoCard
+                key={item.id}
+                title={item.title}
+                time={item.time}
+                onClick={() => {
+                  tap();
+                  setActiveOverlay(item.detail);
+                }}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="sticky bottom-3 space-y-3">
+         
+
+          
+          <div className="pt-3">
+            <LiquidMorph>
+              <Bottombar activeItem={activeItem} onItemClick={onNavClick} />
+            </LiquidMorph>
+          </div>
+        </div>
+      </div>
+      </div>
       <Overlay open={activeOverlay === "bp"} onClose={() => setActiveOverlay("none")}>
         <div className="p-6 text-center">
           <div className="flex justify-end">
@@ -358,3 +384,5 @@ export function TodoListScreen({ onNavClick, activeItem = "list" }: TodoListScre
     </div>
   );
 }
+
+

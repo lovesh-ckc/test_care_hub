@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
@@ -11,7 +11,7 @@ const vitalCards = [
   { label: "Heart rate", value: "68", unit: "bpm", status: "Normal", color: "text-red-500" },
   { label: "Blood Oxygen", value: "98", unit: "%", status: "Normal", color: "text-blue-500" },
   { label: "Blood Pressure", value: "120/80", unit: "mmHg", status: "Normal", color: "text-emerald-600" },
-  { label: "Temperature", value: "98.4", unit: "°F", status: "Normal", color: "text-orange-500" },
+  { label: "Temperature", value: "98.4", unit: "Â°F", status: "Normal", color: "text-orange-500" },
 ];
 
 const testResults = [
@@ -90,3 +90,4 @@ export function ClinicalCareOverview({ onBack }: ClinicalCareOverviewProps) {
     </div>
   );
 }
+

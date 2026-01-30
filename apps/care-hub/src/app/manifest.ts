@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Personalized patient care experience",
     start_url: "/",
     display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#ff8b00",
+    background_color: "#faf9f8",
+    theme_color: "#faf9f8",
     icons: [
       {
         src: "/icons/icon-192.png",

@@ -169,8 +169,8 @@ const canvasRef = useRef<HTMLCanvasElement | null>(null);
  if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
       }
-      window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('resize', resize);
+      // window.removeEventListener('mousemove', onMove);
+      // window.removeEventListener('resize', resize);
       gl.deleteProgram(program);
       gl.deleteBuffer(buffer);
     };
