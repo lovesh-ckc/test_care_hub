@@ -1,4 +1,5 @@
 ﻿import type { Metadata } from "next";
+import { Suspense } from "react";
 import {
   IBM_Plex_Sans,
   Plus_Jakarta_Sans,
@@ -70,7 +71,9 @@ export default function RootLayout({
       >
         <PwaRegister />
         <FeedbackProvider>
-          <IntroGate>{children}</IntroGate>
+          <Suspense fallback={children}>
+            <IntroGate>{children}</IntroGate>
+          </Suspense>
         </FeedbackProvider>
       </body>
     </html>
