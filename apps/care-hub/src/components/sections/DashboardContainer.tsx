@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { DashboardScreen } from "@care-hub/components/sections/Dashboard";
 import { DocumentScreen } from "@care-hub/components/UI/documents/Document";
@@ -15,11 +15,13 @@ import { DeviceManagementScreen } from "@care-hub/components/sections/DeviceMana
 import { PreferencesControlScreen } from "@care-hub/components/sections/PreferencesControlScreen";
 import { DevicesGridScreen } from "@care-hub/components/sections/DevicesGridScreen";
 import { TodoListScreen } from "@care-hub/components/sections/TodoListScreen";
+import { ProfileScreen } from "@care-hub/components/sections/ProfileScreen";
 import type { Dashboard } from "@care-hub/lib/types";
 import { ProfileHeader } from "./ProfileHeader";
 import { FeedbackSettingsSheet } from "@care-hub/components/feedback/FeedbackSettingsSheet";
 import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
 import { Bottombar } from "../UI/bottombar/Bottombar";
+import { getFallbackUser, readCurrentUser } from "@care-hub/lib/users/demoUsers";
 
 type DashboardContainerProps = {
   section: Dashboard;
@@ -39,6 +41,7 @@ const DASHBOARD_SCREENS = [
   "temperature",
   "bloodPressure",
   "notifications",
+  "profile",
   "clinicalCare",
   "deviceManagement",
   "preferences",
@@ -48,6 +51,7 @@ type DashboardScreenKey = (typeof DASHBOARD_SCREENS)[number];
 
 export function DashboardContainer({ section, token }: DashboardContainerProps) {
   const [showSettings, setShowSettings] = useState(false);
+  const [currentUser, setCurrentUser] = useState(getFallbackUser());
   const { tap } = useFeedback();
   const router = useRouter();
   const pathname = usePathname();
@@ -72,6 +76,13 @@ export function DashboardContainer({ section, token }: DashboardContainerProps) 
   useEffect(() => {
     if (!hasSyncedRef.current) {
       hasSyncedRef.current = true;
+    }
+  }, []);
+
+  useEffect(() => {
+    const stored = readCurrentUser();
+    if (stored) {
+      setCurrentUser(stored);
     }
   }, []);
 
@@ -123,15 +134,15 @@ export function DashboardContainer({ section, token }: DashboardContainerProps) 
     <>
     {["dashboard","temperature","heartRate","spo2","respiratory","bloodPressure"].includes(resolvedScreen) &&
     <div className="min-h-screen text-left text-black font-haas-grot-disp-trial">
-    <div className="care-shell care-padding flex h-screen flex-col bg-[#FAF9F8] pb-4 pt-3">
+    <div className="care-shell care-padding flex min-h-screen flex-col bg-[#FAF9F8] pb-4 pt-3">
       <div className="sticky top-3 z-40 rounded-2xl bg-white/70 p-2">
     <ProfileHeader
-          name="Rashi Agrawal"
-          handle="+91 1234567890"
-          avatarSrc="/icons/patient.svg"
+          name={currentUser.name}
+          handle={currentUser.age}
+          avatarSrc={currentUser.avatar}
           bellIconSrc="/icons/bell-01.svg"
           onBellClick={() => navigateTo("notifications")}
-          onProfileClick={() => navigateTo("dashboard")}
+          onProfileClick={() => navigateTo("profile")}
           onSettingsClick={() => {
             tap();
             setShowSettings(true);
@@ -144,6 +155,8 @@ export function DashboardContainer({ section, token }: DashboardContainerProps) 
           section={section}
           onNavClick={handleNavClick}
           activeNavItem={activeNavItem}
+          userAvatar={currentUser.avatar}
+          userName={currentUser.name}
           onHeartRateClick={() => navigateTo("heartRate")}
           onSpo2Click={() => navigateTo("spo2")}
           onRespiratoryClick={() => navigateTo("respiratory")}
@@ -202,6 +215,14 @@ export function DashboardContainer({ section, token }: DashboardContainerProps) 
       
       {resolvedScreen === "notifications" && (
         <NotificationScreen onBack={handleBackClick} />
+      )}
+      {resolvedScreen === "profile" && (
+        <ProfileScreen
+          onBack={handleBackClick}
+          onClinicalCare={() => navigateTo("clinicalCare")}
+          onDeviceManagement={() => navigateTo("deviceManagement")}
+          onPreferences={() => navigateTo("preferences")}
+        />
       )}
       {resolvedScreen === "clinicalCare" && (
         <ClinicalCareOverview onBack={handleBackClick} />

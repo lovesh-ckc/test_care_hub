@@ -11,6 +11,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "next": "16.1.5",
     "react": "19.2.3",
     "react-dom": "19.2.3",

@@ -5,7 +5,7 @@ import { SosButton } from "@care-hub/components/sections/SosButton";
 
 type ProfileHeaderProps = {
   name: string;
-  handle: string;
+  handle: number;
   avatarSrc: string;
   bellIconSrc: string;
   onBellClick?: () => void;

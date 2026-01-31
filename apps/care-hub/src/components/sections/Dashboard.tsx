@@ -11,6 +11,8 @@ type DashboardProps = {
   onNext?: () => void;
   onBack?: () => void;
   activeNavItem?: string;
+  userName?: string;
+  userAvatar?: string;
   onHeartRateClick?: () => void;
   onSpo2Click?: () => void;
   onRespiratoryClick?: () => void;
@@ -21,6 +23,8 @@ type DashboardProps = {
 
 export function DashboardScreen({
   onNavClick,
+  userName,
+  userAvatar,
   onHeartRateClick,
   onSpo2Click,
   onRespiratoryClick,
@@ -177,7 +181,13 @@ export function DashboardScreen({
           <div className="mt-5 text-lg font-bold motion-fade-up delay-3">Upcoming appointments</div>
           <div className="mt-3 rounded-2xl bg-white p-4 shadow-md motion-fade-up delay-2 card-hover" >
             <div className="flex items-center gap-3">
-              <Image className="h-12 w-12 rounded-full object-cover" width={48} height={48} alt="" src="/icons/patient.svg" />
+              <Image
+                className="h-12 w-12 rounded-full object-cover"
+                width={48}
+                height={48}
+                alt={userName ?? "Patient"}
+                src={"/icons/patient.svg"}
+              />
               <div className="flex-1">
                 <div className="text-base font-semibold">Dr. Sarah Jenkins</div>
                 <div className="text-sm text-gray-500 font-ibm-plex-sans">Cardiologist</div>
