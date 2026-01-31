@@ -1,9 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { OtpVerifySection } from "@care-hub/lib/types";
 import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
+import { sendOtpEmail } from "@care-hub/lib/email/sendOtpEmail";
+import { clearOtp, generateOtp, isOtpExpired, readOtp, storeOtp } from "@care-hub/lib/email/otpStore";
+import { allowedEmails } from "@care-hub/lib/users/demoUsers";
 
 type OtpVerifyProps = {
   section: OtpVerifySection;
@@ -21,6 +24,20 @@ export function OtpVerify({ section, onBack, onNext }: OtpVerifyProps) {
   } = section.props;
   const [digits, setDigits] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
+  const [statusMessage, setStatusMessage] = useState<string>("");
+  const [isSending, setIsSending] = useState(false);
+  const [email, setEmail] = useState<string>("");
+
+  useEffect(() => {
+    const stored = readOtp();
+    if (stored?.email) {
+      setEmail(stored.email);
+    }
+    if (isOtpExpired(stored)) {
+      setStatusMessage("OTP expired. Please resend.");
+      clearOtp();
+    }
+  }, []);
 
   const isComplete = useMemo(
     () => digits.every((digit) => digit.trim().length === 1),
@@ -70,6 +87,49 @@ export function OtpVerify({ section, onBack, onNext }: OtpVerifyProps) {
     }
   }
 
+  async function handleResend() {
+    if (!email || !allowedEmails.has(email.toLowerCase())) {
+      setStatusMessage("Only approved Lemnyscate emails are allowed.");
+      error();
+      return;
+    }
+    setIsSending(true);
+    setStatusMessage("");
+    const otp = generateOtp();
+    storeOtp(email, otp);
+    try {
+      console.log("[EmailJS] Resending OTP", { email, otp });
+      await sendOtpEmail(email, otp);
+      setStatusMessage("New OTP sent.");
+      confirm();
+    } catch {
+      console.error("[EmailJS] Resend failed");
+      setStatusMessage("Could not resend OTP. Try again.");
+      error();
+    } finally {
+      setIsSending(false);
+    }
+  }
+
+  function handleVerify() {
+    const entered = digits.join("");
+    const stored = readOtp();
+    if (!stored || isOtpExpired(stored)) {
+      setStatusMessage("OTP expired. Please resend.");
+      clearOtp();
+      error();
+      return;
+    }
+    if (entered !== stored.otp) {
+      setStatusMessage("Incorrect OTP. Please try again.");
+      error();
+      return;
+    }
+    setStatusMessage("");
+    confirm();
+    onNext?.();
+  }
+
   return (
     <section className="flex h-screen flex-col items-center justify-center gap-6 px-5 py-10 text-left sm:px-6">
       <div className="flex w-full max-w-sm items-center gap-3 sm:max-w-md lg:max-w-lg">
@@ -99,6 +159,7 @@ export function OtpVerify({ section, onBack, onNext }: OtpVerifyProps) {
       <div className="flex w-full items-center flex-col gap-4 sm:max-w-md lg:max-w-lg">
         <p className="text-sm text-(--muted-ink)">
           {description}
+          {email ? <span className="block text-xs text-gray-400">Sent to {email}</span> : null}
         </p>
         <div className="flex items-center gap-2">
           {digits.map((digit, index) => (
@@ -121,22 +182,28 @@ export function OtpVerify({ section, onBack, onNext }: OtpVerifyProps) {
           <button
             type="button"
             className="text-xs text-(--muted-ink) cursor-pointer"
-            onClick={tap}
+            onClick={() => {
+              tap();
+              handleResend();
+            }}
+            disabled={isSending}
           >
-            {resendLabel}
+            {isSending ? "Sending..." : resendLabel}
           </button>
         </div>
+        {statusMessage ? (
+          <p className="text-xs text-red-500 font-ibm-plex-sans w-full text-left">{statusMessage}</p>
+        ) : null}
         <button
           className={`mt-2 flex h-11 w-full items-center justify-center rounded-full text-sm font-semibold text-(--brand-contrast)
             ${isComplete ? "bg-(--brand)" : "bg-(--brand)/40"}`}
           type="button"
           onClick={() => {
-            if (isComplete && onNext) {
-              confirm();
-              onNext();
-            } else {
-              error();
+            if (isComplete) {
+              handleVerify();
+              return;
             }
+            error();
           }}
           disabled={!isComplete}
         >

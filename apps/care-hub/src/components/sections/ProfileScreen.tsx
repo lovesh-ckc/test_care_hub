@@ -1,7 +1,9 @@
 ﻿"use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
+import { getFallbackUser, readCurrentUser } from "@care-hub/lib/users/demoUsers";
 
 type ProfileScreenProps = {
   onBack?: () => void;
@@ -50,6 +52,14 @@ export function ProfileScreen({
   onPreferences,
 }: ProfileScreenProps) {
   const { tap } = useFeedback();
+  const [currentUser, setCurrentUser] = useState(getFallbackUser());
+
+  useEffect(() => {
+    const stored = readCurrentUser();
+    if (stored) {
+      setCurrentUser(stored);
+    }
+  }, []);
   const handleItemClick = (id: string) => {
     if (id === "clinical") onClinicalCare?.();
     if (id === "devices") onDeviceManagement?.();
@@ -78,8 +88,8 @@ export function ProfileScreen({
                 className="h-16 w-16 rounded-full object-cover"
                 width={64}
                 height={64}
-                alt=""
-                src="/icons/patient.svg"
+                alt={currentUser.name}
+                src={currentUser.avatar}
               />
               <button
                 type="button"
@@ -97,12 +107,12 @@ export function ProfileScreen({
               </button>
             </div>
             <div>
-              <div className="text-lg font-semibold">Rashi Agrawal</div>
-              <div className="text-sm text-gray-500 font-ibm-plex-sans">#rashi.agrawal0789</div>
+              <div className="text-lg font-semibold">{currentUser.name}</div>
+              <div className="text-sm text-gray-500 font-ibm-plex-sans">{currentUser.handle}</div>
               <div className="mt-2 flex flex-wrap gap-2 text-xs text-gray-700 font-ibm-plex-sans">
-                <span className="rounded-full bg-gray-200 px-3 py-1">Female</span>
-                <span className="rounded-full bg-gray-200 px-3 py-1">45</span>
-                <span className="rounded-full bg-gray-200 px-3 py-1">+91 00000 - 00000</span>
+                <span className="rounded-full bg-gray-200 px-3 py-1">{currentUser.gender}</span>
+                <span className="rounded-full bg-gray-200 px-3 py-1">{currentUser.age}</span>
+                <span className="rounded-full bg-gray-200 px-3 py-1">{currentUser.phone}</span>
               </div>
             </div>
           </div>

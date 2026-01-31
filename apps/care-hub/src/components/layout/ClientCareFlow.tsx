@@ -43,6 +43,7 @@ export function ClientCareFlow({ layout, token }: ClientCareFlowProps) {
 
   const stepParam = searchParams.get("step");
   const screenParam = searchParams.get("screen");
+  const resumeParam = searchParams.get("resume");
 
   const storageKey = `carehub:lastRoute:${token}`;
 
@@ -57,17 +58,40 @@ export function ClientCareFlow({ layout, token }: ClientCareFlowProps) {
 
     const urlStep = normalizeStep(stepParam);
     if (urlStep) {
+      if (resumeParam !== "1") {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("step", "welcome");
+        params.delete("screen");
+        params.delete("resume");
+        router.replace(`${pathname}?${params.toString()}`);
+        setStep("welcome");
+        setIsReady(true);
+        return;
+      }
       setStep(urlStep);
       setIsReady(true);
       return;
     }
 
     if (typeof window === "undefined") return;
+    if (resumeParam !== "1") {
+      window.localStorage.removeItem(storageKey);
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("step", "welcome");
+      params.delete("screen");
+      params.delete("resume");
+      router.replace(`${pathname}?${params.toString()}`);
+      setStep("welcome");
+      setIsReady(true);
+      return;
+    }
+
     const storedRaw = window.localStorage.getItem(storageKey);
     if (!storedRaw) {
       const params = new URLSearchParams(searchParams.toString());
       params.set("step", "welcome");
       params.delete("screen");
+      params.delete("resume");
       router.replace(`${pathname}?${params.toString()}`);
       setStep("welcome");
       setIsReady(true);
@@ -88,6 +112,7 @@ export function ClientCareFlow({ layout, token }: ClientCareFlowProps) {
       } else {
         params.delete("screen");
       }
+      params.delete("resume");
       router.replace(`${pathname}?${params.toString()}`);
       setStep(stored.step);
       if (!stored.screen) {
