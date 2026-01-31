@@ -5,42 +5,43 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Care App Patient",
     short_name: "Care Patient",
     description: "Personalized patient care experience",
+
     start_url: "/",
-    display: "standalone",
     scope: "/",
-    background_color: "#faf9f8",
-    theme_color: "#faf9f8",
+
+    display: "standalone",
     orientation: "portrait-primary",
+
+    background_color: "#ffffff",
+    theme_color: "#faf9f8",
+
     icons: [
+      // Standard PWA icons
       {
-        src: "favicons/android-icon-36x36.png",
-        sizes: "36x36",
-        type: "image/png",
-      },
-      {
-        src: "favicons/android-icon-48x48.png",
-        sizes: "48x48",
-        type: "image/png",
-      },
-      {
-        src: "favicons/android-icon-72x72.png",
-        sizes: "72x72",
-        type: "image/png",
-      },
-      {
-        src: "favicons/android-icon-96x96.png",
-        sizes: "96x96",
-        type: "image/png",
-      },
-      {
-        src: "favicons/android-icon-144x144.png",
-        sizes: "144x144",
-        type: "image/png",
-      },
-      {
-        src: "favicons/android-icon-192x192.png",
+        src: "/favicons/Eu-icon-192x192.png",
         sizes: "192x192",
         type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "/favicons/Eu-icon-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any",
+      },
+
+      // Maskable icons (CRITICAL for correct Android scaling)
+      {
+        src: "/favicons/Eu-icon-192x192-maskable.png",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "maskable",
+      },
+      {
+        src: "/favicons/Eu-icon-512x512-maskable.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "maskable",
       },
     ],
   };

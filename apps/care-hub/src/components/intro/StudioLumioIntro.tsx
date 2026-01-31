@@ -27,12 +27,8 @@ const buildLetters = (word: string): LetterDef[] => {
   });
 };
 
-const LEFT_LETTERS = buildLetters("Lemnyscate");
-const RIGHT_LETTERS = buildLetters("Eumetise");
-const MAX_DELAY = Math.max(
-  ...LEFT_LETTERS.map((letter) => letter.delay),
-  ...RIGHT_LETTERS.map((letter) => letter.delay)
-);
+const CENTER_LETTERS = buildLetters("Eumetise");
+const MAX_DELAY = Math.max(...CENTER_LETTERS.map((letter) => letter.delay));
 const LETTER_CYCLE = MAX_DELAY + LETTER_ANIM_DURATION;
 const LETTER_EXIT_CYCLE = MAX_DELAY + LETTER_EXIT_REPLAY_DURATION;
 const EXIT_REPLAY_TOTAL = 2 * MAX_DELAY + 2 * LETTER_EXIT_REPLAY_DURATION;
@@ -41,7 +37,9 @@ type StudioLumioIntroProps = {
   onComplete?: (withSound: boolean) => void;
 };
 
-export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) {
+export default function StudioLumioIntro({
+  onComplete,
+}: StudioLumioIntroProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [animationPhase, setAnimationPhase] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
@@ -65,7 +63,8 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
     try {
       const AudioContextCtor =
         window.AudioContext ||
-        (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+        (window as unknown as { webkitAudioContext?: typeof AudioContext })
+          .webkitAudioContext;
       if (!AudioContextCtor) return;
 
       if (!audioContextRef.current) {
@@ -80,7 +79,10 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
 
       oscillator.type = "sine";
       oscillator.frequency.setValueAtTime(220, ctx.currentTime);
-      oscillator.frequency.exponentialRampToValueAtTime(420, ctx.currentTime + 0.12);
+      oscillator.frequency.exponentialRampToValueAtTime(
+        420,
+        ctx.currentTime + 0.12
+      );
 
       gain.gain.setValueAtTime(0.0001, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.05, ctx.currentTime + 0.02);
@@ -112,13 +114,14 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
 
     canvas.addEventListener("webglcontextcreationerror", handleContextError);
 
-    const gl =
-      canvas.getContext("webgl2") ||
-      canvas.getContext("webgl");
+    const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
 
     if (!gl) {
       setWebglReady(false);
-      canvas.removeEventListener("webglcontextcreationerror", handleContextError);
+      canvas.removeEventListener(
+        "webglcontextcreationerror",
+        handleContextError
+      );
       return;
     }
 
@@ -126,7 +129,10 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
       gl.getParameter(gl.VERSION);
     } catch {
       setWebglReady(false);
-      canvas.removeEventListener("webglcontextcreationerror", handleContextError);
+      canvas.removeEventListener(
+        "webglcontextcreationerror",
+        handleContextError
+      );
       return;
     }
 
@@ -152,7 +158,10 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
       });
     } catch {
       setWebglReady(false);
-      canvas.removeEventListener("webglcontextcreationerror", handleContextError);
+      canvas.removeEventListener(
+        "webglcontextcreationerror",
+        handleContextError
+      );
       return;
     }
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -303,7 +312,10 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
       gradientGeometry.dispose();
       gradientMaterial.dispose();
       renderer.dispose();
-      canvas.removeEventListener("webglcontextcreationerror", handleContextError);
+      canvas.removeEventListener(
+        "webglcontextcreationerror",
+        handleContextError
+      );
     };
   }, []);
 
@@ -356,34 +368,45 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
           isExiting ? "opacity-0" : "opacity-100"
         }`}
       >
-        <div className="flex flex-col items-center justify-center gap-4 text-center">
+        <div className="flex flex-col items-center justify-center gap-6 text-center">
           <h1
             className={`text-4xl font-black tracking-wider transition-all duration-1000 ease-out md:text-6xl lg:text-7xl ${
-              animationPhase >= 1 ? "text-white opacity-100" : "text-gray-600 opacity-40"
+              animationPhase >= 1
+                ? "text-white opacity-100"
+                : "text-gray-600 opacity-40"
             }`}
             style={{
               fontFamily: "'Bebas Neue', 'Impact', sans-serif",
-              transform: `translateY(${isExitSequence ? "0px" : animationPhase >= 3 ? "-24px" : "0px"})`,
               opacity: isExitFade ? 0 : animationPhase >= 1 ? 1 : 0.4,
               transition:
                 "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.6s ease, opacity 0.5s ease",
             }}
           >
-            <span className="sr-only">Lemnyscate</span>
+            <span className="sr-only">Eumetise</span>
             <span
-              key={`left-word-${letterCycleKey}`}
-              className={`title-word ${isExitSequence ? "exit-seq" : ""} ${isExitFade ? "exit" : ""}`}
+              key={`center-word-${letterCycleKey}`}
+              className={`title-word ${isExitSequence ? "exit-seq" : ""} ${
+                isExitFade ? "exit" : ""
+              }`}
               aria-hidden="true"
               style={{
-                ["--cycle" as string]: `${isExitSequence ? LETTER_EXIT_CYCLE : LETTER_CYCLE}s`,
-                ["--duration" as string]: `${isExitSequence ? LETTER_EXIT_REPLAY_DURATION : LETTER_ANIM_DURATION}s`,
+                ["--cycle" as string]: `${
+                  isExitSequence ? LETTER_EXIT_CYCLE : LETTER_CYCLE
+                }s`,
+                ["--duration" as string]: `${
+                  isExitSequence
+                    ? LETTER_EXIT_REPLAY_DURATION
+                    : LETTER_ANIM_DURATION
+                }s`,
                 ["--exit-duration" as string]: `${LETTER_EXIT_DURATION}s`,
-                ["--replay-total" as string]: `${EXIT_REPLAY_TOTAL + EXIT_HOLD}s`,
+                ["--replay-total" as string]: `${
+                  EXIT_REPLAY_TOTAL + EXIT_HOLD
+                }s`,
               }}
             >
-              {LEFT_LETTERS.map((letter, index) => (
+              {CENTER_LETTERS.map((letter, index) => (
                 <span
-                  key={`left-${index}-${letter.char}`}
+                  key={`center-${index}-${letter.char}`}
                   className="title-letter"
                   style={{
                     ["--delay" as string]: `${letter.delay}s`,
@@ -398,7 +421,9 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
 
           <div
             className={`flex items-center gap-2 overflow-hidden transition-all duration-700 ease-out ${
-              animationPhase >= 3 ? "max-w-[400px] opacity-100" : "max-w-0 opacity-0"
+              animationPhase >= 3
+                ? "max-w-[400px] opacity-100"
+                : "max-w-0 opacity-0"
             }`}
             style={{
               transition:
@@ -410,7 +435,11 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
                 animationPhase >= 4 ? "enter-ready" : ""
               }`}
             >
-              <div className={`enter-button-inner ${animationPhase >= 3 ? "enter-stretch" : ""}`}>
+              <div
+                className={`enter-button-inner ${
+                  animationPhase >= 3 ? "enter-stretch" : ""
+                }`}
+              >
                 <button
                   onClick={() => handleEnter(true)}
                   className="flex items-center gap-2 bg-[#c8e972] px-4 py-2 text-xs font-medium tracking-wide text-black transition-colors duration-200 hover:bg-[#d4f080] md:text-sm"
@@ -422,50 +451,13 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
               </div>
             </div>
           </div>
-
-          <h1
-            className={`text-4xl font-black tracking-wider transition-all duration-1000 ease-out md:text-6xl lg:text-7xl ${
-              animationPhase >= 1 ? "text-white opacity-100" : "text-gray-600 opacity-40"
-            }`}
-            style={{
-              fontFamily: "'Bebas Neue', 'Impact', sans-serif",
-              transform: `translateY(${isExitSequence ? "0px" : animationPhase >= 3 ? "24px" : "0px"})`,
-              opacity: isExitFade ? 0 : animationPhase >= 1 ? 1 : 0.4,
-              transition:
-                "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.6s ease, opacity 0.5s ease",
-            }}
-          >
-            <span className="sr-only">Eumetise</span>
-            <span
-              key={`right-word-${letterCycleKey}`}
-              className={`title-word ${isExitSequence ? "exit-seq" : ""} ${isExitFade ? "exit" : ""}`}
-              aria-hidden="true"
-              style={{
-                ["--cycle" as string]: `${isExitSequence ? LETTER_EXIT_CYCLE : LETTER_CYCLE}s`,
-                ["--duration" as string]: `${isExitSequence ? LETTER_EXIT_REPLAY_DURATION : LETTER_ANIM_DURATION}s`,
-                ["--exit-duration" as string]: `${LETTER_EXIT_DURATION}s`,
-                ["--replay-total" as string]: `${EXIT_REPLAY_TOTAL + EXIT_HOLD}s`,
-              }}
-            >
-              {RIGHT_LETTERS.map((letter, index) => (
-                <span
-                  key={`right-${index}-${letter.char}`}
-                  className="title-letter"
-                  style={{
-                    ["--delay" as string]: `${letter.delay}s`,
-                    ["--dim" as string]: letter.dim.toFixed(2),
-                  }}
-                >
-                  {letter.char}
-                </span>
-              ))}
-            </span>
-          </h1>
         </div>
 
         <div
           className={`mt-8 text-center transition-all duration-700 ease-out ${
-            animationPhase >= 4 ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+            animationPhase >= 4
+              ? "translate-y-0 opacity-100"
+              : "translate-y-4 opacity-0"
           }`}
           style={{
             transition: "opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s",
