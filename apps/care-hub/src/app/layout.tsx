@@ -45,12 +45,20 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/favicons/Eu-512x512.svg",
+        url: "/favicons/Eu-icon-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        url: "/favicons/Eu-icon-512x512.png",
         sizes: "512x512",
-        type: "image/svg",
+        type: "image/png",
       },
     ],
-    apple: [{ url: "/favicons/apple-icon-180x180.png", sizes: "180x180", type: "image/png" }],
+    apple: [
+      { url: "/favicons/Eu-icon-180x180.png", sizes: "180x180", type: "image/png" },
+      { url: "/favicons/Eu-icon-192x192.png", sizes: "192x192", type: "image/png" },
+    ],
   },
 };
 
