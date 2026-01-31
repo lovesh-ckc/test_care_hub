@@ -63,7 +63,7 @@ const navItems: NavItem[] = [
     id: "grid",
     label: "Devices",
     icon: (
-      <svg viewBox="0 0 54 54" className="h-5 w-5" fill="none" aria-hidden="true">
+      <svg viewBox="0 0 54 54" className="h-6 w-6" fill="none" aria-hidden="true">
         <path
           d="M16.3998 17.7444C16.3998 17.002 17.0017 16.4001 17.7441 16.4001L23.1672 16.4001C23.9096 16.4001 24.5115 17.002 24.5115 17.7444L24.5115 23.1675C24.5115 23.9099 23.9096 24.5118 23.1672 24.5118L17.7441 24.5118C17.0017 24.5118 16.3998 23.9099 16.3998 23.1675L16.3998 17.7444Z"
           stroke="currentColor"

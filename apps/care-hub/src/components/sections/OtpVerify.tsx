@@ -6,6 +6,7 @@ import type { OtpVerifySection } from "@care-hub/lib/types";
 import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
 import { sendOtpEmail } from "@care-hub/lib/email/sendOtpEmail";
 import { clearOtp, generateOtp, isOtpExpired, readOtp, storeOtp } from "@care-hub/lib/email/otpStore";
+import { allowedEmails } from "@care-hub/lib/users/demoUsers";
 
 type OtpVerifyProps = {
   section: OtpVerifySection;
@@ -87,8 +88,8 @@ export function OtpVerify({ section, onBack, onNext }: OtpVerifyProps) {
   }
 
   async function handleResend() {
-    if (!email || !email.endsWith("@lemnyscate.com")) {
-      setStatusMessage("Only @lemnyscate.com emails allowed.");
+    if (!email || !allowedEmails.has(email.toLowerCase())) {
+      setStatusMessage("Only approved Lemnyscate emails are allowed.");
       error();
       return;
     }

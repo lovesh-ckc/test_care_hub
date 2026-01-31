@@ -6,6 +6,7 @@ import type { ConnectFormSection } from "@care-hub/lib/types";
 import { sendOtpEmail } from "@care-hub/lib/email/sendOtpEmail";
 import { generateOtp, storeOtp } from "@care-hub/lib/email/otpStore";
 import { useFeedback } from "@care-hub/components/feedback/FeedbackProvider";
+import { allowedEmails, getUserByEmail, storeCurrentUser } from "@care-hub/lib/users/demoUsers";
 
 type EmailOtpRequestProps = {
   section: ConnectFormSection;
@@ -21,19 +22,28 @@ export function EmailOtpRequest({ section, onBack, onNext }: EmailOtpRequestProp
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [message, setMessage] = useState("");
 
-  const isAllowed = email.trim().length > 0 && email.trim().endsWith("@lemnyscate.com");
+  const normalizedEmail = email.trim().toLowerCase();
+  const isAllowed = normalizedEmail.length > 0 && allowedEmails.has(normalizedEmail);
 
   async function handleSend() {
     if (!isAllowed) {
-      setMessage("Only @lemnyscate.com emails allowed.");
+      setMessage("Only approved Lemnyscate emails are allowed.");
       error();
       return;
     }
 
     setStatus("sending");
     setMessage("");
+    const user = getUserByEmail(normalizedEmail);
+    if (!user) {
+      setMessage("User not found in demo list.");
+      setStatus("error");
+      error();
+      return;
+    }
     const otp = generateOtp();
     storeOtp(email.trim(), otp);
+    storeCurrentUser(user);
     try {
       console.log("[EmailJS] Sending OTP", { email: email.trim(), otp });
       await sendOtpEmail(email.trim(), otp);
