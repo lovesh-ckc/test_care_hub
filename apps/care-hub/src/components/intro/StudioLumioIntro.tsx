@@ -369,7 +369,7 @@ export default function StudioLumioIntro({ onComplete }: StudioLumioIntroProps) 
                 "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.6s ease, opacity 0.5s ease",
             }}
           >
-            <span className="sr-only">Lemnyscate</span>
+            {/* <span className="sr-only">Lemnyscate</span> */}
             <span
               key={`left-word-${letterCycleKey}`}
               className={`title-word ${isExitSequence ? "exit-seq" : ""} ${isExitFade ? "exit" : ""}`}
